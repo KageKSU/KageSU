@@ -45,10 +45,10 @@ def get_caption():
 
 def check_environ():
     global CHAT_ID, MESSAGE_THREAD_ID
-    if BOT_TOKEN is None:
+    if not BOT_TOKEN:
         print("[-] Invalid BOT_TOKEN")
         exit(1)
-    if CHAT_ID is None:
+    if not CHAT_ID:
         print("[-] Invalid CHAT_ID")
         exit(1)
     else:
@@ -109,3 +109,4 @@ if __name__ == "__main__":
         asyncio.run(main())
     except Exception as e:
         print(f"[-] An error occurred: {e}")
+        sys.exit(1)
