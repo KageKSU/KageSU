@@ -198,7 +198,7 @@ jobs:
       - name: Setup need_upload
         id: need_upload
         run: |
-          if [ ! -z "${{ secrets.BOT_TOKEN }}" ]; then
+          if [ ! -z "${{ secrets.TG_BOT_TOKEN }}" ]; then
             echo "UPLOAD=true" >> $GITHUB_OUTPUT
           else
             echo "UPLOAD=false" >> $GITHUB_OUTPUT
@@ -310,16 +310,16 @@ jobs:
       - name: Upload to telegram
         if: github.event_name != 'pull_request' && steps.need_upload.outputs.UPLOAD == 'true'
         env:
-          CHAT_ID: ${{ secrets.CHAT_ID }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          MESSAGE_THREAD_ID: ${{ secrets.MESSAGE_THREAD_ID }}
+          CHAT_ID: ${{ secrets.TG_CHANNEL_ID }}
+          BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          MESSAGE_THREAD_ID: ${{ secrets.TG_TOPIC_ID }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           COMMIT_URL: ${{ github.event.head_commit.url }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           TITLE: Manager
           BRANCH: ${{ github.ref_name }}
         run: |
-          if [ ! -z "${{ secrets.BOT_TOKEN }}" ]; then
+          if [ ! -z "${{ secrets.TG_BOT_TOKEN }}" ]; then
             export VERSION=$(git rev-list --count HEAD)
             APK=$(find ./dist -name "*.apk")
             pip3 install telethon
