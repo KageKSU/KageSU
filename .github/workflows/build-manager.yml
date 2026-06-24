@@ -31,14 +31,13 @@ jobs:
   generate-key:
     runs-on: ubuntu-latest
     outputs:
-      expected_size: ${{ steps.extract.outputs.expected_size }}
-      expected_hash: ${{ steps.extract.outputs.expected_hash }}
+      expected_size: ${{ steps.select.outputs.expected_size }}
+      expected_hash: ${{ steps.select.outputs.expected_hash }}
       keystore: ${{ steps.gen.outputs.keystore }}
       keystore_password: ${{ steps.gen.outputs.keystore_password }}
       key_password: ${{ steps.gen.outputs.key_password }}
     steps:
       - name: Generate temporary keystore
-        if: github.event_name == 'pull_request'
         id: gen
         run: |
           KEYSTORE_PASSWORD=$(openssl rand -hex 32)
@@ -52,14 +51,13 @@ jobs:
             -validity 1 \
             -storepass "$KEYSTORE_PASSWORD" \
             -keypass "$KEY_PASSWORD" \
-            -dname "CN=KernelSU PR Build" \
+            -dname "CN=KernelSU CI Build" \
             -storetype JKS \
             -keystore pr-key.jks
 
           echo "keystore=$(base64 -w 0 pr-key.jks)" >> $GITHUB_OUTPUT
 
       - name: Extract certificate hash and size
-        if: github.event_name == 'pull_request'
         id: extract
         env:
           STORE_PASS: ${{ steps.gen.outputs.keystore_password }}
@@ -82,6 +80,21 @@ jobs:
 
           echo "Certificate size: $SIZE_HEX ($SIZE_DEC bytes)"
           echo "Certificate hash: $HASH"
+
+      - name: Select fallback certificate
+        id: select
+        env:
+          PROD_KEYSTORE: ${{ secrets.KEYSTORE }}
+          GENERATED_SIZE: ${{ steps.extract.outputs.expected_size }}
+          GENERATED_HASH: ${{ steps.extract.outputs.expected_hash }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ] || [ -z "$PROD_KEYSTORE" ]; then
+            echo "expected_size=$GENERATED_SIZE" >> $GITHUB_OUTPUT
+            echo "expected_hash=$GENERATED_HASH" >> $GITHUB_OUTPUT
+          else
+            echo "expected_size=" >> $GITHUB_OUTPUT
+            echo "expected_hash=" >> $GITHUB_OUTPUT
+          fi
 
   build-lkm:
     needs: generate-key
@@ -262,7 +275,7 @@ jobs:
           PROD_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           PROD_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
+          if [ "${{ github.event_name }}" = "pull_request" ] || [ -z "$PROD_KEYSTORE" ]; then
             echo "$PR_KEYSTORE" | base64 -d > pr-key.jks
             echo "SIGN_KEYSTORE_FILE=pr-key.jks" >> $GITHUB_ENV
             echo "SIGN_KEY_ALIAS=pr-key" >> $GITHUB_ENV
