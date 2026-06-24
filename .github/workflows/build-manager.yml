@@ -211,9 +211,10 @@ jobs:
       - name: Setup need_upload
         id: need_upload
         run: |
-          if [ ! -z "${{ secrets.TG_BOT_TOKEN }}" ]; then
+          if [ -n "${{ secrets.TG_BOT_TOKEN }}" ] && [ -n "${{ vars.TG_CHANNEL_ID }}" ]; then
             echo "UPLOAD=true" >> $GITHUB_OUTPUT
           else
+            echo "Telegram upload disabled: TG_BOT_TOKEN secret or TG_CHANNEL_ID variable is not configured."
             echo "UPLOAD=false" >> $GITHUB_OUTPUT
           fi
 
@@ -323,18 +324,16 @@ jobs:
       - name: Upload to telegram
         if: github.event_name != 'pull_request' && steps.need_upload.outputs.UPLOAD == 'true'
         env:
-          CHAT_ID: ${{ secrets.TG_CHANNEL_ID }}
+          CHAT_ID: ${{ vars.TG_CHANNEL_ID }}
           BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          MESSAGE_THREAD_ID: ${{ secrets.TG_TOPIC_ID }}
+          MESSAGE_THREAD_ID: ${{ vars.TG_TOPIC_ID }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           COMMIT_URL: ${{ github.event.head_commit.url }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           TITLE: Manager
           BRANCH: ${{ github.ref_name }}
         run: |
-          if [ ! -z "${{ secrets.TG_BOT_TOKEN }}" ]; then
-            export VERSION=$(git rev-list --count HEAD)
-            APK=$(find ./dist -name "*.apk")
-            pip3 install telethon
-            python3 $GITHUB_WORKSPACE/scripts/ksubot.py $APK
-          fi
+          export VERSION=$(git rev-list --count HEAD)
+          APK=$(find ./dist -name "*.apk")
+          pip3 install telethon
+          python3 $GITHUB_WORKSPACE/scripts/ksubot.py $APK
