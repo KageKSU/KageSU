@@ -1,5 +1,5 @@
-# SukiSU Ultra
-<img align='right' src='SukiSU-mini.svg' width='250px' alt="sukisu logo">
+# KageSU
+<img align='right' src='KageSU-mini.svg' width='250px' alt="KageSU logo">
 
 
 [English](../README.md) | [简体中文](../zh/README.md) | [日本語](../ja/README.md) | **Türkçe**
@@ -19,13 +19,13 @@
 Ana dalı kullanın (GKI olmayan cihazlar için desteklenmez)
 
 ```
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s main
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s main
 ```
 
 GKI olmayan cihazları destekleyen dalı kullanın
 
 ```
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s builtin
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s builtin
 ```
 
 ## susfs Nasıl Entegre Edilir
@@ -33,7 +33,7 @@ curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kern
 1. Doğrudan susfs-main veya susfs-\* dalını kullanın, susfs entegrasyonuna gerek yok
 
 ```
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s susfs-main
 ```
 
 ## Kanca Yöntemleri
@@ -57,7 +57,7 @@ curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kern
 - KernelPatch tabanlı olarak KSU ile çakışan işlevleri kaldırdık ve yalnızca KPM desteğini koruduk
 - APatch ile daha fazla uyumlu fonksiyon ekleyerek KPM işlevlerinin bütünlüğünü sağlayacağız
 
-Kaynak kodu: https://github.com/ShirkNeko/SukiSU_KernelPatch_patch
+Kaynak kodu: https://github.com/ShirkNeko/KageSU_KernelPatch_patch
 
 KPM şablonu: https://github.com/udochina/KPM-Build-Anywhere
 
@@ -84,7 +84,7 @@ KPM şablonu: https://github.com/udochina/KPM-Build-Anywhere
 
 ## Daha Fazla Bağlantı
 
-SukiSU ve susfs tabanlı derlenen projeler
+KageSU ve susfs tabanlı derlenen projeler
 
 - [GKI](https://github.com/ShirkNeko/GKI_KernelSU_SUSFS)
 - [OnePlus](https://github.com/ShirkNeko/Action_OnePlus_MKSU_SUSFS)

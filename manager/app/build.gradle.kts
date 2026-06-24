@@ -34,7 +34,7 @@ val baseCFlags = listOf(
 val baseCppFlags = baseCFlags + "-fno-rtti"
 
 android {
-    namespace = "com.sukisu.ultra"
+    namespace = "com.kageksu.kagesu"
     val isPrBuild = project.findProperty("IS_PR_BUILD")?.toString()?.toBoolean() ?: false
 
     buildTypes {
@@ -155,7 +155,7 @@ androidComponents {
 
 base {
     archivesName.set(
-        "SukiSU_${managerVersionName}_${managerVersionCode}"
+        "KageSU_${managerVersionName}_${managerVersionCode}"
     )
 }
 

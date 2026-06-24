@@ -1,8 +1,8 @@
 # Интеграция
 
-SukiSU можно интегрировать как в ядра _GKI_, так и в _non-GKI_. Выполнен бэкпорт до версии _4.14_.
+KageSU можно интегрировать как в ядра _GKI_, так и в _non-GKI_. Выполнен бэкпорт до версии _4.14_.
 
-<!-- It should be 3.4, but backslashxx's syscall manual hook cannot use in SukiSU-->
+<!-- It should be 3.4, but backslashxx's syscall manual hook cannot use in KageSU-->
 
 Кастомизация некоторых OEM-производителей приводит к тому, что до 50% кода ядра является сторонним (out-of-tree) и не относится к апстриму Linux или ACK (Android Common Kernel). Из-за этого фрагментация _non-GKI_ ядер очень высока, и универсального способа их сборки не существует. По этой причине мы не можем предоставить готовые образы загрузки (boot images) для _non-GKI_ ядер.
 
@@ -26,7 +26,7 @@ SukiSU можно интегрировать как в ядра _GKI_, так и
 
 3. **Tracepoint Hook:**
 
-   - Метод представлен в SukiSU начиная с коммита [49b01aad](https://github.com/SukiSU-Ultra/SukiSU-Ultra/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124).
+   - Метод представлен в KageSU начиная с коммита [49b01aad](https://github.com/KageKSU/KageSU/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124).
    - Требует: `CONFIG_KSU_TRACEPOINT_HOOK=y`
    - Инструкция: [`guide/tracepoint-hook.md`](tracepoint-hook.md)
 
@@ -51,10 +51,10 @@ KernelSU использует механизм kprobe для создания х
 
 Пожалуйста, обратитесь к этому документу: [https://github.com/~](https://github.com/tiann/KernelSU/blob/main/website/docs/guide/how-to-integrate-for-non-gki.md#integrate-with-kprobe). Несмотря на заголовок "для _non-GKI_", это применимо только к _GKI_.
 
-Команда для добавления SukiSU (писать в корневой папке исходников ядра):
+Команда для добавления KageSU (писать в корневой папке исходников ядра):
 
 ```sh
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s main
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s main
 ```
 
 ## Ручная модификация исходного кода ядра
@@ -70,28 +70,28 @@ curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kern
 
 <!-- It is backslashxx's syscall manual hook, but it cannot be used now. -->
 
-Команды для добавления SukiSU в дерево исходников вашего ядра:
+Команды для добавления KageSU в дерево исходников вашего ядра:
 
 ### GKI ядро
 
 ```sh
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s main
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s main
 ```
 
 ### Встроенное ядро (Built-in)
 
 ```sh
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s builtin
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s builtin
 ```
 
 ### GKI / Built-in ядро с поддержкой susfs (экспериментально)
 
 ```sh
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-{{branch}}
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s susfs-{{branch}}
 ```
 
 Доступные ветки (Branch):
 
 - `main` (susfs-main)
 - `test` (susfs-test)
-- конкретная версия (например: susfs-1.5.7, проверить доступные варианты можно в разделе [branches](https://github.com/SukiSU-Ultra/SukiSU-Ultra/branches))
+- конкретная версия (например: susfs-1.5.7, проверить доступные варианты можно в разделе [branches](https://github.com/KageKSU/KageSU/branches))

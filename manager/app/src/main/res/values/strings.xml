@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">SukiSU Ultra</string>
+    <string name="app_name" translatable="false">KageSU</string>
     <string name="home">Home</string>
     <string name="home_not_installed">Not installed</string>
     <string name="home_click_to_install">Click to install</string>
@@ -388,7 +388,7 @@
     <string name="kpm_args">Parameters</string>
     <string name="kpm_control">Execute</string>
     <string name="close_notice">Close</string>
-    <string name="kernel_module_notice">The following kernel module functions were developed by KernelPatch and modified to include the kernel module functions of SukiSU Ultra</string>
+    <string name="kernel_module_notice">The following kernel module functions were developed by KernelPatch and modified to include the kernel module functions of KageSU</string>
     <string name="kpm_control_success">Success</string>
     <string name="kpm_control_failed">Failed</string>
     <string name="not_supported">Unsupported</string>

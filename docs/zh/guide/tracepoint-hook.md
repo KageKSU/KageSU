@@ -2,7 +2,7 @@
 
 ## 介绍
 
-自 commit [49b01aad](https://github.com/SukiSU-Ultra/SukiSU-Ultra/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124) 起，SukiSU 引入了 Tracepoint Hook
+自 commit [49b01aad](https://github.com/KageKSU/KageSU/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124) 起，KageSU 引入了 Tracepoint Hook
 
 该 Hook 理论上相比于 Kprobes Hook，性能开销更小，但次于 Manual Hook / Syscall Hook
 

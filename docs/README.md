@@ -1,13 +1,13 @@
-# SukiSU Ultra
-<img align='right' src='SukiSU-mini.svg' width='220px' alt="sukisu logo">
+# KageSU
+<img align='right' src='KageSU-mini.svg' width='220px' alt="KageSU logo">
 
 
 **English** | [简体中文](./zh/README.md) | [日本語](./ja/README.md) | [Türkçe](./tr/README.md) | [Русский](./ru/README.md)
 
-A kernel-based root solution for Android devices, forked from [`tiann/KernelSU`](https://github.com/tiann/KernelSU), and added some interesting changes.
+A kernel-based root solution for Android devices, forked from [`KageKSU/KageSU`](https://github.com/KageKSU/KageSU), and added some interesting changes.
 
-[![Latest release](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/tiann/KernelSU/releases/latest)
-[![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/Sukiksu)
+[![Latest release](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/tiann/KernelSU/releases/latest)
+[![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/KageKSU)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-orange.svg?logo=gnu)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![GitHub License](https://img.shields.io/github/license/tiann/KernelSU?logo=gnu)](/LICENSE)
 
@@ -39,14 +39,14 @@ See [`guide/how-to-integrate.md`](guide/how-to-integrate.md)
 
 ## Translation
 
-If you need to submit a translation for the manager, please go to [Crowdin](https://crowdin.com/project/SukiSU-Ultra).
+If you need to submit a translation for the manager, please go to [Crowdin](https://crowdin.com/project/KageSU).
 
 ## KPM Support
 
 - Based on KernelPatch, we removed features redundant with KSU and retained only KPM support.
 - Work in Progress: Expanding APatch compatibility by integrating additional functions to ensure compatibility across different implementations.
 
-**Open-source repository**: [https://github.com/ShirkNeko/SukiSU_KernelPatch_patch](https://github.com/ShirkNeko/SukiSU_KernelPatch_patch)
+**Open-source repository**: [https://github.com/ShirkNeko/KageSU_KernelPatch_patch](https://github.com/ShirkNeko/KageSU_KernelPatch_patch)
 
 **KPM template**: [https://github.com/udochina/KPM-Build-Anywhere](https://github.com/udochina/KPM-Build-Anywhere)
 
@@ -63,18 +63,8 @@ If you need to submit a translation for the manager, please go to [Crowdin](http
 
 ## Sponsor
 
-- [ShirkNeko](https://afdian.com/a/shirkneko) (maintainer of SukiSU)
+- [ShirkNeko](https://afdian.com/a/shirkneko) (maintainer of KageSU)
 - [weishu](https://github.com/sponsors/tiann) (author of KernelSU)
-
-## ShirkNeko's sponsorship list
-
-- [Ktouls](https://github.com/Ktouls) Thanks so much for bringing me support.
-- [zaoqi123](https://github.com/zaoqi123) Thanks for the milk tea.
-- [wswzgdg](https://github.com/wswzgdg) Many thanks for supporting this project.
-- [yspbwx2010](https://github.com/yspbwx2010) Many thanks.
-- [DARKWWEE](https://github.com/DARKWWEE) 100 USDT
-- [Saksham Singla](https://github.com/TypeFlu) Provide and maintain the website
-- [OukaroMF](https://github.com/OukaroMF) Donation of website domain name
 
 ## License
 
@@ -84,6 +74,7 @@ If you need to submit a translation for the manager, please go to [Crowdin](http
 
 ## Credit
 
+- [KageSU](https://github.com/KageKSU/KageSU): upstream
 - [KernelSU](https://github.com/tiann/KernelSU): upstream
 - [MKSU](https://github.com/5ec1cff/KernelSU): Magic Mount
 - [RKSU](https://github.com/rsuntk/KernelsU): support non-GKI

@@ -1,6 +1,6 @@
 # Установка
 
-Ты можешь обратиться к разделу [KernelSU Documentation - Installation](https://kernelsu.org/guide/installation.html) за базовой информацией. Ниже приведены дополнительные инструкции, специфичные для SukiSU.
+Ты можешь обратиться к разделу [KernelSU Documentation - Installation](https://kernelsu.org/guide/installation.html) за базовой информацией. Ниже приведены дополнительные инструкции, специфичные для KageSU.
 
 ## Установка путем загрузки модуля ядра (LKM)
 
@@ -15,7 +15,7 @@
 Мы предоставляем готовые (pre-built) ядра для использования:
 
 - [ShirkNeko flavor kernel](https://github.com/ShirkNeko/GKI_KernelSU_SUSFS) (добавлен патч алгоритма сжатия ZRAM, susfs, KPM. Работает на многих устройствах).
-- [MiRinFork flavored kernel](https://github.com/MiRinFork/GKI_SukiSU_SUSFS) (добавлены susfs, KPM. Максимально близкое к стоковому GKI ядро, работает на большинстве устройств).
+- [MiRinFork flavored kernel](https://github.com/MiRinFork/GKI_KageSU_SUSFS) (добавлены susfs, KPM. Максимально близкое к стоковому GKI ядро, работает на большинстве устройств).
 
 Хотя на некоторых устройствах возможна установка через LKM, их нельзя перевести на обычное GKI ядро в лоб; в таких случаях ядро необходимо модифицировать и компилировать вручную. Примеры:
 

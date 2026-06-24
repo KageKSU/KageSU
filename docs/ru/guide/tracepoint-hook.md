@@ -2,7 +2,7 @@
 
 ## Введение
 
-Начиная с коммита [49b01aad](https://github.com/SukiSU-Ultra/SukiSU-Ultra/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124), в SukiSU добавлена поддержка Tracepoint Hook.
+Начиная с коммита [49b01aad](https://github.com/KageKSU/KageSU/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124), в KageSU добавлена поддержка Tracepoint Hook.
 
 Теоретически, этот метод имеет меньшие накладные расходы на производительность по сравнению с Kprobes Hook, но уступает Manual Hook / Syscall Hook.
 

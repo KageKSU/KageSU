@@ -1,12 +1,12 @@
-# SukiSU Ultra
-<img align='right' src='SukiSU-mini.svg' width='220px' alt="логотип sukisu">
+# KageSU
+<img align='right' src='KageSU-mini.svg' width='220px' alt="логотип KageSU">
 
 
 [English](../README.md) | [简体中文](./zh/README.md) | [日本語](./ja/README.md) | [Türkçe](./tr/README.md) | **Русский**
 
 Решение для получения root-прав на уровне ядра для устройств Android. Форк [`tiann/KernelSU`](https://github.com/tiann/KernelSU) с добавлением интересных изменений.
 
-[![Latest release](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?label=Release&logo=github)](https://github.com/tiann/KernelSU/releases/latest)
+[![Latest release](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/tiann/KernelSU/releases/latest)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/Sukiksu)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-orange.svg?logo=gnu)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![GitHub License](https://img.shields.io/github/license/tiann/KernelSU?logo=gnu)](/LICENSE)
@@ -39,14 +39,14 @@
 
 ## Перевод
 
-Если вы хотите предложить перевод для менеджера, пожалуйста, воспользуйтесь [Crowdin](https://crowdin.com/project/SukiSU-Ultra).
+Если вы хотите предложить перевод для менеджера, пожалуйста, воспользуйтесь [Crowdin](https://crowdin.com/project/KageSU).
 
 ## Поддержка KPM
 
 - На базе KernelPatch: мы удалили функции, дублирующие возможности KSU, оставив только поддержку KPM.
 - В разработке: расширение совместимости с APatch путем интеграции дополнительных функций для обеспечения работы в различных реализациях.
 
-**Open-source репозиторий**: [https://github.com/ShirkNeko/SukiSU_KernelPatch_patch](https://github.com/ShirkNeko/SukiSU_KernelPatch_patch)
+**Open-source репозиторий**: [https://github.com/ShirkNeko/KageSU_KernelPatch_patch](https://github.com/ShirkNeko/KageSU_KernelPatch_patch)
 
 **Шаблон KPM**: [https://github.com/udochina/KPM-Build-Anywhere](https://github.com/udochina/KPM-Build-Anywhere)
 
@@ -58,12 +58,12 @@
 
 ## Устранение неполадок
 
-1. Если устройство зависает при удалении менеджера (sukisu) 
+1. Если устройство зависает при удалении менеджера (KageSU) 
    Удалите com.sony.playmemories.mobile
 
 ## Спонсоры
 
-- [ShirkNeko](https://afdian.com/a/shirkneko) (поддерживает SukiSU)
+- [ShirkNeko](https://afdian.com/a/shirkneko) (поддерживает KageSU)
 - [weishu](https://github.com/sponsors/tiann) (автор KernelSU)
 
 ## Список спонсоров ShirkNeko

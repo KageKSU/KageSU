@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Since commit [49b01aad](https://github.com/SukiSU-Ultra/SukiSU-Ultra/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124), SukiSU has introduced Tracepoint Hook
+Since commit [49b01aad](https://github.com/KageKSU/KageSU/commit/49b01aad74bcca6dba5a8a2e053bb54b648eb124), KageSU has introduced Tracepoint Hook
 
 This Hook theoretically has lower performance overhead compared to Kprobes Hook, but is inferior to Manual Hook / Syscall Hook
 
