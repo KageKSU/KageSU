@@ -4,9 +4,11 @@
 
 **English** | [简体中文](./zh/README.md) | [日本語](./ja/README.md) | [Türkçe](./tr/README.md) | [Русский](./ru/README.md)
 
-A kernel-based root solution for Android devices, forked from [`KageKSU/KageSU`](https://github.com/KageKSU/KageSU), and added some interesting changes.
+A kernel-based root solution for Android devices.
 
-[![Latest release](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/tiann/KernelSU/releases/latest)
+> **KageSU** is a fork of [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra), which is itself based on [KernelSU](https://github.com/tiann/KernelSU). Thanks to both upstream projects.
+
+[![Latest release](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/KageKSU/KageSU/releases/latest)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/KageKSU)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-orange.svg?logo=gnu)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![GitHub License](https://img.shields.io/github/license/tiann/KernelSU?logo=gnu)](/LICENSE)
