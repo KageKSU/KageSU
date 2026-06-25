@@ -48,7 +48,6 @@ class SettingsViewModel(
             val showFullStatus = repo.showFullStatus
             val colorStyle = repo.colorStyle
             val colorSpec = repo.colorSpec
-            val contrastLevel = repo.contrastLevel
             val isLkmMode = repo.isLkmMode()
 
             // Async loading for natives/features
@@ -89,7 +88,6 @@ class SettingsViewModel(
                     showFullStatus = showFullStatus,
                     colorStyle = colorStyle,
                     colorSpec = colorSpec,
-                    contrastLevel = contrastLevel,
                     suCompatStatus = suCompatStatus,
                     suCompatMode = suCompatMode,
                     isSuEnabled = isSuEnabled,
@@ -197,11 +195,6 @@ class SettingsViewModel(
     fun setColorSpec(spec: String) {
         repo.colorSpec = spec
         _uiState.update { it.copy(colorSpec = spec) }
-    }
-
-    fun setContrastLevel(level: Int) {
-        repo.contrastLevel = level
-        _uiState.update { it.copy(contrastLevel = level) }
     }
 
     fun setEnablePredictiveBack(enabled: Boolean) {

@@ -28,7 +28,6 @@ fun MaterialKernelSUTheme(
     val dynamicColor = appSettings.keyColor == 0
     val colorStyle = appSettings.paletteStyle
     val colorSpec = appSettings.colorSpec
-    val contrastLevel = appSettings.contrastLevel
 
     val colorScheme = if (dynamicColor) {
         val baseScheme = if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
@@ -37,7 +36,6 @@ fun MaterialKernelSUTheme(
             isDark = darkTheme,
             isAmoled = amoledMode,
             style = colorStyle,
-            contrastLevel = contrastLevel,
             specVersion = colorSpec,
             primary = baseScheme.primary,
             secondary = baseScheme.secondary,
@@ -52,7 +50,6 @@ fun MaterialKernelSUTheme(
             isDark = darkTheme,
             isAmoled = amoledMode,
             style = colorStyle,
-            contrastLevel = contrastLevel,
             specVersion = colorSpec,
         )
     }
