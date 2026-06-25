@@ -162,6 +162,11 @@ class MainActivity : ComponentActivity() {
                 Density(systemDensity.density * uiState.pageScale, systemDensity.fontScale)
             }
 
+            // Decode the wallpaper once here, then share it with every page via
+            // LocalWallpaper so navigating between pages does not re-decode/flicker.
+            val wallpaperEnabled = uiState.backgroundEnabled && uiState.backgroundPath.isNotBlank()
+            val wallpaperBitmap = if (wallpaperEnabled) rememberBackgroundBitmap(uiState.backgroundPath) else null
+
             CompositionLocalProvider(
                 LocalNavigator provides navigator,
                 LocalDensity provides density,
@@ -171,8 +176,8 @@ class MainActivity : ComponentActivity() {
                 LocalEnableFloatingBottomBarBlur provides uiState.enableFloatingBottomBarBlur,
                 LocalUiMode provides uiMode,
                 LocalWallpaper provides WallpaperState(
-                    enabled = uiState.backgroundEnabled && uiState.backgroundPath.isNotBlank(),
-                    path = uiState.backgroundPath,
+                    enabled = wallpaperEnabled && wallpaperBitmap != null,
+                    bitmap = wallpaperBitmap,
                     dim = uiState.backgroundDim,
                     blurEnabled = uiState.backgroundBlurEnabled,
                     blurRadius = uiState.backgroundBlurRadius,
@@ -210,27 +215,27 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             entryProvider = entryProvider {
-                                entry<Route.Main> { mainScreenEntry() }
-                                entry<Route.About> { AboutScreen() }
-                                entry<Route.Sulog> { SulogScreen() }
-                                entry<Route.ColorPalette> { ColorPaletteScreen() }
-                                entry<Route.AppProfileTemplate> { AppProfileTemplateScreen() }
-                                entry<Route.TemplateEditor> { key -> TemplateEditorScreen(key.template, key.readOnly) }
-                                entry<Route.AppProfile> { key -> AppProfileScreen(key.uid) }
-                                entry<Route.ModuleRepo> { ModuleRepoScreen() }
-                                entry<Route.ModuleRepoDetail> { key -> ModuleRepoDetailScreen(key.module) }
-                                entry<Route.Install> { key -> InstallScreen(preselectedKernelUri = key.preselectedKernelUri) }
-                                entry<Route.Flash> { key -> FlashScreen(key.flashIt) }
-                                entry<Route.ExecuteModuleAction> { key -> ExecuteModuleActionScreen(key.moduleId, key.fromShortcut) }
-                                entry<Route.Home> { mainScreenEntry() }
-                                entry<Route.SuperUser> { mainScreenEntry() }
-                                entry<Route.Module> { mainScreenEntry() }
-                                entry<Route.Settings> { mainScreenEntry() }
-                                entry<Route.KernelFlash> { key -> KernelFlashScreen(key.kernelUri, key.selectedSlot, key.kpmPatchEnabled, key.kpmUndoPatch) }
-                                entry<Route.Kpm> { KpmScreen() }
-                                entry<Route.SuSFS> { SuSFSScreen() }
-                                entry<Route.Tool> { ToolsScreen() }
-                                entry<Route.UmountManager> { UmountManagerScreen() }
+                                entry<Route.Main> { WallpaperPage { mainScreenEntry() } }
+                                entry<Route.About> { WallpaperPage { AboutScreen() } }
+                                entry<Route.Sulog> { WallpaperPage { SulogScreen() } }
+                                entry<Route.ColorPalette> { WallpaperPage { ColorPaletteScreen() } }
+                                entry<Route.AppProfileTemplate> { WallpaperPage { AppProfileTemplateScreen() } }
+                                entry<Route.TemplateEditor> { key -> WallpaperPage { TemplateEditorScreen(key.template, key.readOnly) } }
+                                entry<Route.AppProfile> { key -> WallpaperPage { AppProfileScreen(key.uid) } }
+                                entry<Route.ModuleRepo> { WallpaperPage { ModuleRepoScreen() } }
+                                entry<Route.ModuleRepoDetail> { key -> WallpaperPage { ModuleRepoDetailScreen(key.module) } }
+                                entry<Route.Install> { key -> WallpaperPage { InstallScreen(preselectedKernelUri = key.preselectedKernelUri) } }
+                                entry<Route.Flash> { key -> WallpaperPage { FlashScreen(key.flashIt) } }
+                                entry<Route.ExecuteModuleAction> { key -> WallpaperPage { ExecuteModuleActionScreen(key.moduleId, key.fromShortcut) } }
+                                entry<Route.Home> { WallpaperPage { mainScreenEntry() } }
+                                entry<Route.SuperUser> { WallpaperPage { mainScreenEntry() } }
+                                entry<Route.Module> { WallpaperPage { mainScreenEntry() } }
+                                entry<Route.Settings> { WallpaperPage { mainScreenEntry() } }
+                                entry<Route.KernelFlash> { key -> WallpaperPage { KernelFlashScreen(key.kernelUri, key.selectedSlot, key.kpmPatchEnabled, key.kpmUndoPatch) } }
+                                entry<Route.Kpm> { WallpaperPage { KpmScreen() } }
+                                entry<Route.SuSFS> { WallpaperPage { SuSFSScreen() } }
+                                entry<Route.Tool> { WallpaperPage { ToolsScreen() } }
+                                entry<Route.UmountManager> { WallpaperPage { UmountManagerScreen() } }
                             }
                         )
                     }
@@ -260,9 +265,10 @@ class MainActivity : ComponentActivity() {
 
 val LocalMainPagerState = staticCompositionLocalOf<MainPagerState> { error("LocalMainPagerState not provided") }
 
+@androidx.compose.runtime.Immutable
 data class WallpaperState(
     val enabled: Boolean = false,
-    val path: String = "",
+    val bitmap: androidx.compose.ui.graphics.ImageBitmap? = null,
     val dim: Float = 0.4f,
     val blurEnabled: Boolean = false,
     val blurRadius: Float = 16f,
@@ -270,8 +276,40 @@ data class WallpaperState(
 
 val LocalWallpaper = staticCompositionLocalOf { WallpaperState() }
 
-/** Re-themes the main screen with a transparent surface/background so the
- *  wallpaper drawn behind it shows through, while keeping typography/shapes. */
+/** Wraps a navigation entry so the user wallpaper is drawn behind it with a
+ *  transparent surface on top. Applied per-entry so each page is self-contained
+ *  (opaque wallpaper background), keeping navigation transitions clean. */
+@Composable
+fun WallpaperPage(content: @Composable () -> Unit) {
+    val wallpaper = LocalWallpaper.current
+    val bitmap = wallpaper.bitmap
+    if (!wallpaper.enabled || bitmap == null) {
+        content()
+        return
+    }
+    val uiMode = LocalUiMode.current
+    val realSurface = when (uiMode) {
+        UiMode.Material -> MaterialTheme.colorScheme.surface
+        UiMode.Miuix -> MiuixTheme.colorScheme.surface
+    }
+    Box(modifier = Modifier.fillMaxSize()) {
+        WallpaperBackground(
+            bitmap = bitmap,
+            dim = wallpaper.dim,
+            blurEnabled = wallpaper.blurEnabled,
+            blurRadius = wallpaper.blurRadius,
+            scrimColor = realSurface,
+        )
+        CompositionLocalProvider(LocalContentSurfaceColor provides realSurface) {
+            WallpaperSurfaceTheme(uiMode) {
+                content()
+            }
+        }
+    }
+}
+
+/** Re-themes a page with a transparent surface/background so the wallpaper drawn
+ *  behind it shows through, while keeping typography/shapes. */
 @Composable
 private fun WallpaperSurfaceTheme(uiMode: UiMode, content: @Composable () -> Unit) {
     when (uiMode) {
@@ -315,10 +353,13 @@ fun MainScreen(
         UiMode.Material -> MaterialTheme.colorScheme.surface // Blur is not used in Material, this is just a placeholder
         UiMode.Miuix -> MiuixTheme.colorScheme.surface
     }
+    // Under a wallpaper the surface is transparent; use the real opaque surface
+    // as the blur backdrop base so the floating bar never renders black.
+    val realSurface = LocalContentSurfaceColor.current.takeOrElse { surfaceColor }
     val blurBackdrop = rememberBlurBackdrop(enableBlur)
 
     val backdrop = rememberLayerBackdrop {
-        drawRect(surfaceColor)
+        drawRect(realSurface)
         drawContent()
     }
 
@@ -337,8 +378,6 @@ fun MainScreen(
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     val useNavigationRail = isLandscape && !(uiMode == UiMode.Miuix && enableFloatingBottomBar)
 
-    val wallpaper = LocalWallpaper.current
-    val mainContent = @Composable {
     CompositionLocalProvider(
         LocalMainPagerState provides mainPagerState
     ) {
@@ -423,26 +462,6 @@ fun MainScreen(
             }
         }
     }
-    }
-
-    if (wallpaper.enabled) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            WallpaperBackground(
-                path = wallpaper.path,
-                dim = wallpaper.dim,
-                blurEnabled = wallpaper.blurEnabled,
-                blurRadius = wallpaper.blurRadius,
-                scrimColor = surfaceColor,
-            )
-            CompositionLocalProvider(LocalContentSurfaceColor provides surfaceColor) {
-                WallpaperSurfaceTheme(uiMode) {
-                    mainContent()
-                }
-            }
-        }
-    } else {
-        mainContent()
-    }
 }
 
 @Composable
@@ -469,13 +488,12 @@ private fun MainScreenBackHandler(
 
 @Composable
 private fun WallpaperBackground(
-    path: String,
+    bitmap: androidx.compose.ui.graphics.ImageBitmap,
     dim: Float,
     blurEnabled: Boolean,
     blurRadius: Float,
     scrimColor: androidx.compose.ui.graphics.Color,
 ) {
-    val bitmap = rememberBackgroundBitmap(path) ?: return
     val base = scrimColor.takeOrElse { androidx.compose.ui.graphics.Color.Black }
     val scrim = base.copy(alpha = dim.coerceIn(0f, 1f))
     val imageModifier = Modifier

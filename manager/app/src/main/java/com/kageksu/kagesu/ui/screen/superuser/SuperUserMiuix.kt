@@ -75,6 +75,7 @@ import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.theme.isInDarkTheme
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.ownerNameForUid
+import com.kageksu.kagesu.ui.LocalWallpaper
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import top.yukonga.miuix.kmp.basic.BasicComponent
 import top.yukonga.miuix.kmp.basic.Card
@@ -118,12 +119,16 @@ fun SuperUserPagerMiuix(
     }
 
     val backdrop = rememberBlurBackdrop(enableBlur)
-    val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val wallpaperActive = LocalWallpaper.current.enabled
+    val scrolled by remember { derivedStateOf { scrollBehavior.state.collapsedFraction > 0.01f } }
+    // With a wallpaper, keep the bar transparent at the top so the wallpaper
+    // shows through, and only blur once the user scrolls down.
+    val blurActive = backdrop != null && (!wallpaperActive || scrolled)
+    val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
 
     Scaffold(
         topBar = {
-            BlurredBar(backdrop) {
+            BlurredBar(backdrop, blurActive = blurActive) {
                 searchStatus.TopAppBarAnim(backgroundColor = barColor) {
                     TopAppBar(
                         color = barColor,

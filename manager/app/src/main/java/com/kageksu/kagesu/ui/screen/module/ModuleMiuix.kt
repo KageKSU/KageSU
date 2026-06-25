@@ -104,6 +104,7 @@ import kotlinx.coroutines.launch
 import com.kageksu.kagesu.R
 import com.kageksu.kagesu.data.model.Module
 import com.kageksu.kagesu.data.model.ModuleUpdateInfo
+import com.kageksu.kagesu.ui.LocalWallpaper
 import com.kageksu.kagesu.ui.component.ListPopupDefaults
 import com.kageksu.kagesu.ui.component.ObserveAsEvents
 import com.kageksu.kagesu.ui.component.ScrollToTopOnChange
@@ -281,12 +282,16 @@ fun ModulePagerMiuix(
     )
 
     val backdrop = rememberBlurBackdrop(enableBlur)
-    val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val wallpaperActive = LocalWallpaper.current.enabled
+    val scrolled by remember { derivedStateOf { scrollBehavior.state.collapsedFraction > 0.01f } }
+    // With a wallpaper, keep the bar transparent at the top so the wallpaper
+    // shows through, and only blur once the user scrolls down.
+    val blurActive = backdrop != null && (!wallpaperActive || scrolled)
+    val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
 
     Scaffold(
         topBar = {
-            BlurredBar(backdrop) {
+            BlurredBar(backdrop, blurActive = blurActive) {
                 searchStatus.TopAppBarAnim(backgroundColor = barColor) {
                     TopAppBar(
                         color = barColor,

@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material.icons.rounded.ErrorOutline
@@ -49,6 +50,7 @@ import com.kageksu.kagesu.R
 import com.kageksu.kagesu.ui.component.dialog.rememberConfirmDialog
 import com.kageksu.kagesu.ui.component.miuix.WarningCard
 import com.kageksu.kagesu.ui.component.rebootlistpopup.RebootListPopupMiuix
+import com.kageksu.kagesu.ui.LocalWallpaper
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.theme.isInDarkTheme
 import com.kageksu.kagesu.ui.util.BlurredBar
@@ -83,16 +85,21 @@ fun HomePagerMiuix(
     bottomInnerPadding: Dp,
 ) {
     val scrollBehavior = MiuixScrollBehavior()
+    val listState = rememberLazyListState()
     val enableBlur = LocalEnableBlur.current
     val backdrop = rememberBlurBackdrop(enableBlur)
-    val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val wallpaperActive = LocalWallpaper.current.enabled
+    // With a wallpaper, keep the bar transparent at the top of the list (so the
+    // wallpaper shows through) and only blur once the user scrolls down.
+    val blurActive = backdrop != null && (!wallpaperActive || listState.canScrollBackward)
+    val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
     Scaffold(
         topBar = {
             TopBar(
                 scrollBehavior = scrollBehavior,
                 backdrop = backdrop,
                 barColor = barColor,
+                blurActive = blurActive,
             )
         },
         popupHost = { },
@@ -100,6 +107,7 @@ fun HomePagerMiuix(
     ) { innerPadding ->
         Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
             LazyColumn(
+                state = listState,
                 modifier = Modifier
                     .fillMaxHeight()
                     .scrollEndHaptic()
@@ -217,8 +225,9 @@ private fun TopBar(
     scrollBehavior: ScrollBehavior,
     backdrop: LayerBackdrop?,
     barColor: Color,
+    blurActive: Boolean,
 ) {
-    BlurredBar(backdrop) {
+    BlurredBar(backdrop, blurActive = blurActive) {
         TopAppBar(
             color = barColor,
             title = stringResource(R.string.app_name),
