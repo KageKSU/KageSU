@@ -8,6 +8,7 @@ static struct apk_sign_key {
     const char *sha256;
 } apk_sign_keys[] = {
     { 0x35c, "947ae944f3de4ed4c21a7e4f7953ecf351bfa2b36239da37a34111ad29993eef" }, // SukiSU
+    { 0x2f0, "794f0b612b7732134078a2cf370499a8eab22b1bfb72994f2fa33edc7a91e5ea" }, // KageSU
     { 0x396, "f415f4ed9435427e1fdf7f1fccd4dbc07b3d6b8751e4dbcec6f19671f427870b" }, // RKSU
     { 0x033b, "c371061b19d8c7d7d6133c6a9bafe198fa944e50c1b31c9d8daa8d7f1fc2d2d6" }, // KSU
     { 0x381, "52d52d8c8bfbe53dc2b6ff1c613184e2c03013e090fe8905d8e3d5dc2658c2e4" }, // WKSU

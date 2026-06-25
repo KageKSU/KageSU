@@ -23,11 +23,11 @@ config KSU_DEBUG
 	  Enable KernelSU debug mode.
 
 config KPM
-    bool "Enable SukiSU KPM"
+    bool "Enable KageSU KPM"
     depends on KSU && 64BIT
     default n
     help
-      Enabling this option will activate the KPM feature of SukiSU.
+      Enabling this option will activate the KPM feature of KageSU.
       This option is suitable for scenarios where you need to force KPM to be enabled.
       but it may affect system stability.
     select KALLSYMS

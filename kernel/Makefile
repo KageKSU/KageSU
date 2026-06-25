@@ -19,8 +19,8 @@ endif
 
 MDIR    := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-REPO_OWNER  := SukiSU-Ultra
-REPO_NAME   := SukiSU-Ultra
+REPO_OWNER  := KageKSU
+REPO_NAME   := KageSU
 REPO_BRANCH := main
 
 VERSION_BASE    := 40000
