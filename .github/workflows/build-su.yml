@@ -1,7 +1,7 @@
 name: Build SU
 on:
   push:
-    branches: [ "main", "ci" ]
+    branches: [ "main", "ci", "rebrand-kagesu" ]
     paths:
       - '.github/workflows/build-su.yml'
       - 'userspace/su/**'
