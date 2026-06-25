@@ -124,6 +124,17 @@ ifndef KSU_EXPECTED_HASH
 KSU_EXPECTED_HASH := 947ae944f3de4ed4c21a7e4f7953ecf351bfa2b36239da37a34111ad29993eef
 endif
 
+# Secondary accepted manager signature: the KageSU release certificate.
+# The primary hash above (SukiSU) is kept so SukiSU managers still work on
+# KageSU kernels; this second hash additionally accepts the KageSU manager.
+ifndef KSU_EXPECTED_SIZE2
+KSU_EXPECTED_SIZE2 := 0x02f0
+endif
+
+ifndef KSU_EXPECTED_HASH2
+KSU_EXPECTED_HASH2 := 794f0b612b7732134078a2cf370499a8eab22b1bfb72994f2fa33edc7a91e5ea
+endif
+
 ifdef KSU_MANAGER_PACKAGE
 ccflags-y += -DKSU_MANAGER_PACKAGE=\"$(KSU_MANAGER_PACKAGE)\"
 $(info -- KernelSU Manager package name: $(KSU_MANAGER_PACKAGE))
