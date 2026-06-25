@@ -308,49 +308,31 @@ fun WallpaperPage(content: @Composable () -> Unit) {
     }
 }
 
-/** Re-themes a page with a transparent surface/background so the wallpaper drawn
- *  behind it shows through, while keeping typography/shapes. */
-// Opacity of surfaces (cards, bars, sheets) over a wallpaper. Kept fairly high
-// so text stays readable; the page background itself is fully transparent so the
-// wallpaper shows through clearly between surfaces.
-private const val WALLPAPER_SURFACE_ALPHA = 0.65f
-
+/** Re-themes a page with a transparent surface so the wallpaper drawn behind it
+ *  shows through, while keeping typography/shapes. */
+// Over a wallpaper only `surface` is made transparent so page bodies and top bars
+// (Scaffold/TopAppBar use `surface`) reveal the wallpaper. `background` and every
+// `surfaceContainer*` stay opaque so cards, the navigation bar, dialogs and bottom
+// sheets remain solid/readable — Miuix dialogs (OverlayDialog) use `background`.
 @Composable
 private fun WallpaperSurfaceTheme(uiMode: UiMode, content: @Composable () -> Unit) {
     val transparent = androidx.compose.ui.graphics.Color.Transparent
     when (uiMode) {
-        UiMode.Material -> {
-            val c = MaterialTheme.colorScheme
-            MaterialTheme(
-                colorScheme = c.copy(
-                    background = transparent,
-                    surface = c.surface.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainerLowest = c.surfaceContainerLowest.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainerLow = c.surfaceContainerLow.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainer = c.surfaceContainer.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainerHigh = c.surfaceContainerHigh.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainerHighest = c.surfaceContainerHighest.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                ),
-                typography = MaterialTheme.typography,
-                shapes = MaterialTheme.shapes,
-                content = content,
-            )
-        }
+        UiMode.Material -> MaterialTheme(
+            colorScheme = MaterialTheme.colorScheme.copy(
+                surface = transparent,
+            ),
+            typography = MaterialTheme.typography,
+            shapes = MaterialTheme.shapes,
+            content = content,
+        )
 
-        UiMode.Miuix -> {
-            val c = MiuixTheme.colorScheme
-            MiuixTheme(
-                colors = c.copy(
-                    background = transparent,
-                    surface = c.surface.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceVariant = c.surfaceVariant.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainer = c.surfaceContainer.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainerHigh = c.surfaceContainerHigh.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                    surfaceContainerHighest = c.surfaceContainerHighest.copy(alpha = WALLPAPER_SURFACE_ALPHA),
-                ),
-                content = content,
-            )
-        }
+        UiMode.Miuix -> MiuixTheme(
+            colors = MiuixTheme.colorScheme.copy(
+                surface = transparent,
+            ),
+            content = content,
+        )
     }
 }
 
