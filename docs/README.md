@@ -74,7 +74,7 @@ If you need to submit a translation for the manager, please go to [Crowdin](http
 
 ## Credit
 
-- [KageSU](https://github.com/KageKSU/KageSU): upstream
+- [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): upstream
 - [KernelSU](https://github.com/tiann/KernelSU): upstream
 - [MKSU](https://github.com/5ec1cff/KernelSU): Magic Mount
 - [RKSU](https://github.com/rsuntk/KernelsU): support non-GKI
