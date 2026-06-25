@@ -220,6 +220,14 @@
     <string name="settings_page_scale_summary">Adjust the global display scale</string>
     <string name="settings_color_spec">Color Spec</string>
     <string name="settings_color_style">Color Style</string>
+    <string name="settings_background">Background image</string>
+    <string name="settings_background_summary">Show a custom image behind the interface</string>
+    <string name="settings_background_pick">Choose image</string>
+    <string name="settings_background_clear">Remove image</string>
+    <string name="settings_background_dim">Dim</string>
+    <string name="settings_background_blur">Blur background</string>
+    <string name="settings_background_blur_summary">Blur the background image (Android 12+)</string>
+    <string name="settings_background_blur_level">Blur level</string>
     <string name="color_blue">Blue</string>
     <string name="color_red">Red</string>
     <string name="color_green">Green</string>

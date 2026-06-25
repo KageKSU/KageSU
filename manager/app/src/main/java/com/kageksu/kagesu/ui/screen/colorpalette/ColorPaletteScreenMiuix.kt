@@ -2,6 +2,9 @@ package com.kageksu.kagesu.ui.screen.colorpalette
 
 import android.annotation.SuppressLint
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,7 +37,10 @@ import androidx.compose.material.icons.rounded.AspectRatio
 import androidx.compose.material.icons.rounded.BlurOn
 import androidx.compose.material.icons.rounded.CallToAction
 import androidx.compose.material.icons.rounded.Colorize
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.DesignServices
+import androidx.compose.material.icons.rounded.Image
+import androidx.compose.material.icons.rounded.Opacity
 import androidx.compose.material.icons.rounded.Style
 import androidx.compose.material.icons.rounded.Wallpaper
 import androidx.compose.material.icons.rounded.Fingerprint
@@ -334,6 +340,8 @@ fun ColorPaletteScreenMiuix(
                         }
                     }
 
+                    BackgroundSettingsMiuix(uiState = uiState, actions = actions)
+
                     Card(
                         modifier = Modifier
                             .padding(top = 12.dp)
@@ -433,6 +441,148 @@ fun ColorPaletteScreenMiuix(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun BackgroundSettingsMiuix(
+    uiState: com.kageksu.kagesu.ui.screen.settings.SettingsUiState,
+    actions: ColorPaletteScreenActions,
+) {
+    val pickMedia = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) actions.onPickBackgroundImage(uri)
+    }
+    val launchPicker = {
+        pickMedia.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
+    }
+    val hasImage = uiState.backgroundPath.isNotBlank()
+
+    Card(
+        modifier = Modifier
+            .padding(top = 12.dp)
+            .fillMaxWidth(),
+    ) {
+        SwitchPreference(
+            title = stringResource(id = R.string.settings_background),
+            summary = stringResource(id = R.string.settings_background_summary),
+            startAction = {
+                Icon(
+                    Icons.Rounded.Wallpaper,
+                    modifier = Modifier.padding(end = 6.dp),
+                    contentDescription = stringResource(id = R.string.settings_background),
+                    tint = colorScheme.onBackground
+                )
+            },
+            checked = uiState.backgroundEnabled,
+            onCheckedChange = { checked ->
+                if (checked && !hasImage) launchPicker() else actions.onSetBackgroundEnabled(checked)
+            }
+        )
+
+        AnimatedVisibility(visible = uiState.backgroundEnabled) {
+            Column {
+                ArrowPreference(
+                    title = stringResource(id = R.string.settings_background_pick),
+                    startAction = {
+                        Icon(
+                            Icons.Rounded.Image,
+                            modifier = Modifier.padding(end = 6.dp),
+                            contentDescription = stringResource(id = R.string.settings_background_pick),
+                            tint = colorScheme.onBackground
+                        )
+                    },
+                    onClick = launchPicker,
+                )
+
+                AnimatedVisibility(visible = hasImage) {
+                    ArrowPreference(
+                        title = stringResource(id = R.string.settings_background_clear),
+                        startAction = {
+                            Icon(
+                                Icons.Rounded.Delete,
+                                modifier = Modifier.padding(end = 6.dp),
+                                contentDescription = stringResource(id = R.string.settings_background_clear),
+                                tint = colorScheme.onBackground
+                            )
+                        },
+                        onClick = actions.onClearBackgroundImage,
+                    )
+                }
+
+                MiuixLabeledSlider(
+                    label = stringResource(id = R.string.settings_background_dim),
+                    icon = Icons.Rounded.Opacity,
+                    value = uiState.backgroundDim,
+                    valueRange = 0f..0.9f,
+                    valueLabel = "${(uiState.backgroundDim * 100).toInt()}%",
+                    onValueChangeFinished = actions.onSetBackgroundDim,
+                )
+
+                SwitchPreference(
+                    title = stringResource(id = R.string.settings_background_blur),
+                    summary = stringResource(id = R.string.settings_background_blur_summary),
+                    startAction = {
+                        Icon(
+                            Icons.Rounded.BlurOn,
+                            modifier = Modifier.padding(end = 6.dp),
+                            contentDescription = stringResource(id = R.string.settings_background_blur),
+                            tint = colorScheme.onBackground
+                        )
+                    },
+                    checked = uiState.backgroundBlurEnabled,
+                    onCheckedChange = actions.onSetBackgroundBlurEnabled,
+                )
+
+                AnimatedVisibility(visible = uiState.backgroundBlurEnabled) {
+                    MiuixLabeledSlider(
+                        label = stringResource(id = R.string.settings_background_blur_level),
+                        icon = Icons.Rounded.BlurOn,
+                        value = uiState.backgroundBlurRadius,
+                        valueRange = 0f..40f,
+                        valueLabel = uiState.backgroundBlurRadius.toInt().toString(),
+                        onValueChangeFinished = actions.onSetBackgroundBlurRadius,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MiuixLabeledSlider(
+    label: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    value: Float,
+    valueRange: ClosedFloatingPointRange<Float>,
+    valueLabel: String,
+    onValueChangeFinished: (Float) -> Unit,
+) {
+    var sliderValue by remember(value) { mutableFloatStateOf(value) }
+    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                icon,
+                modifier = Modifier.padding(end = 6.dp),
+                contentDescription = label,
+                tint = colorScheme.onBackground
+            )
+            Text(text = label, color = colorScheme.onBackground, modifier = Modifier.weight(1f))
+            Text(text = valueLabel, color = colorScheme.onSurfaceVariantActions)
+        }
+        Spacer(Modifier.height(8.dp))
+        Slider(
+            value = sliderValue,
+            onValueChange = { sliderValue = it },
+            onValueChangeFinished = { onValueChangeFinished(sliderValue) },
+            valueRange = valueRange,
+        )
     }
 }
 

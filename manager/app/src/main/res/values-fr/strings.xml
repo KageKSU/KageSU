@@ -215,6 +215,14 @@
     <string name="settings_page_scale_summary">Ajustez l\'échelle d\'affichage globale.</string>
     <string name="settings_color_spec">Spécification couleurs</string>
     <string name="settings_color_style">Style de couleurs</string>
+    <string name="settings_background">Image d\'arrière-plan</string>
+    <string name="settings_background_summary">Afficher une image personnalisée derrière l\'interface</string>
+    <string name="settings_background_pick">Choisir une image</string>
+    <string name="settings_background_clear">Supprimer l\'image</string>
+    <string name="settings_background_dim">Assombrissement</string>
+    <string name="settings_background_blur">Flouter l\'arrière-plan</string>
+    <string name="settings_background_blur_summary">Flouter l\'image d\'arrière-plan (Android 12+)</string>
+    <string name="settings_background_blur_level">Niveau de flou</string>
     <string name="settings_enable_blur">Flou</string>
     <string name="settings_enable_blur_summary">Activez l\'effet de flou pour les barres supérieures et inférieures</string>
     <string name="settings_floating_bottom_bar">Barre inférieure flottante</string>

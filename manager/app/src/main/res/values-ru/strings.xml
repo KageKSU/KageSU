@@ -207,6 +207,14 @@
     <string name="settings_page_scale_summary">Задайте глобальный масштаб дисплея</string>
     <string name="settings_color_spec">Спецификация цвета</string>
     <string name="settings_color_style">Цветовой стиль</string>
+    <string name="settings_background">Фоновое изображение</string>
+    <string name="settings_background_summary">Показать своё изображение за интерфейсом</string>
+    <string name="settings_background_pick">Выбрать изображение</string>
+    <string name="settings_background_clear">Удалить изображение</string>
+    <string name="settings_background_dim">Затемнение</string>
+    <string name="settings_background_blur">Размытие фона</string>
+    <string name="settings_background_blur_summary">Размыть фоновое изображение (Android 12+)</string>
+    <string name="settings_background_blur_level">Уровень размытия</string>
     <string name="color_blue">Синий</string>
     <string name="color_red">Красный</string>
     <string name="color_green">Зеленый</string>

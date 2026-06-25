@@ -179,6 +179,14 @@
     <string name="settings_page_scale_summary">Sesuaikan skala tampilan.</string>
     <string name="settings_color_spec">Spesifikasi Warna</string>
     <string name="settings_color_style">Gaya Warna</string>
+    <string name="settings_background">Gambar latar belakang</string>
+    <string name="settings_background_summary">Tampilkan gambar khusus di belakang antarmuka</string>
+    <string name="settings_background_pick">Pilih gambar</string>
+    <string name="settings_background_clear">Hapus gambar</string>
+    <string name="settings_background_dim">Redup</string>
+    <string name="settings_background_blur">Buramkan latar belakang</string>
+    <string name="settings_background_blur_summary">Buramkan gambar latar belakang (Android 12+)</string>
+    <string name="settings_background_blur_level">Tingkat buram</string>
     <string name="color_blue">Biru</string>
     <string name="color_red">Merah</string>
     <string name="color_green">Hijau</string>

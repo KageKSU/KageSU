@@ -12,8 +12,10 @@ import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -39,11 +41,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -91,6 +95,7 @@ import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBar
 import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBarBlur
 import com.kageksu.kagesu.ui.util.install
+import com.kageksu.kagesu.ui.util.rememberBackgroundBitmap
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.util.rememberContentReady
 import com.kageksu.kagesu.ui.util.rootAvailable
@@ -221,9 +226,20 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    when (uiMode) {
-                        UiMode.Material -> androidx.compose.material3.Scaffold { navDisplay() }
-                        UiMode.Miuix -> Scaffold { navDisplay() }
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        if (uiState.backgroundEnabled && uiState.backgroundPath.isNotBlank()) {
+                            WallpaperBackground(
+                                path = uiState.backgroundPath,
+                                dim = uiState.backgroundDim,
+                                blurEnabled = uiState.backgroundBlurEnabled,
+                                blurRadius = uiState.backgroundBlurRadius,
+                                darkMode = darkMode,
+                            )
+                        }
+                        when (uiMode) {
+                            UiMode.Material -> androidx.compose.material3.Scaffold { navDisplay() }
+                            UiMode.Miuix -> Scaffold { navDisplay() }
+                        }
                     }
                 }
             }
@@ -394,6 +410,39 @@ private fun MainScreenBackHandler(
             mainState.animateToPage(0)
         }
     )
+}
+
+@Composable
+private fun WallpaperBackground(
+    path: String,
+    dim: Float,
+    blurEnabled: Boolean,
+    blurRadius: Float,
+    darkMode: Boolean,
+) {
+    val bitmap = rememberBackgroundBitmap(path) ?: return
+    val scrim = (if (darkMode) androidx.compose.ui.graphics.Color.Black
+    else androidx.compose.ui.graphics.Color.White).copy(alpha = dim.coerceIn(0f, 1f))
+    val imageModifier = Modifier
+        .fillMaxSize()
+        .then(
+            if (blurEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && blurRadius > 0f)
+                Modifier.blur(blurRadius.dp)
+            else Modifier
+        )
+    Box(modifier = Modifier.fillMaxSize()) {
+        androidx.compose.foundation.Image(
+            bitmap = bitmap,
+            contentDescription = null,
+            contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+            modifier = imageModifier,
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(scrim)
+        )
+    }
 }
 
 @Composable

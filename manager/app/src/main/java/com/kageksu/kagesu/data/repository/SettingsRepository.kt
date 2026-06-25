@@ -10,6 +10,11 @@ interface SettingsRepository {
     var keyColor: Int
     var colorStyle: String
     var colorSpec: String
+    var backgroundEnabled: Boolean
+    var backgroundPath: String
+    var backgroundDim: Float
+    var backgroundBlurEnabled: Boolean
+    var backgroundBlurRadius: Float
     var enablePredictiveBack: Boolean
     var enableBlur: Boolean
     var enableFloatingBottomBar: Boolean

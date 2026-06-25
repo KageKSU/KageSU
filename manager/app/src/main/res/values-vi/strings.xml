@@ -202,6 +202,14 @@
     <string name="settings_page_scale_summary">Điều chỉnh tỷ lệ DPI hiển thị.</string>
     <string name="settings_color_spec">Thông số màu sắc</string>
     <string name="settings_color_style">Kiểu màu sắc</string>
+    <string name="settings_background">Ảnh nền</string>
+    <string name="settings_background_summary">Hiển thị ảnh tùy chỉnh phía sau giao diện</string>
+    <string name="settings_background_pick">Chọn ảnh</string>
+    <string name="settings_background_clear">Xóa ảnh</string>
+    <string name="settings_background_dim">Làm tối</string>
+    <string name="settings_background_blur">Làm mờ nền</string>
+    <string name="settings_background_blur_summary">Làm mờ ảnh nền (Android 12+)</string>
+    <string name="settings_background_blur_level">Mức độ mờ</string>
     <string name="color_blue">Xanh dương</string>
     <string name="color_red">Đỏ</string>
     <string name="color_green">Xanh lục</string>

@@ -2,6 +2,9 @@ package com.kageksu.kagesu.ui.screen.colorpalette
 
 import android.annotation.SuppressLint
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
@@ -48,9 +51,14 @@ import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.material.icons.filled.Brightness7
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.AspectRatio
+import androidx.compose.material.icons.rounded.BlurOn
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.DesignServices
+import androidx.compose.material.icons.rounded.Image
+import androidx.compose.material.icons.rounded.Opacity
 import androidx.compose.material.icons.rounded.Style
+import androidx.compose.material.icons.rounded.Wallpaper
 import androidx.compose.material.icons.rounded.Fingerprint
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.Icon
@@ -93,6 +101,7 @@ import com.materialkolor.rememberDynamicColorScheme
 import com.kageksu.kagesu.R
 import com.kageksu.kagesu.ui.component.material.SegmentedColumn
 import com.kageksu.kagesu.ui.component.material.SegmentedDropdownItem
+import com.kageksu.kagesu.ui.component.material.SegmentedListItem
 import com.kageksu.kagesu.ui.component.material.SegmentedSwitchItem
 import com.kageksu.kagesu.ui.component.material.TonalCard
 import com.kageksu.kagesu.ui.theme.ColorMode
@@ -267,6 +276,8 @@ fun ColorPaletteScreenMaterial(
                     )
                 )
 
+                BackgroundSettingsMaterial(uiState = uiState, actions = actions)
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                     SegmentedColumn(
                         modifier = Modifier.padding(top = 4.dp),
@@ -349,6 +360,147 @@ fun ColorPaletteScreenMaterial(
             }
 
             Spacer(modifier = Modifier.height(16.dp + navBars.calculateBottomPadding() + captionBar.calculateBottomPadding()))
+        }
+    }
+}
+
+@Composable
+private fun BackgroundSettingsMaterial(
+    uiState: com.kageksu.kagesu.ui.screen.settings.SettingsUiState,
+    actions: ColorPaletteScreenActions,
+) {
+    val pickMedia = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) actions.onPickBackgroundImage(uri)
+    }
+    val launchPicker = {
+        pickMedia.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
+    }
+    val hasImage = uiState.backgroundPath.isNotBlank()
+
+    Column(
+        modifier = Modifier.padding(top = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        SegmentedColumn(
+            content = listOf(
+                {
+                    SegmentedSwitchItem(
+                        icon = Icons.Rounded.Wallpaper,
+                        title = stringResource(R.string.settings_background),
+                        summary = stringResource(R.string.settings_background_summary),
+                        checked = uiState.backgroundEnabled,
+                        onCheckedChange = { checked ->
+                            if (checked && !hasImage) launchPicker()
+                            else actions.onSetBackgroundEnabled(checked)
+                        }
+                    )
+                }
+            )
+        )
+
+        AnimatedVisibility(visible = uiState.backgroundEnabled) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                SegmentedColumn(
+                    content = listOf(
+                        {
+                            SegmentedListItem(
+                                onClick = launchPicker,
+                                leadingContent = { Icon(Icons.Rounded.Image, null) },
+                                headlineContent = { Text(stringResource(R.string.settings_background_pick)) },
+                                trailingContent = if (hasImage) {
+                                    {
+                                        IconButton(onClick = actions.onClearBackgroundImage) {
+                                            Icon(Icons.Rounded.Delete, stringResource(R.string.settings_background_clear))
+                                        }
+                                    }
+                                } else null
+                            )
+                        }
+                    )
+                )
+
+                BackgroundSliderCard(
+                    icon = Icons.Rounded.Opacity,
+                    title = stringResource(R.string.settings_background_dim),
+                    value = uiState.backgroundDim,
+                    valueRange = 0f..0.9f,
+                    valueLabel = "${(uiState.backgroundDim * 100).toInt()}%",
+                    onValueChangeFinished = actions.onSetBackgroundDim,
+                )
+
+                SegmentedColumn(
+                    content = listOf(
+                        {
+                            SegmentedSwitchItem(
+                                icon = Icons.Rounded.BlurOn,
+                                title = stringResource(R.string.settings_background_blur),
+                                summary = stringResource(R.string.settings_background_blur_summary),
+                                checked = uiState.backgroundBlurEnabled,
+                                onCheckedChange = actions.onSetBackgroundBlurEnabled
+                            )
+                        }
+                    )
+                )
+
+                AnimatedVisibility(visible = uiState.backgroundBlurEnabled) {
+                    BackgroundSliderCard(
+                        icon = Icons.Rounded.BlurOn,
+                        title = stringResource(R.string.settings_background_blur_level),
+                        value = uiState.backgroundBlurRadius,
+                        valueRange = 0f..40f,
+                        valueLabel = uiState.backgroundBlurRadius.toInt().toString(),
+                        onValueChangeFinished = actions.onSetBackgroundBlurRadius,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BackgroundSliderCard(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    title: String,
+    value: Float,
+    valueRange: ClosedFloatingPointRange<Float>,
+    valueLabel: String,
+    onValueChangeFinished: (Float) -> Unit,
+) {
+    TonalCard {
+        var sliderValue by remember(value) { mutableFloatStateOf(value) }
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(icon, contentDescription = title, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    text = valueLabel,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Slider(
+                value = sliderValue,
+                onValueChange = { sliderValue = it },
+                onValueChangeFinished = { onValueChangeFinished(sliderValue) },
+                valueRange = valueRange,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }

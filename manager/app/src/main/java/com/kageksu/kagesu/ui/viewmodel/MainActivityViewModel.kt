@@ -51,6 +51,11 @@ class MainActivityViewModel(
             enableFloatingBottomBar = settingRepo.enableFloatingBottomBar,
             enableFloatingBottomBarBlur = settingRepo.enableFloatingBottomBarBlur,
             uiMode = UiMode.fromValue(settingRepo.uiMode),
+            backgroundEnabled = settingRepo.backgroundEnabled,
+            backgroundPath = settingRepo.backgroundPath,
+            backgroundDim = settingRepo.backgroundDim,
+            backgroundBlurEnabled = settingRepo.backgroundBlurEnabled,
+            backgroundBlurRadius = settingRepo.backgroundBlurRadius,
         )
     }
 
@@ -65,6 +70,11 @@ class MainActivityViewModel(
             "enable_floating_bottom_bar",
             "enable_floating_bottom_bar_blur",
             "ui_mode",
+            "bg_enabled",
+            "bg_image_path",
+            "bg_dim",
+            "bg_blur_enabled",
+            "bg_blur_radius",
         )
     }
 }

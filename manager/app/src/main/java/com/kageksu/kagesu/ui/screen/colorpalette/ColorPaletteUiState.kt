@@ -1,5 +1,6 @@
 package com.kageksu.kagesu.ui.screen.colorpalette
 
+import android.net.Uri
 import androidx.compose.runtime.Immutable
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
@@ -24,6 +25,12 @@ data class ColorPaletteScreenActions(
     val onSetColorMode: (ColorMode) -> Unit,
     val onSetColorStyle: (String) -> Unit,
     val onSetColorSpec: (String) -> Unit,
+    val onSetBackgroundEnabled: (Boolean) -> Unit,
+    val onPickBackgroundImage: (Uri) -> Unit,
+    val onClearBackgroundImage: () -> Unit,
+    val onSetBackgroundDim: (Float) -> Unit,
+    val onSetBackgroundBlurEnabled: (Boolean) -> Unit,
+    val onSetBackgroundBlurRadius: (Float) -> Unit,
     val onSetEnableBlur: (Boolean) -> Unit,
     val onSetEnableFloatingBottomBar: (Boolean) -> Unit,
     val onSetEnableFloatingBottomBarBlur: (Boolean) -> Unit,

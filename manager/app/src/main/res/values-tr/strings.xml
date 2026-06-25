@@ -199,6 +199,14 @@
     <string name="settings_page_scale_summary">Genel görüntü ölçeğini ayarlayın.</string>
     <string name="settings_color_spec">Renk Özellikleri</string>
     <string name="settings_color_style">Renk Stili</string>
+    <string name="settings_background">Arka plan resmi</string>
+    <string name="settings_background_summary">Arayüzün arkasında özel bir resim göster</string>
+    <string name="settings_background_pick">Resim seç</string>
+    <string name="settings_background_clear">Resmi kaldır</string>
+    <string name="settings_background_dim">Karartma</string>
+    <string name="settings_background_blur">Arka planı bulanıklaştır</string>
+    <string name="settings_background_blur_summary">Arka plan resmini bulanıklaştır (Android 12+)</string>
+    <string name="settings_background_blur_level">Bulanıklık düzeyi</string>
     <string name="color_blue">Mavi</string>
     <string name="color_red">Kırmızı</string>
     <string name="color_green">Yeşil</string>

@@ -12,4 +12,9 @@ data class MainActivityUiState(
     val enableFloatingBottomBar: Boolean,
     val enableFloatingBottomBarBlur: Boolean,
     val uiMode: UiMode,
+    val backgroundEnabled: Boolean = false,
+    val backgroundPath: String = "",
+    val backgroundDim: Float = 0.4f,
+    val backgroundBlurEnabled: Boolean = false,
+    val backgroundBlurRadius: Float = 16f,
 )

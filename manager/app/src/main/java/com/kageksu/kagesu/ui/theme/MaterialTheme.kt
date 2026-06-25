@@ -29,7 +29,7 @@ fun MaterialKernelSUTheme(
     val colorStyle = appSettings.paletteStyle
     val colorSpec = appSettings.colorSpec
 
-    val colorScheme = if (dynamicColor) {
+    val baseColorScheme = if (dynamicColor) {
         val baseScheme = if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         rememberDynamicColorScheme(
             seedColor = Color.Unspecified,
@@ -52,6 +52,17 @@ fun MaterialKernelSUTheme(
             style = colorStyle,
             specVersion = colorSpec,
         )
+    }
+
+    // When a user wallpaper is active, make the page background/surface
+    // transparent so it shows through; cards keep their own containers.
+    val colorScheme = if (appSettings.hasCustomBackground) {
+        baseColorScheme.copy(
+            background = Color.Transparent,
+            surface = Color.Transparent,
+        )
+    } else {
+        baseColorScheme
     }
 
     LaunchedEffect(darkTheme) {

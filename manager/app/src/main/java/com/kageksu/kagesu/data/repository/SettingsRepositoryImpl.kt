@@ -58,6 +58,26 @@ class SettingsRepositoryImpl : SettingsRepository {
         get() = prefs.getString("color_spec", ColorSpec.SpecVersion.Default.name) ?: ColorSpec.SpecVersion.Default.name
         set(value) = prefs.edit { putString("color_spec", value) }
 
+    override var backgroundEnabled: Boolean
+        get() = prefs.getBoolean("bg_enabled", false)
+        set(value) = prefs.edit { putBoolean("bg_enabled", value) }
+
+    override var backgroundPath: String
+        get() = prefs.getString("bg_image_path", "") ?: ""
+        set(value) = prefs.edit { putString("bg_image_path", value) }
+
+    override var backgroundDim: Float
+        get() = prefs.getFloat("bg_dim", 0.4f)
+        set(value) = prefs.edit { putFloat("bg_dim", value) }
+
+    override var backgroundBlurEnabled: Boolean
+        get() = prefs.getBoolean("bg_blur_enabled", false)
+        set(value) = prefs.edit { putBoolean("bg_blur_enabled", value) }
+
+    override var backgroundBlurRadius: Float
+        get() = prefs.getFloat("bg_blur_radius", 16f)
+        set(value) = prefs.edit { putFloat("bg_blur_radius", value) }
+
     override var enablePredictiveBack: Boolean
         get() = prefs.getBoolean("enable_predictive_back", false)
         set(value) = prefs.edit { putBoolean("enable_predictive_back", value) }

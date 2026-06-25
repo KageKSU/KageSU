@@ -69,7 +69,19 @@ fun MiuixKernelSUTheme(
             CompositionLocalProvider(
                 LocalContentColor provides MiuixTheme.colorScheme.onBackground,
             ) {
-                content()
+                if (appSettings.hasCustomBackground) {
+                    // Make the page background/surface transparent so the user
+                    // wallpaper drawn behind the UI shows through.
+                    MiuixTheme(
+                        colors = MiuixTheme.colorScheme.copy(
+                            background = Color.Transparent,
+                            surface = Color.Transparent,
+                        ),
+                        content = content,
+                    )
+                } else {
+                    content()
+                }
             }
         }
     )

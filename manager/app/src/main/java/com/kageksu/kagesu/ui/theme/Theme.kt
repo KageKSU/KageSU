@@ -51,6 +51,9 @@ data class AppSettings(
     val keyColor: Int,
     val paletteStyle: PaletteStyle,
     val colorSpec: ColorSpec.SpecVersion,
+    /** When true a user wallpaper is drawn behind the UI, so the theme makes its
+     *  background/surface transparent to let it show through. */
+    val hasCustomBackground: Boolean = false,
 )
 
 object ThemeController {
@@ -85,8 +88,10 @@ object ThemeController {
         } catch (_: Exception) {
             ColorSpec.SpecVersion.Default
         }
+        val hasCustomBackground = prefs.getBoolean("bg_enabled", false) &&
+                !prefs.getString("bg_image_path", "").isNullOrBlank()
 
-        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec)
+        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec, hasCustomBackground)
     }
 }
 

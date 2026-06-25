@@ -1,6 +1,7 @@
 package com.kageksu.kagesu.ui.viewmodel
 
 import android.content.Context
+import android.net.Uri
 import android.system.OsConstants
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,8 @@ import com.kageksu.kagesu.data.repository.SettingsRepositoryImpl
 import com.kageksu.kagesu.ksuApp
 import com.kageksu.kagesu.ui.screen.settings.SettingsUiState
 import com.kageksu.kagesu.ui.theme.ColorMode
+import com.kageksu.kagesu.ui.util.copyBackgroundImage
+import com.kageksu.kagesu.ui.util.deleteBackgroundImage
 
 class SettingsViewModel(
     private val repo: SettingsRepository = SettingsRepositoryImpl()
@@ -48,6 +51,11 @@ class SettingsViewModel(
             val showFullStatus = repo.showFullStatus
             val colorStyle = repo.colorStyle
             val colorSpec = repo.colorSpec
+            val backgroundEnabled = repo.backgroundEnabled
+            val backgroundPath = repo.backgroundPath
+            val backgroundDim = repo.backgroundDim
+            val backgroundBlurEnabled = repo.backgroundBlurEnabled
+            val backgroundBlurRadius = repo.backgroundBlurRadius
             val isLkmMode = repo.isLkmMode()
 
             // Async loading for natives/features
@@ -88,6 +96,11 @@ class SettingsViewModel(
                     showFullStatus = showFullStatus,
                     colorStyle = colorStyle,
                     colorSpec = colorSpec,
+                    backgroundEnabled = backgroundEnabled,
+                    backgroundPath = backgroundPath,
+                    backgroundDim = backgroundDim,
+                    backgroundBlurEnabled = backgroundBlurEnabled,
+                    backgroundBlurRadius = backgroundBlurRadius,
                     suCompatStatus = suCompatStatus,
                     suCompatMode = suCompatMode,
                     isSuEnabled = isSuEnabled,
@@ -195,6 +208,48 @@ class SettingsViewModel(
     fun setColorSpec(spec: String) {
         repo.colorSpec = spec
         _uiState.update { it.copy(colorSpec = spec) }
+    }
+
+    fun setBackgroundEnabled(enabled: Boolean) {
+        repo.backgroundEnabled = enabled
+        _uiState.update { it.copy(backgroundEnabled = enabled) }
+    }
+
+    fun pickBackgroundImage(uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val path = copyBackgroundImage(ksuApp, uri) ?: return@launch
+            repo.backgroundPath = path
+            repo.backgroundEnabled = true
+            withContext(Dispatchers.Main) {
+                _uiState.update { it.copy(backgroundPath = path, backgroundEnabled = true) }
+            }
+        }
+    }
+
+    fun clearBackgroundImage() {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteBackgroundImage(repo.backgroundPath)
+            repo.backgroundPath = ""
+            repo.backgroundEnabled = false
+            withContext(Dispatchers.Main) {
+                _uiState.update { it.copy(backgroundPath = "", backgroundEnabled = false) }
+            }
+        }
+    }
+
+    fun setBackgroundDim(dim: Float) {
+        repo.backgroundDim = dim
+        _uiState.update { it.copy(backgroundDim = dim) }
+    }
+
+    fun setBackgroundBlurEnabled(enabled: Boolean) {
+        repo.backgroundBlurEnabled = enabled
+        _uiState.update { it.copy(backgroundBlurEnabled = enabled) }
+    }
+
+    fun setBackgroundBlurRadius(radius: Float) {
+        repo.backgroundBlurRadius = radius
+        _uiState.update { it.copy(backgroundBlurRadius = radius) }
     }
 
     fun setEnablePredictiveBack(enabled: Boolean) {
