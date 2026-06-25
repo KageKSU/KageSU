@@ -118,7 +118,7 @@ fun AboutScreenMiuix(
 
     Scaffold(
         topBar = {
-            BlurredBar(backdrop = barBlurBackdrop, blurActive = blurActive) {
+            BlurredBar(backdrop = barBlurBackdrop, blurRadius = if (blurActive) 25f else 0f) {
                 SmallTopAppBar(
                     title = state.title,
                     scrollBehavior = topAppBarScrollBehavior,

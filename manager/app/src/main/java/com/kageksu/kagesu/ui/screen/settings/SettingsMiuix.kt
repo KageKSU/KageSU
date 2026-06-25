@@ -52,6 +52,7 @@ import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.LocalWallpaper
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
+import com.kageksu.kagesu.ui.util.wallpaperBarBlur
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
@@ -81,9 +82,9 @@ fun SettingPagerMiuix(
     val enableBlur = LocalEnableBlur.current
     val backdrop = rememberBlurBackdrop(enableBlur)
     val wallpaperActive = LocalWallpaper.current.enabled
-    // With a wallpaper, keep the bar transparent at the top so the wallpaper
-    // shows through, and only blur once the user scrolls down.
-    val blurActive = backdrop != null && (!wallpaperActive || scrollBehavior.state.collapsedFraction > 0.01f)
+    // With a wallpaper, ramp the bar blur in smoothly as the user scrolls (so the
+    // wallpaper shows through at the top), instead of toggling it on/off.
+    val barBlur = wallpaperBarBlur(backdrop != null, wallpaperActive, scrollBehavior)
     val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
     val loadingDialog = rememberLoadingDialog()
     val showUninstallDialog = rememberSaveable { mutableStateOf(false) }
@@ -91,7 +92,7 @@ fun SettingPagerMiuix(
 
     Scaffold(
         topBar = {
-            BlurredBar(backdrop, blurActive = blurActive) {
+            BlurredBar(backdrop, blurRadius = barBlur) {
                 TopAppBar(
                     color = barColor,
                     title = stringResource(R.string.settings),

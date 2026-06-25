@@ -216,7 +216,7 @@ class MainActivity : ComponentActivity() {
                             },
                             entryProvider = entryProvider {
                                 entry<Route.Main> { WallpaperPage { mainScreenEntry() } }
-                                entry<Route.About> { WallpaperPage { AboutScreen() } }
+                                entry<Route.About> { AboutScreen() }
                                 entry<Route.Sulog> { WallpaperPage { SulogScreen() } }
                                 entry<Route.ColorPalette> { WallpaperPage { ColorPaletteScreen() } }
                                 entry<Route.AppProfileTemplate> { WallpaperPage { AppProfileTemplateScreen() } }
@@ -310,26 +310,47 @@ fun WallpaperPage(content: @Composable () -> Unit) {
 
 /** Re-themes a page with a transparent surface/background so the wallpaper drawn
  *  behind it shows through, while keeping typography/shapes. */
+// Opacity of surfaces (cards, bars, sheets) over a wallpaper. Kept fairly high
+// so text stays readable; the page background itself is fully transparent so the
+// wallpaper shows through clearly between surfaces.
+private const val WALLPAPER_SURFACE_ALPHA = 0.65f
+
 @Composable
 private fun WallpaperSurfaceTheme(uiMode: UiMode, content: @Composable () -> Unit) {
+    val transparent = androidx.compose.ui.graphics.Color.Transparent
     when (uiMode) {
-        UiMode.Material -> MaterialTheme(
-            colorScheme = MaterialTheme.colorScheme.copy(
-                surface = androidx.compose.ui.graphics.Color.Transparent,
-                background = androidx.compose.ui.graphics.Color.Transparent,
-            ),
-            typography = MaterialTheme.typography,
-            shapes = MaterialTheme.shapes,
-            content = content,
-        )
+        UiMode.Material -> {
+            val c = MaterialTheme.colorScheme
+            MaterialTheme(
+                colorScheme = c.copy(
+                    background = transparent,
+                    surface = c.surface.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainerLowest = c.surfaceContainerLowest.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainerLow = c.surfaceContainerLow.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainer = c.surfaceContainer.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainerHigh = c.surfaceContainerHigh.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainerHighest = c.surfaceContainerHighest.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                ),
+                typography = MaterialTheme.typography,
+                shapes = MaterialTheme.shapes,
+                content = content,
+            )
+        }
 
-        UiMode.Miuix -> MiuixTheme(
-            colors = MiuixTheme.colorScheme.copy(
-                surface = androidx.compose.ui.graphics.Color.Transparent,
-                background = androidx.compose.ui.graphics.Color.Transparent,
-            ),
-            content = content,
-        )
+        UiMode.Miuix -> {
+            val c = MiuixTheme.colorScheme
+            MiuixTheme(
+                colors = c.copy(
+                    background = transparent,
+                    surface = c.surface.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceVariant = c.surfaceVariant.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainer = c.surfaceContainer.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainerHigh = c.surfaceContainerHigh.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                    surfaceContainerHighest = c.surfaceContainerHighest.copy(alpha = WALLPAPER_SURFACE_ALPHA),
+                ),
+                content = content,
+            )
+        }
     }
 }
 
