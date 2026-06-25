@@ -58,6 +58,10 @@ class SettingsRepositoryImpl : SettingsRepository {
         get() = prefs.getString("color_spec", ColorSpec.SpecVersion.Default.name) ?: ColorSpec.SpecVersion.Default.name
         set(value) = prefs.edit { putString("color_spec", value) }
 
+    override var contrastLevel: Int
+        get() = prefs.getInt("contrast_level", 0)
+        set(value) = prefs.edit { putInt("contrast_level", value) }
+
     override var enablePredictiveBack: Boolean
         get() = prefs.getBoolean("enable_predictive_back", false)
         set(value) = prefs.edit { putBoolean("enable_predictive_back", value) }

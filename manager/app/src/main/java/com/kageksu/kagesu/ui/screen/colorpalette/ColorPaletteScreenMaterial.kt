@@ -49,6 +49,7 @@ import androidx.compose.material.icons.filled.Brightness7
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.AspectRatio
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Contrast
 import androidx.compose.material.icons.rounded.DesignServices
 import androidx.compose.material.icons.rounded.Style
 import androidx.compose.material.icons.rounded.Fingerprint
@@ -261,6 +262,22 @@ fun ColorPaletteScreenMaterial(
                                 selectedIndex = specs.indexOf(colorSpec).coerceAtLeast(0),
                                 onItemSelected = { index ->
                                     actions.onSetColorSpec(specs[index].name)
+                                }
+                            )
+                        },
+                        {
+                            val contrastLabels = listOf(
+                                stringResource(R.string.settings_contrast_standard),
+                                stringResource(R.string.settings_contrast_medium),
+                                stringResource(R.string.settings_contrast_high),
+                            )
+                            SegmentedDropdownItem(
+                                icon = Icons.Rounded.Contrast,
+                                title = stringResource(R.string.settings_contrast),
+                                items = contrastLabels,
+                                selectedIndex = uiState.contrastLevel.coerceIn(0, contrastLabels.lastIndex),
+                                onItemSelected = { index ->
+                                    actions.onSetContrastLevel(index)
                                 }
                             )
                         }

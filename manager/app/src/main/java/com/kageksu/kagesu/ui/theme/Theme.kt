@@ -46,11 +46,20 @@ enum class ColorMode(val value: Int) {
     }
 }
 
+/** Maps the stored contrast level (0 = standard, 1 = medium, 2 = high) to the
+ *  materialkolor contrast scale (0.0..1.0). Material-only; Miuix ignores it. */
+fun contrastLevelToDouble(level: Int): Double = when (level) {
+    1 -> 0.5
+    2 -> 1.0
+    else -> 0.0
+}
+
 data class AppSettings(
     val colorMode: ColorMode,
     val keyColor: Int,
     val paletteStyle: PaletteStyle,
     val colorSpec: ColorSpec.SpecVersion,
+    val contrastLevel: Double = 0.0,
 )
 
 object ThemeController {
@@ -85,8 +94,9 @@ object ThemeController {
         } catch (_: Exception) {
             ColorSpec.SpecVersion.Default
         }
+        val contrastLevel = contrastLevelToDouble(prefs.getInt("contrast_level", 0))
 
-        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec)
+        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec, contrastLevel)
     }
 }
 
