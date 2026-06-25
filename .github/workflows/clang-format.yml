@@ -5,7 +5,6 @@ on:
     branches:
       - 'main'
       - 'dev'
-      - 'rebrand-kagesu'
     paths:
       - '.github/workflows/clang-format.yml'
       - 'kernel/**/*.c'
