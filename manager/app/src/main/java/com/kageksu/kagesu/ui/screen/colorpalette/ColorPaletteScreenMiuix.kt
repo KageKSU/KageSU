@@ -68,6 +68,7 @@ import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
 import com.materialkolor.rememberDynamicColorScheme
 import com.kageksu.kagesu.R
+import com.kageksu.kagesu.ui.LocalWallpaper
 import com.kageksu.kagesu.ui.component.miuix.ScaleDialog
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.theme.keyColorOptions
@@ -101,15 +102,18 @@ fun ColorPaletteScreenMiuix(
     val scrollBehavior = MiuixScrollBehavior()
     val enableBlurState = LocalEnableBlur.current
     val backdrop = rememberBlurBackdrop(enableBlurState)
-    val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val wallpaperActive = LocalWallpaper.current.enabled
+    // With a wallpaper, keep the bar transparent at the top so the wallpaper
+    // shows through, and only blur once the user scrolls down.
+    val blurActive = backdrop != null && (!wallpaperActive || scrollBehavior.state.collapsedFraction > 0.01f)
+    val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
     val uiState = state.uiState
     val currentColorMode = state.currentColorMode
     val isDark = currentColorMode.isDark || currentColorMode.isSystem && isSystemInDarkTheme()
 
     Scaffold(
         topBar = {
-            BlurredBar(backdrop) {
+            BlurredBar(backdrop, blurActive = blurActive) {
                 TopAppBar(
                     color = barColor,
                     title = stringResource(R.string.settings_theme),
