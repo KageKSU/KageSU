@@ -220,8 +220,15 @@ class SettingsViewModel(
             val path = copyBackgroundImage(ksuApp, uri) ?: return@launch
             repo.backgroundPath = path
             repo.backgroundEnabled = true
+            repo.backgroundBlurEnabled = true
             withContext(Dispatchers.Main) {
-                _uiState.update { it.copy(backgroundPath = path, backgroundEnabled = true) }
+                _uiState.update {
+                    it.copy(
+                        backgroundPath = path,
+                        backgroundEnabled = true,
+                        backgroundBlurEnabled = true,
+                    )
+                }
             }
         }
     }

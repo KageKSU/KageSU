@@ -42,6 +42,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -91,6 +92,7 @@ import com.kageksu.kagesu.ui.screen.templateeditor.TemplateEditorScreen
 import com.kageksu.kagesu.ui.screen.umountmanager.UmountManagerScreen
 import com.kageksu.kagesu.ui.theme.KernelSUTheme
 import com.kageksu.kagesu.ui.theme.LocalColorMode
+import com.kageksu.kagesu.ui.theme.LocalContentSurfaceColor
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBar
 import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBarBlur
@@ -168,6 +170,13 @@ class MainActivity : ComponentActivity() {
                 LocalEnableFloatingBottomBar provides uiState.enableFloatingBottomBar,
                 LocalEnableFloatingBottomBarBlur provides uiState.enableFloatingBottomBarBlur,
                 LocalUiMode provides uiMode,
+                LocalWallpaper provides WallpaperState(
+                    enabled = uiState.backgroundEnabled && uiState.backgroundPath.isNotBlank(),
+                    path = uiState.backgroundPath,
+                    dim = uiState.backgroundDim,
+                    blurEnabled = uiState.backgroundBlurEnabled,
+                    blurRadius = uiState.backgroundBlurRadius,
+                ),
             ) {
                 KernelSUTheme(appSettings = appSettings, uiMode = uiMode) {
                     HandleDeepLink(intentState = intentState.collectAsStateWithLifecycle())
@@ -226,20 +235,9 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        if (uiState.backgroundEnabled && uiState.backgroundPath.isNotBlank()) {
-                            WallpaperBackground(
-                                path = uiState.backgroundPath,
-                                dim = uiState.backgroundDim,
-                                blurEnabled = uiState.backgroundBlurEnabled,
-                                blurRadius = uiState.backgroundBlurRadius,
-                                darkMode = darkMode,
-                            )
-                        }
-                        when (uiMode) {
-                            UiMode.Material -> androidx.compose.material3.Scaffold { navDisplay() }
-                            UiMode.Miuix -> Scaffold { navDisplay() }
-                        }
+                    when (uiMode) {
+                        UiMode.Material -> androidx.compose.material3.Scaffold { navDisplay() }
+                        UiMode.Miuix -> Scaffold { navDisplay() }
                     }
                 }
             }
@@ -261,6 +259,41 @@ class MainActivity : ComponentActivity() {
 }
 
 val LocalMainPagerState = staticCompositionLocalOf<MainPagerState> { error("LocalMainPagerState not provided") }
+
+data class WallpaperState(
+    val enabled: Boolean = false,
+    val path: String = "",
+    val dim: Float = 0.4f,
+    val blurEnabled: Boolean = false,
+    val blurRadius: Float = 16f,
+)
+
+val LocalWallpaper = staticCompositionLocalOf { WallpaperState() }
+
+/** Re-themes the main screen with a transparent surface/background so the
+ *  wallpaper drawn behind it shows through, while keeping typography/shapes. */
+@Composable
+private fun WallpaperSurfaceTheme(uiMode: UiMode, content: @Composable () -> Unit) {
+    when (uiMode) {
+        UiMode.Material -> MaterialTheme(
+            colorScheme = MaterialTheme.colorScheme.copy(
+                surface = androidx.compose.ui.graphics.Color.Transparent,
+                background = androidx.compose.ui.graphics.Color.Transparent,
+            ),
+            typography = MaterialTheme.typography,
+            shapes = MaterialTheme.shapes,
+            content = content,
+        )
+
+        UiMode.Miuix -> MiuixTheme(
+            colors = MiuixTheme.colorScheme.copy(
+                surface = androidx.compose.ui.graphics.Color.Transparent,
+                background = androidx.compose.ui.graphics.Color.Transparent,
+            ),
+            content = content,
+        )
+    }
+}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -304,6 +337,8 @@ fun MainScreen(
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     val useNavigationRail = isLandscape && !(uiMode == UiMode.Miuix && enableFloatingBottomBar)
 
+    val wallpaper = LocalWallpaper.current
+    val mainContent = @Composable {
     CompositionLocalProvider(
         LocalMainPagerState provides mainPagerState
     ) {
@@ -388,6 +423,26 @@ fun MainScreen(
             }
         }
     }
+    }
+
+    if (wallpaper.enabled) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            WallpaperBackground(
+                path = wallpaper.path,
+                dim = wallpaper.dim,
+                blurEnabled = wallpaper.blurEnabled,
+                blurRadius = wallpaper.blurRadius,
+                scrimColor = surfaceColor,
+            )
+            CompositionLocalProvider(LocalContentSurfaceColor provides surfaceColor) {
+                WallpaperSurfaceTheme(uiMode) {
+                    mainContent()
+                }
+            }
+        }
+    } else {
+        mainContent()
+    }
 }
 
 @Composable
@@ -418,11 +473,11 @@ private fun WallpaperBackground(
     dim: Float,
     blurEnabled: Boolean,
     blurRadius: Float,
-    darkMode: Boolean,
+    scrimColor: androidx.compose.ui.graphics.Color,
 ) {
     val bitmap = rememberBackgroundBitmap(path) ?: return
-    val scrim = (if (darkMode) androidx.compose.ui.graphics.Color.Black
-    else androidx.compose.ui.graphics.Color.White).copy(alpha = dim.coerceIn(0f, 1f))
+    val base = scrimColor.takeOrElse { androidx.compose.ui.graphics.Color.Black }
+    val scrim = base.copy(alpha = dim.coerceIn(0f, 1f))
     val imageModifier = Modifier
         .fillMaxSize()
         .then(

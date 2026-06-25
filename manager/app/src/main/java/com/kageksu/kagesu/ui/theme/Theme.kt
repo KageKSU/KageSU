@@ -51,9 +51,6 @@ data class AppSettings(
     val keyColor: Int,
     val paletteStyle: PaletteStyle,
     val colorSpec: ColorSpec.SpecVersion,
-    /** When true a user wallpaper is drawn behind the UI, so the theme makes its
-     *  background/surface transparent to let it show through. */
-    val hasCustomBackground: Boolean = false,
 )
 
 object ThemeController {
@@ -88,10 +85,8 @@ object ThemeController {
         } catch (_: Exception) {
             ColorSpec.SpecVersion.Default
         }
-        val hasCustomBackground = prefs.getBoolean("bg_enabled", false) &&
-                !prefs.getString("bg_image_path", "").isNullOrBlank()
 
-        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec, hasCustomBackground)
+        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec)
     }
 }
 
@@ -130,6 +125,12 @@ fun isInDarkTheme(): Boolean {
 
 
 val LocalColorMode = staticCompositionLocalOf { 0 }
+
+/** The real, opaque surface color. When a wallpaper is active the main screen
+ *  paints its surfaces transparent, so blur backdrops read this instead of the
+ *  (transparent) theme surface to avoid rendering black. Unspecified = no
+ *  wallpaper, fall back to the theme surface. */
+val LocalContentSurfaceColor = staticCompositionLocalOf { androidx.compose.ui.graphics.Color.Unspecified }
 
 val LocalEnableBlur = staticCompositionLocalOf { false }
 
