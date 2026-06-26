@@ -96,6 +96,7 @@ import com.kageksu.kagesu.ui.theme.LocalContentSurfaceColor
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBar
 import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBarBlur
+import com.kageksu.kagesu.ui.util.drawWallpaperCropped
 import com.kageksu.kagesu.ui.util.install
 import com.kageksu.kagesu.ui.util.rememberBackgroundBitmap
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
@@ -310,20 +311,20 @@ fun WallpaperPage(content: @Composable () -> Unit) {
 
 /** Re-themes a page with a transparent surface so the wallpaper drawn behind it
  *  shows through, while keeping typography/shapes. */
-// Over a wallpaper the page-body roles are made transparent so the wallpaper shows
-// through, while every `surfaceContainer*` stays opaque (cards, navigation bar,
-// dialogs and bottom sheets remain solid/readable).
-//  - Material: its Scaffold defaults to `background` and screens use `surface`, so
-//    both are transparent; Material dialogs/sheets use surfaceContainer* (opaque).
-//  - Miuix: its Scaffold uses `surface`, so only `surface` is transparent; `background`
-//    stays opaque because Miuix dialogs (OverlayDialog) are drawn on `background`.
+// Over a wallpaper only the page-body color role is made transparent so the
+// wallpaper shows through, while everything else stays opaque and readable.
+//  - Material: page bodies use the Scaffold's `background`; cards (TonalCard ->
+//    surfaceColorAtElevation, derived from `surface`), top bars and sheets stay
+//    opaque. So ONLY `background` is transparent — making `surface` transparent
+//    too would turn every card see-through and the text unreadable.
+//  - Miuix: its Scaffold uses `surface`, so only `surface` is transparent;
+//    `background` stays opaque because Miuix dialogs (OverlayDialog) use it.
 @Composable
 private fun WallpaperSurfaceTheme(uiMode: UiMode, content: @Composable () -> Unit) {
     val transparent = androidx.compose.ui.graphics.Color.Transparent
     when (uiMode) {
         UiMode.Material -> MaterialTheme(
             colorScheme = MaterialTheme.colorScheme.copy(
-                surface = transparent,
                 background = transparent,
             ),
             typography = MaterialTheme.typography,
@@ -365,8 +366,20 @@ fun MainScreen(
     val realSurface = LocalContentSurfaceColor.current.takeOrElse { surfaceColor }
     val blurBackdrop = rememberBlurBackdrop(enableBlur)
 
+    // Over a wallpaper the floating bar frosts the (dimmed) wallpaper itself, just
+    // like the top bars, instead of a flat surface slab.
+    val wallpaper = LocalWallpaper.current
+    val wallpaperBitmap = wallpaper.bitmap
     val backdrop = rememberLayerBackdrop {
-        drawRect(realSurface)
+        if (wallpaper.enabled && wallpaperBitmap != null) {
+            drawRect(realSurface)
+            drawWallpaperCropped(wallpaperBitmap)
+            if (wallpaper.dim > 0f) {
+                drawRect(realSurface.copy(alpha = wallpaper.dim))
+            }
+        } else {
+            drawRect(realSurface)
+        }
         drawContent()
     }
 
