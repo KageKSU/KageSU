@@ -43,6 +43,7 @@ import com.kageksu.kagesu.R
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import com.kageksu.kagesu.ui.viewmodel.KpmViewModel
 import kotlinx.coroutines.delay
 import top.yukonga.miuix.kmp.basic.*
@@ -173,7 +174,7 @@ fun KpmMiuix(
         topBar = {
             BlurredBar(backdrop) {
                 TopAppBar(
-                    color = if (enableBlur) Color.Transparent else colorScheme.surface,
+                    color = wallpaperBarColor(backdrop != null),
                     title = stringResource(R.string.kpm_title),
                     actions = {
                         IconButton(

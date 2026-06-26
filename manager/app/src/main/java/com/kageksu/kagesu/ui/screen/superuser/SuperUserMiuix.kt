@@ -78,6 +78,7 @@ import com.kageksu.kagesu.ui.util.ownerNameForUid
 import com.kageksu.kagesu.ui.LocalWallpaper
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.util.wallpaperBarBlur
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import top.yukonga.miuix.kmp.basic.BasicComponent
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.DropdownImpl
@@ -121,10 +122,10 @@ fun SuperUserPagerMiuix(
 
     val backdrop = rememberBlurBackdrop(enableBlur)
     val wallpaperActive = LocalWallpaper.current.enabled
-    // With a wallpaper, ramp the bar blur in smoothly as the user scrolls (so the
-    // wallpaper shows through at the top), instead of toggling it on/off.
+    // Over a wallpaper the bar matches the no-wallpaper look: constant frosted blur
+    // when blur is on, an opaque surface bar when it is off — shown everywhere.
     val barBlur = wallpaperBarBlur(backdrop != null, wallpaperActive, scrollBehavior)
-    val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
+    val barColor = wallpaperBarColor(backdrop != null)
 
     Scaffold(
         topBar = {

@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kageksu.kagesu.R
 import com.kageksu.kagesu.ui.component.KeyEventBlocker
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import com.kageksu.kagesu.ui.kernelFlash.state.FlashState
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.FloatingActionButton
@@ -70,6 +71,7 @@ fun KernelFlashMiuix(
     Scaffold(
         topBar = {
             SmallTopAppBar(
+                color = wallpaperBarColor(false),
                 title = stringResource(
                     when {
                         state.error.isNotEmpty() -> R.string.flash_failed

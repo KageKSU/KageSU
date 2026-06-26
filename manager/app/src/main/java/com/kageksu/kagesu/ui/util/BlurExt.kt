@@ -3,6 +3,7 @@ package com.kageksu.kagesu.ui.util
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.takeOrElse
 import com.kageksu.kagesu.ui.theme.LocalContentSurfaceColor
@@ -15,18 +16,25 @@ import top.yukonga.miuix.kmp.blur.textureBlur
 import top.yukonga.miuix.kmp.shader.isRenderEffectSupported
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
-/** Blur radius for a top bar over a wallpaper: ramps 0..25 with scroll so the bar
- *  is transparent (wallpaper visible) at the top and smoothly frosts on scroll.
- *  Without a wallpaper it stays at the constant default. */
+/** Blur radius for a Miuix top bar. The bar must behave exactly like it does
+ *  without a wallpaper: a constant frosted blur whenever blur is available (it is
+ *  applied even at the top of the list, not ramped in on scroll), and none when
+ *  blur is off. The extra params are kept for call-site symmetry. */
+@Suppress("UNUSED_PARAMETER")
 fun wallpaperBarBlur(
     blurAvailable: Boolean,
     wallpaperActive: Boolean,
     scrollBehavior: ScrollBehavior,
-): Float = when {
-    !blurAvailable -> 0f
-    wallpaperActive -> (25f * scrollBehavior.state.collapsedFraction).coerceIn(0f, 25f)
-    else -> 25f
-}
+): Float = if (blurAvailable) 25f else 0f
+
+/** Background color for a Miuix top bar over a wallpaper. When blur frosts the bar
+ *  it stays transparent so the blur shows through; otherwise it uses the real opaque
+ *  surface (provided via [LocalContentSurfaceColor] under a wallpaper) so the bar is
+ *  a solid surface bar everywhere, just like without a wallpaper. */
+@Composable
+fun wallpaperBarColor(blurActive: Boolean): Color =
+    if (blurActive) Color.Transparent
+    else LocalContentSurfaceColor.current.takeOrElse { MiuixTheme.colorScheme.surface }
 
 @Composable
 fun rememberBlurBackdrop(enableBlur: Boolean): LayerBackdrop? {

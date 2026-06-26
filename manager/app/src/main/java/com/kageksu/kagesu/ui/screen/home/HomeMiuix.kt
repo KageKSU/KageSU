@@ -56,6 +56,7 @@ import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.module.LatestVersionInfo
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.util.wallpaperBarBlur
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import top.yukonga.miuix.kmp.basic.BasicComponent
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
@@ -91,7 +92,7 @@ fun HomePagerMiuix(
     // With a wallpaper, ramp the bar blur in smoothly as the user scrolls (so the
     // wallpaper shows through at the top), instead of toggling it on/off.
     val barBlur = wallpaperBarBlur(backdrop != null, wallpaperActive, scrollBehavior)
-    val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
+    val barColor = wallpaperBarColor(backdrop != null)
     Scaffold(
         topBar = {
             TopBar(

@@ -75,6 +75,7 @@ import com.kageksu.kagesu.ui.theme.keyColorOptions
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.util.wallpaperBarBlur
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
@@ -107,7 +108,7 @@ fun ColorPaletteScreenMiuix(
     // With a wallpaper, ramp the bar blur in smoothly as the user scrolls (so the
     // wallpaper shows through at the top), instead of toggling it on/off.
     val barBlur = wallpaperBarBlur(backdrop != null, wallpaperActive, scrollBehavior)
-    val barColor = if (backdrop != null || wallpaperActive) Color.Transparent else colorScheme.surface
+    val barColor = wallpaperBarColor(backdrop != null)
     val uiState = state.uiState
     val currentColorMode = state.currentColorMode
     val isDark = currentColorMode.isDark || currentColorMode.isSystem && isSystemInDarkTheme()

@@ -42,6 +42,7 @@ import com.kageksu.kagesu.ui.screen.susfs.util.SuSFSManager
 import com.kageksu.kagesu.ui.screen.susfs.viewmodel.SuSFSViewModel
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import top.yukonga.miuix.kmp.basic.*
 import top.yukonga.miuix.kmp.icon.MiuixIcons
@@ -60,7 +61,7 @@ fun SuSFSMiuix() {
     val enableBlur = LocalEnableBlur.current
     val backdrop = rememberBlurBackdrop(enableBlur)
     val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val barColor = wallpaperBarColor(blurActive)
 
     val viewModel: SuSFSViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

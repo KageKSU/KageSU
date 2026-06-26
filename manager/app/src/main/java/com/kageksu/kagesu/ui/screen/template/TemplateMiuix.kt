@@ -66,6 +66,7 @@ import com.kageksu.kagesu.ui.component.ListPopupDefaults
 import com.kageksu.kagesu.ui.component.miuix.DropdownItem
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.FloatingActionButton
@@ -139,7 +140,7 @@ fun AppProfileTemplateScreenMiuix(
     val enableBlur = LocalEnableBlur.current
     val backdrop = rememberBlurBackdrop(enableBlur)
     val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val barColor = wallpaperBarColor(blurActive)
 
     Scaffold(
         topBar = {

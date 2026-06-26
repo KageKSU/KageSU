@@ -31,6 +31,7 @@ import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBar
 import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBarBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.rootAvailable
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.NavigationBar
 import top.yukonga.miuix.kmp.basic.NavigationBarItem
@@ -64,7 +65,7 @@ fun BottomBarMiuix(
         BlurredBar(blurBackdrop) {
             NavigationBar(
                 modifier = modifier,
-                color = if (blurBackdrop != null) Color.Transparent else MiuixTheme.colorScheme.surface,
+                color = wallpaperBarColor(blurBackdrop != null),
                 content = {
                     items.forEachIndexed { index, item ->
                         NavigationBarItem(

@@ -52,6 +52,7 @@ import com.kageksu.kagesu.ui.kernelFlash.KpmPatchSelectionDialog
 import com.kageksu.kagesu.ui.kernelFlash.component.SlotSelectionDialog
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import com.kageksu.kagesu.ui.util.LkmSelection
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.util.isAbDevice
@@ -96,7 +97,7 @@ internal fun InstallScreenMiuix(
     val scrollBehavior = MiuixScrollBehavior()
     val backdrop = rememberBlurBackdrop(enableBlur)
     val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val barColor = wallpaperBarColor(blurActive)
     val isAbDevice by produceState(initialValue = false) {
         value = isAbDevice()
     }

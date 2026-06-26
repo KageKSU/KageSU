@@ -310,10 +310,13 @@ fun WallpaperPage(content: @Composable () -> Unit) {
 
 /** Re-themes a page with a transparent surface so the wallpaper drawn behind it
  *  shows through, while keeping typography/shapes. */
-// Over a wallpaper only `surface` is made transparent so page bodies and top bars
-// (Scaffold/TopAppBar use `surface`) reveal the wallpaper. `background` and every
-// `surfaceContainer*` stay opaque so cards, the navigation bar, dialogs and bottom
-// sheets remain solid/readable — Miuix dialogs (OverlayDialog) use `background`.
+// Over a wallpaper the page-body roles are made transparent so the wallpaper shows
+// through, while every `surfaceContainer*` stays opaque (cards, navigation bar,
+// dialogs and bottom sheets remain solid/readable).
+//  - Material: its Scaffold defaults to `background` and screens use `surface`, so
+//    both are transparent; Material dialogs/sheets use surfaceContainer* (opaque).
+//  - Miuix: its Scaffold uses `surface`, so only `surface` is transparent; `background`
+//    stays opaque because Miuix dialogs (OverlayDialog) are drawn on `background`.
 @Composable
 private fun WallpaperSurfaceTheme(uiMode: UiMode, content: @Composable () -> Unit) {
     val transparent = androidx.compose.ui.graphics.Color.Transparent
@@ -321,6 +324,7 @@ private fun WallpaperSurfaceTheme(uiMode: UiMode, content: @Composable () -> Uni
         UiMode.Material -> MaterialTheme(
             colorScheme = MaterialTheme.colorScheme.copy(
                 surface = transparent,
+                background = transparent,
             ),
             typography = MaterialTheme.typography,
             shapes = MaterialTheme.shapes,

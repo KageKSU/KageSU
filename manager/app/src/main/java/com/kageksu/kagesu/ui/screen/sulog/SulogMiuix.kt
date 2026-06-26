@@ -72,6 +72,7 @@ import com.kageksu.kagesu.ui.component.miuix.WarningCard
 import com.kageksu.kagesu.ui.component.statustag.StatusTag
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import com.kageksu.kagesu.ui.util.SulogEntry
 import com.kageksu.kagesu.ui.util.SulogEventFilter
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
@@ -116,7 +117,7 @@ fun SulogScreenMiuix(
     }
     val backdrop = rememberBlurBackdrop(enableBlur)
     val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else colorScheme.surface
+    val barColor = wallpaperBarColor(blurActive)
     val pullToRefreshState = rememberPullToRefreshState()
     val listState = rememberLazyListState()
     val fileSelector = buildSulogFileSelector(state.files, state.selectedFilePath)

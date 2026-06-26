@@ -12,6 +12,7 @@ import com.kageksu.kagesu.Natives
 import com.kageksu.kagesu.ui.LocalMainPagerState
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.rootAvailable
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import top.yukonga.miuix.kmp.basic.NavigationRail
 import top.yukonga.miuix.kmp.basic.NavigationRailItem
 import top.yukonga.miuix.kmp.blur.LayerBackdrop
@@ -36,7 +37,7 @@ fun NavigationRailMiuix(
         NavigationRail(
             modifier = modifier
                 .fillMaxHeight(),
-            color = if (blurBackdrop != null) Color.Transparent else MiuixTheme.colorScheme.surface,
+            color = wallpaperBarColor(blurBackdrop != null),
         ) {
             Spacer(modifier = Modifier.weight(1f))
             items.forEachIndexed { index, (label, icon) ->

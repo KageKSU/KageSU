@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.kageksu.kagesu.R
+import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.CircularProgressIndicator
@@ -51,6 +52,7 @@ fun UmountManagerMiuix(
     Scaffold(
         topBar = {
             TopAppBar(
+                color = wallpaperBarColor(false),
                 title = stringResource(R.string.umount_path_manager),
                 navigationIcon = {
                     IconButton(onClick = actions.onBack) {
