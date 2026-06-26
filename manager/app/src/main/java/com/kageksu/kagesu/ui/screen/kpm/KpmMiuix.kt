@@ -44,6 +44,7 @@ import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.util.wallpaperBarColor
+import top.yukonga.miuix.kmp.blur.layerBackdrop
 import com.kageksu.kagesu.ui.viewmodel.KpmViewModel
 import kotlinx.coroutines.delay
 import top.yukonga.miuix.kmp.basic.*
@@ -284,6 +285,7 @@ private fun KpmList(
     ) {
         LazyColumn(
             modifier = Modifier
+                .then(if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier)
                 .fillMaxHeight()
                 .scrollEndHaptic()
                 .overScrollVertical()

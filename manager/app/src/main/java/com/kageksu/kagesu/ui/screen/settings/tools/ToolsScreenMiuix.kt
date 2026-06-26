@@ -31,6 +31,7 @@ import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.wallpaperBarColor
 import com.kageksu.kagesu.ui.util.getSELinuxStatusRaw
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
+import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
@@ -83,6 +84,7 @@ fun ToolsMiuix(
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
+                .then(if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier)
                 .fillMaxHeight()
                 .scrollEndHaptic()
                 .overScrollVertical()
