@@ -77,11 +77,16 @@ If you need to submit a translation for the manager, please go to [Crowdin](http
 ## Credit
 
 - [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): upstream
+
+<details>
+<summary>SukiSU Ultra's credit</summary>
+
 - [KernelSU](https://github.com/tiann/KernelSU): upstream
 - [MKSU](https://github.com/5ec1cff/KernelSU): Magic Mount
 - [RKSU](https://github.com/rsuntk/KernelsU): support non-GKI
 - [susfs](https://gitlab.com/simonpunk/susfs4ksu): An addon root hiding kernel patches and userspace module for KernelSU.
 - [KernelPatch](https://github.com/bmax121/KernelPatch): KernelPatch is a key part of the APatch implementation of the kernel module
+</details>
 
 <details>
 <summary>KernelSU's credit</summary>

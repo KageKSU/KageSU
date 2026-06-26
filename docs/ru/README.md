@@ -1,13 +1,15 @@
 # KageSU
-<img align='right' src='KageSU-mini.svg' width='220px' alt="логотип KageSU">
+<img align='right' src='../KageSU-mini.svg' width='220px' alt="логотип KageSU">
 
 
-[English](../README.md) | [简体中文](./zh/README.md) | [日本語](./ja/README.md) | [Türkçe](./tr/README.md) | **Русский**
+[English](../README.md) | [简体中文](../zh/README.md) | [日本語](../ja/README.md) | [Türkçe](../tr/README.md) | **Русский**
 
-Решение для получения root-прав на уровне ядра для устройств Android. Форк [`tiann/KernelSU`](https://github.com/tiann/KernelSU) с добавлением интересных изменений.
+Решение для получения root-прав на уровне ядра для устройств Android.
 
-[![Latest release](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/tiann/KernelSU/releases/latest)
-[![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/Sukiksu)
+> **KageSU** — это форк проекта [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra), который, в свою очередь, основан на [KernelSU](https://github.com/tiann/KernelSU). Спасибо обоим вышестоящим проектам.
+
+[![Latest release](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/KageKSU/KageSU/releases/latest)
+[![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/KageKSU)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-orange.svg?logo=gnu)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![GitHub License](https://img.shields.io/github/license/tiann/KernelSU?logo=gnu)](/LICENSE)
 
@@ -17,7 +19,7 @@
 2. [App Profile](https://kernelsu.org/guide/app-profile.html): закройте root-права для конкретных приложений.
 3. Поддержка non-GKI и GKI 1.0.
 4. Поддержка KPM.
-5. Изменения в теме менеджера и встроенный susfs.
+5. Доработки темы менеджера и встроенный инструмент управления susfs.
 
 ## Статус совместимости
 
@@ -31,11 +33,11 @@
 
 ## Установка
 
-См. [`guide/installation.md`](guide/installation.md)
+См. [`guide/installation.md`](../guide/installation.md)
 
 ## Интеграция
 
-См. [`guide/how-to-integrate.md`](guide/how-to-integrate.md)
+См. [`guide/how-to-integrate.md`](../guide/how-to-integrate.md)
 
 ## Перевод
 
@@ -54,27 +56,17 @@
 >
 > 1. Требуется `CONFIG_KPM=y`
 > 2. Для non-GKI устройств требуются `CONFIG_KALLSYMS=y` и `CONFIG_KALLSYMS_ALL=y`
-> 3. Для ядер ниже `4.19` требуется бэкпорт `set_memory.h` из версии `4.19`.
+> 3. Для ядер ниже `4.19` требуется бэкпорт `set_memory.h` из версии `4.19`.
 
 ## Устранение неполадок
 
-1. Если устройство зависает при удалении менеджера (KageSU) 
-   Удалите com.sony.playmemories.mobile
+1. Если устройство зависает при удалении менеджера:
+   Удалите _com.sony.playmemories.mobile_
 
 ## Спонсоры
 
-- [ShirkNeko](https://afdian.com/a/shirkneko) (поддерживает KageSU)
+- [ShirkNeko](https://afdian.com/a/shirkneko) (сопровождающий KageSU)
 - [weishu](https://github.com/sponsors/tiann) (автор KernelSU)
-
-## Список спонсоров ShirkNeko
-
-- [Ktouls](https://github.com/Ktouls) Большое спасибо за поддержку.
-- [zaoqi123](https://github.com/zaoqi123) Спасибо за чай с молоком.
-- [wswzgdg](https://github.com/wswzgdg) Огромное спасибо за поддержку проекта.
-- [yspbwx2010](https://github.com/yspbwx2010) Большое спасибо.
-- [DARKWWEE](https://github.com/DARKWWEE) 100 USDT
-- [Saksham Singla](https://github.com/TypeFlu) Предоставление и поддержка сайта.
-- [OukaroMF](https://github.com/OukaroMF) Пожертвование доменного имени для сайта.
 
 ## Лицензия
 
@@ -84,11 +76,17 @@
 
 ## Благодарности
 
-- [KernelSU](https://github.com/tiann/KernelSU): база (основа).
-- [MKSU](https://github.com/5ec1cff/KernelSU): Magic Mount.
-- [RKSU](https://github.com/rsuntk/KernelsU): поддержка non-GKI.
+- [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): вышестоящий проект
+
+<details>
+<summary>Благодарности SukiSU Ultra</summary>
+
+- [KernelSU](https://github.com/tiann/KernelSU): вышестоящий проект
+- [MKSU](https://github.com/5ec1cff/KernelSU): Magic Mount
+- [RKSU](https://github.com/rsuntk/KernelsU): поддержка non-GKI
 - [susfs](https://gitlab.com/simonpunk/susfs4ksu): дополнение для скрытия root в ядре и модуль пространства пользователя для KernelSU.
 - [KernelPatch](https://github.com/bmax121/KernelPatch): ключевая часть реализации модулей ядра в APatch.
+</details>
 
 <details>
 <summary>Благодарности команды KernelSU</summary>
