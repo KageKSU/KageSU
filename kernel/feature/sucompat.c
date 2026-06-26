@@ -223,6 +223,26 @@ __attribute__((hot)) static __always_inline bool __is_su_allowed(const void **pt
 }
 #define is_su_allowed(ptr) (__is_su_allowed((const void **)ptr))
 
+static bool is_ksud_exists(void)
+{
+    // ksud is installed once and is never removed while running, so latch
+    // the result: once it exists, skip the kern_path() walk on every later
+    // su probe. We never cache a negative, so early boot (before /data) is
+    // unaffected.
+    static bool cached __read_mostly;
+    struct path kpath;
+
+    if (READ_ONCE(cached))
+        return true;
+
+    if (!!kern_path(ksud_path, 0, &kpath))
+        return false;
+
+    path_put(&kpath);
+    WRITE_ONCE(cached, true);
+    return true;
+}
+
 static noinline int ksu_sucompat_user_common(const char __user **filename_user, const char *syscall_name,
                                              const bool escalate)
 {
@@ -244,11 +264,9 @@ static noinline int ksu_sucompat_user_common(const char __user **filename_user, 
         return ret;
 
     // NOTE: we only check file existence, not exec success!
-    struct path kpath;
-    if (!!kern_path(ksud_path, 0, &kpath))
+    if (!is_ksud_exists())
         goto no_ksud;
 
-    path_put(&kpath);
     pr_info("%s su->ksud!\n", syscall_name);
     *filename_user = ksud_user_path();
     return 0;
@@ -316,11 +334,9 @@ int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr, void *
         return 0;
 
     // NOTE: we only check file existence, not exec success!
-    struct path kpath;
-    if (!!kern_path("/data/adb/ksud", 0, &kpath))
+    if (!is_ksud_exists())
         goto no_ksud;
 
-    path_put(&kpath);
     pr_info("do_execveat_common su->ksud!\n");
     memcpy((void *)(*filename_ptr)->name, ksud_path, sizeof(ksud_path));
     return 0;
