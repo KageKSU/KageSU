@@ -6,10 +6,24 @@
 #include <linux/slab.h>
 #include <linux/rculist.h>
 #include <linux/version.h>
+#include <linux/workqueue.h>
 #include "klog.h" // IWYU pragma: keep
 #include "manager/throne_tracker.h"
 
 #define MASK_SYSTEM (FS_CREATE | FS_MOVE | FS_EVENT_ON_CHILD)
+
+// PackageManager rewrites packages.list several times during a single
+// install/uninstall, and the event arrives in fsnotify callback context.
+// Defer the heavy rescan (/data/app walk + APK signature checks) to a
+// workqueue and debounce a burst of writes into a single run once they
+// settle, instead of running it synchronously on every event.
+#define THRONE_DEBOUNCE_MS 100
+
+static void throne_work_fn(struct work_struct *work)
+{
+    track_throne(false);
+}
+static DECLARE_DELAYED_WORK(throne_dwork, throne_work_fn);
 
 struct watch_dir {
     const char *path;
@@ -30,7 +44,7 @@ static int ksu_handle_inode_event(struct fsnotify_mark *mark, u32 mask, struct i
         return 0;
     if (file_name->len == 13 && !memcmp(file_name->name, "packages.list", 13)) {
         pr_info("packages.list detected: %d\n", mask);
-        track_throne(false);
+        mod_delayed_work(system_unbound_wq, &throne_dwork, msecs_to_jiffies(THRONE_DEBOUNCE_MS));
     }
     return 0;
 }
@@ -119,6 +133,7 @@ int ksu_observer_init(void)
 void __exit ksu_observer_exit(void)
 {
     unwatch_one_dir(&g_watch);
+    cancel_delayed_work_sync(&throne_dwork);
     fsnotify_put_group(g);
     pr_info("observer exit done\n");
 }
