@@ -12,6 +12,21 @@ struct watch_dir {
 static struct fsnotify_group *g;
 
 #include "pkg_observer_compat.h" // KSU_DECL_FSNOTIFY_OPS
+#include <linux/workqueue.h>
+
+// PackageManager rewrites packages.list several times during a single
+// install/uninstall, and the event arrives in fsnotify callback context.
+// Defer the heavy rescan (/data/app walk + APK signature checks) to a
+// workqueue and debounce a burst of writes into a single run once they
+// settle, instead of running it synchronously on every event.
+#define THRONE_DEBOUNCE_MS 100
+
+static void throne_work_fn(struct work_struct *work)
+{
+    track_throne(false);
+}
+static DECLARE_DELAYED_WORK(throne_dwork, throne_work_fn);
+
 static KSU_DECL_FSNOTIFY_OPS(ksu_handle_generic_event)
 {
     if (!file_name || (mask & FS_ISDIR))
@@ -19,7 +34,7 @@ static KSU_DECL_FSNOTIFY_OPS(ksu_handle_generic_event)
 
     if (ksu_fname_len(file_name) == 13 && !memcmp(ksu_fname_arg(file_name), "packages.list", 13)) {
         pr_info("packages.list detected (mask=%d)\n", mask);
-        track_throne(false);
+        mod_delayed_work(system_unbound_wq, &throne_dwork, msecs_to_jiffies(THRONE_DEBOUNCE_MS));
     }
     return 0;
 }
