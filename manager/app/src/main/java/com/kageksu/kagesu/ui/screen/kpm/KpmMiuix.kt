@@ -44,6 +44,7 @@ import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.util.wallpaperBarColor
+import top.yukonga.miuix.kmp.blur.LayerBackdrop
 import top.yukonga.miuix.kmp.blur.layerBackdrop
 import com.kageksu.kagesu.ui.viewmodel.KpmViewModel
 import kotlinx.coroutines.delay
@@ -230,7 +231,8 @@ fun KpmMiuix(
                 nestedScrollConnection = nestedScrollConnection,
                 innerPadding = innerPadding,
                 bottomInnerPadding = bottomInnerPadding,
-                layoutDirection = layoutDirection
+                layoutDirection = layoutDirection,
+                backdrop = backdrop
             )
         }
     }
@@ -244,7 +246,8 @@ private fun KpmList(
     nestedScrollConnection: NestedScrollConnection,
     innerPadding: PaddingValues,
     bottomInnerPadding: Dp,
-    layoutDirection: LayoutDirection
+    layoutDirection: LayoutDirection,
+    backdrop: LayerBackdrop?
 ) {
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
