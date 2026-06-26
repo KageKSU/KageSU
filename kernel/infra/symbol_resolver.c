@@ -131,7 +131,9 @@ static __nocfi void *resolve_symbol_variant(const char *symbol_name, size_t symb
     if (kallsyms_on_each_symbol_fn) {
         kallsyms_on_each_symbol_fn(lookup_symbol_variant_cb, &ctx);
     }
-    // TODO: iterate kallsyms by sprint_symbol
+    // If kallsyms_on_each_symbol is unavailable we cannot enumerate symbol
+    // variants here; the caller falls back to an exact-name lookup, so we
+    // intentionally avoid any unsafe sprint_symbol address scan.
 #else
     kallsyms_on_each_symbol(lookup_symbol_variant_cb, &ctx);
 #endif

@@ -648,9 +648,9 @@ void __init ksu_ksud_init()
 
 void __exit ksu_ksud_exit()
 {
-    // TODO:
-    // this should be done before unregister vfs_read_kp
-    // stop_init_rc_hook();
+    // The init.rc read/fstat hooks are already removed at runtime via
+    // stop_init_rc_hook() after the first init.rc read, so no teardown is
+    // needed here (this __exit path is unused in a built-in kernel anyway).
     unregister_kprobe(&input_event_kp);
 
     if (module_rc_buf) {
