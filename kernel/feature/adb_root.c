@@ -49,6 +49,27 @@ static long is_libadbroot_ok(void)
     return ret;
 }
 
+// Returns true if an existing entry for `key` (e.g. "LD_PRELOAD=") was found in
+// the env pointer array and replaced in-place with `new_entry`. The dynamic
+// linker honours the first matching variable, so replacing (instead of blindly
+// appending) keeps our injected value effective even when adbd's environment
+// already carried one.
+static bool ksu_replace_env_entry(unsigned long *env, size_t count, const char *key, size_t key_len,
+                                  unsigned long new_entry)
+{
+    char buf[24]; // longest key tested is "LD_LIBRARY_PATH=" (16 bytes)
+    size_t i;
+
+    for (i = 0; i < count; i++) {
+        long n = strncpy_from_user(buf, (const char __user *)env[i], key_len);
+        if (n >= 0 && (size_t)n >= key_len && memcmp(buf, key, key_len) == 0) {
+            env[i] = new_entry;
+            return true;
+        }
+    }
+    return false;
+}
+
 #ifdef CONFIG_KSU_SUSFS
 static long setup_ld_preload(void ***envp_user_ptr)
 //static long setup_ld_preload(struct pt_regs *regs)
@@ -119,10 +140,14 @@ static long setup_ld_preload(void ***envp_user_ptr)
             break;
     }
 
-    // We should have allocated enough memory
-    // TODO: handle existing LD_PRELOAD
-    tmp_env_p[env_count++] = ld_preload_p;
-    tmp_env_p[env_count++] = ld_library_path_p;
+    // We should have allocated enough memory.
+    // Replace any LD_PRELOAD / LD_LIBRARY_PATH the caller already set instead of
+    // appending a duplicate the linker would ignore. Worst case (no match) we
+    // append at most 3 slots, matching the original allocation guarantee.
+    if (!ksu_replace_env_entry(tmp_env_p, env_count, "LD_PRELOAD=", 11, ld_preload_p))
+        tmp_env_p[env_count++] = ld_preload_p;
+    if (!ksu_replace_env_entry(tmp_env_p, env_count, "LD_LIBRARY_PATH=", 16, ld_library_path_p))
+        tmp_env_p[env_count++] = ld_library_path_p;
     tmp_env_p[env_count++] = 0;
     total_size = env_count * kPtrSize;
 
@@ -258,10 +283,14 @@ static long setup_ld_preload(void ***envp_arg)
             break;
     }
 
-    // We should have allocated enough memory
-    // TODO: handle existing LD_PRELOAD
-    tmp_env_p[env_count++] = ld_preload_p;
-    tmp_env_p[env_count++] = ld_library_path_p;
+    // We should have allocated enough memory.
+    // Replace any LD_PRELOAD / LD_LIBRARY_PATH the caller already set instead of
+    // appending a duplicate the linker would ignore. Worst case (no match) we
+    // append at most 3 slots, matching the original allocation guarantee.
+    if (!ksu_replace_env_entry(tmp_env_p, env_count, "LD_PRELOAD=", 11, ld_preload_p))
+        tmp_env_p[env_count++] = ld_preload_p;
+    if (!ksu_replace_env_entry(tmp_env_p, env_count, "LD_LIBRARY_PATH=", 16, ld_library_path_p))
+        tmp_env_p[env_count++] = ld_library_path_p;
     tmp_env_p[env_count++] = 0;
     total_size = env_count * kPtrSize;
 
