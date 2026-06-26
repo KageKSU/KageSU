@@ -77,12 +77,21 @@ static const char su_path[] = SU_PATH;
 
 static bool is_ksud_exists()
 {
+    // ksud is installed once and is never removed while running, so latch
+    // the result: once it exists, skip the kern_path() walk on every later
+    // su probe. We never cache a negative, so early boot (before /data) is
+    // unaffected.
+    static bool cached __read_mostly;
     struct path path;
+
+    if (READ_ONCE(cached))
+        return true;
 
     if (kern_path(KSUD_PATH, 0, &path) < 0) {
         return false;
     }
     path_put(&path);
+    WRITE_ONCE(cached, true);
     return true;
 }
 
