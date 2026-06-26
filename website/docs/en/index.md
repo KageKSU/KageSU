@@ -2,19 +2,19 @@
 layout: home
 
 hero:
-  name: 'SukiSU-Ultra'
+  name: 'KageSU'
   text: 'Next-Generation Android Root Solution'
   tagline: Advanced kernel-based root management for Android devices
   image:
     src: /logo.svg
-    alt: SukiSU-Ultra
+    alt: KageSU
   actions:
     - theme: brand
       text: Get Started
       link: /guide/
     - theme: alt
       text: View on GitHub
-      link: https://github.com/sukisu-ultra/sukisu-ultra
+      link: https://github.com/KageKSU/KageSU
 
 features:
   - title: Kernel-based su and root access management

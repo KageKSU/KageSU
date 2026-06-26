@@ -1,7 +1,7 @@
 {
-  "name": "sukisu-ultra-docs",
+  "name": "kagesu-docs",
   "version": "2.0.0",
-  "description": "SukiSU-Ultra Documentation - Next-Generation Android Root Solution",
+  "description": "KageSU Documentation - Next-Generation Android Root Solution",
   "type": "module",
   "scripts": {
     "dev": "tsx scripts/rebuild-ico.ts && tsx scripts/sync-favicons.ts && vitepress dev docs --host",
@@ -18,17 +18,17 @@
     "android",
     "root",
     "kernelsu",
-    "sukisu",
+    "kagesu",
     "documentation",
     "vitepress"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/sukisu-ultra/sukisu-ultra.git"
+    "url": "https://github.com/KageKSU/KageSU.git"
   },
-  "homepage": "https://sukisu.org",
+  "homepage": "https://kagesu.palaz.uk",
   "bugs": {
-    "url": "https://github.com/sukisu-ultra/sukisu-ultra/issues"
+    "url": "https://github.com/KageKSU/KageSU/issues"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

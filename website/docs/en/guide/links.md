@@ -6,11 +6,11 @@
 If you need to submit a translation for the manager, please visit our Crowdin project
 :::
 
-**Translation Platform:** [Crowdin - SukiSU-Ultra](https://crowdin.com/project/SukiSU-Ultra)
+**Translation Platform:** [Crowdin - KageSU](https://crowdin.com/project/KageSU)
 
 ## 🔧 Projects & Builds
 
-Projects compiled based on Sukisu and susfs:
+Projects compiled based on KageSU and susfs:
 
 ### GKI Builds
 
@@ -36,7 +36,7 @@ Automated OnePlus kernel builds with MKSU and SUSFS
 Connect with other users, get support, and stay updated
 :::
 
-**Main Group:** [Tg Group](https://t.me/sukiksu)
+**Main Group:** [Tg Group](https://t.me/KageKSU)
 
 ### Test Builds
 
@@ -44,7 +44,7 @@ Connect with other users, get support, and stay updated
 Test builds are experimental and may be unstable
 :::
 
-**Test Builds Channel:** [Latest Test Build](https://t.me/Sukiksu/7114)
+**Test Builds Channel:** [Latest Test Build](https://t.me/KageKSU)
 
 ## Downloads & Releases
 
@@ -54,7 +54,7 @@ Test builds are experimental and may be unstable
 Download the latest stable versions from our GitHub releases
 :::
 
-**GitHub Releases:** [SukiSU-Ultra Releases](https://github.com/sukisu-ultra/sukisu-ultra/releases)
+**GitHub Releases:** [KageSU Releases](https://github.com/KageKSU/KageSU/releases)
 
 ### Issue Reporting
 
@@ -62,16 +62,16 @@ Download the latest stable versions from our GitHub releases
 Report bugs or request new features on our GitHub repository
 :::
 
-**GitHub Issues:** [Report Issues](https://github.com/sukisu-ultra/sukisu-ultra/issues)
+**GitHub Issues:** [Report Issues](https://github.com/KageKSU/KageSU/issues)
 
 ## 🔗 Quick Links Summary
 
 | Resource           | Link                                                                         | Description            |
 | ------------------ | ---------------------------------------------------------------------------- | ---------------------- |
-| **Translations**   | [Crowdin](https://crowdin.com/project/SukiSU-Ultra)                          | Submit translations    |
-| **Telegram Group** | [t.me/sukiksu](https://t.me/sukiksu)                                         | Community support      |
-| **Test Builds**    | [Test Channel](https://t.me/Sukiksu/7114)                                    | Experimental builds    |
-| **Releases**       | [GitHub Releases](https://github.com/sukisu-ultra/sukisu-ultra/releases)     | Stable downloads       |
-| **Issues**         | [GitHub Issues](https://github.com/sukisu-ultra/sukisu-ultra/issues)         | Bug reports            |
+| **Translations**   | [Crowdin](https://crowdin.com/project/KageSU)                          | Submit translations    |
+| **Telegram Group** | [t.me/KageKSU](https://t.me/KageKSU)                                         | Community support      |
+| **Test Builds**    | [Test Channel](https://t.me/KageKSU)                                    | Experimental builds    |
+| **Releases**       | [GitHub Releases](https://github.com/KageKSU/KageSU/releases)     | Stable downloads       |
+| **Issues**         | [GitHub Issues](https://github.com/KageKSU/KageSU/issues)         | Bug reports            |
 | **GKI Builds**     | [GKI Repository](https://github.com/ShirkNeko/GKI_KernelSU_SUSFS)            | Universal builds       |
 | **OnePlus Builds** | [OnePlus Repository](https://github.com/ShirkNeko/Action_OnePlus_MKSU_SUSFS) | Device-specific builds |

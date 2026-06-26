@@ -1,6 +1,6 @@
 # 安装参考
 
-::: details 将会了解 SukiSU-Ultra 安装过程
+::: details 将会了解 KageSU 安装过程
 [[toc]]
 :::
 
@@ -77,28 +77,28 @@
 
 ### 手动内核集成
 
-面向希望将 SukiSU Ultra 集成到自己内核构建中的高级用户
+面向希望将 KageSU 集成到自己内核构建中的高级用户
 
 #### 主分支（GKI）
 
 ```sh [bash]
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s main
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s main
 ```
 
 #### 非 GKI 分支
 
 ```sh [bash]
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s builtin
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s builtin
 ```
 
 #### SUSFS-Dev 分支（推荐）
 
 ```sh [bash]
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-dev
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s susfs-dev
 ```
 
 ```bash
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
+curl -LSs "https://raw.githubusercontent.com/KageKSU/KageSU/main/kernel/setup.sh" | bash -s susfs-main
 ```
 
 ::: warning 必需的内核配置
@@ -117,8 +117,8 @@ curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kern
 #### 步骤：
 
 1. 系统更新后重启前
-   - OTA 安装后不要立即重启，将 SukiSU Ultra 安装到第二插槽
-   - 打开 SukiSU Ultra 管理器，在**刷入/修补内核**界面选择 **GKI/non_GKI install**，选择您的 `AnyKernel3` 内核 `zip` 文件，选择与当前运行插槽相对的插槽然后刷入重启。
+   - OTA 安装后不要立即重启，将 KageSU 安装到第二插槽
+   - 打开 KageSU 管理器，在**刷入/修补内核**界面选择 **GKI/non_GKI install**，选择您的 `AnyKernel3` 内核 `zip` 文件，选择与当前运行插槽相对的插槽然后刷入重启。
 
 2. 替代方案：LKM 模式
 
@@ -132,7 +132,7 @@ curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kern
 
 安装后，验证一切是否正常工作，
 
-- 打开 SukiSU Ultra 管理器检查 root 工作状态
+- 打开 KageSU 管理器检查 root 工作状态
 - 使用 root 权限的应用程序来验证 root 访问是否工作正常
 - 在设置 -> 关于手机中检查内核版本
 
@@ -141,8 +141,8 @@ curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kern
 如果在安装过程中遇到问题：
 
 1. 查看我们的[兼容性指南](./compatibility)了解设备要求
-2. 访问我们的 [GitHub 仓库](https://github.com/sukisu-ultra/sukisu-ultra)获取支持
-3. 加入我们的 [Telegram 社区](https://t.me/sukiksu)获取帮助
+2. 访问我们的 [GitHub 仓库](https://github.com/KageKSU/KageSU)获取支持
+3. 加入我们的 [Telegram 社区](https://t.me/KageKSU)获取帮助
 
 ::: danger 安全提醒
 **始终有备用计划！** 保留您的原始 `boot.img/init_boot.img` 并知道如何在出现问题时恢复设备。

@@ -13,7 +13,7 @@ export default defineConfig({
 
     search: { options: searchOptions() },
     editLink: {
-      pattern: 'https://github.com/sukisu-ultra/sukisu-ultra/edit/main/docs/:path',
+      pattern: 'https://github.com/KageKSU/KageSU/edit/main/docs/:path',
       text: '在 GitHub 上编辑此页面',
     },
 

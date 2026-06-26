@@ -1,6 +1,10 @@
-# 什么是 SukiSU-Ultra？
+# 什么是 KageSU？
 
-一个 Android 上基于内核的 root 方案，由 [`tiann/KernelSU`](https://github.com/tiann/KernelSU) 分叉而来，添加了一些有趣的变更。
+一个 Android 上基于内核的 root 方案。
+
+::: info 基于 SukiSU-Ultra
+**KageSU** 是 [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) 的分支，而 SukiSU-Ultra 本身基于 [KernelSU](https://github.com/tiann/KernelSU)。衷心感谢这两个上游项目。
+:::
 
 ## 特性
 
@@ -13,11 +17,11 @@
 
 ## 如何安装
 
-了解如何在您的设备上 **[安装](./installation)** SukiSU-Ultra
+了解如何在您的设备上 **[安装](./installation)** KageSU
 
 ## 如何集成
 
-阅读 **[集成](./how-to-integrate.md)** 将 SukiSU 集成到你的内核中
+阅读 **[集成](./how-to-integrate.md)** 将 KageSU 集成到你的内核中
 
 ## 了解兼容性
 
@@ -31,5 +35,5 @@
 
 需要帮助？我们在这里为您提供帮助：
 
-- **错误报告**: [GitHub Issues](https://github.com/SukiSU-Ultra/SukiSU-Ultra/issues)
+- **错误报告**: [GitHub Issues](https://github.com/KageKSU/KageSU/issues)
 - **直接支持**: 联系开发者处理关键问题
