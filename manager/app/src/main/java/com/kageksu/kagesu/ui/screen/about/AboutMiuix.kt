@@ -268,7 +268,7 @@ private fun AboutContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    top = logoPadding.calculateTopPadding() + 52.dp,
+                    top = logoPadding.calculateTopPadding() + 12.dp,
                     start = logoPadding.calculateStartPadding(layoutDirection),
                     end = logoPadding.calculateEndPadding(layoutDirection),
                 )
@@ -280,7 +280,7 @@ private fun AboutContent(
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(120.dp)
+                    .size(160.dp)
                     .clipToBounds()
                     .graphicsLayer {
                         alpha = 1 - iconProgress
