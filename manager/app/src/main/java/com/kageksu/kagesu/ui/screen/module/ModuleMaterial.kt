@@ -105,7 +105,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.FixedScale
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -565,12 +565,13 @@ private fun ModuleShortcutSheet(
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .background(Color.White)
+                            .background(Color(0xFF11111B))
                     )
                     Image(
                         painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        modifier = Modifier.fillMaxSize(),
                         contentDescription = null,
-                        contentScale = FixedScale(1.5f)
+                        contentScale = ContentScale.Fit
                     )
                 }
             }

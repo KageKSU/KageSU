@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -280,7 +280,7 @@ private fun AboutContent(
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(120.dp)
                     .clipToBounds()
                     .graphicsLayer {
                         alpha = 1 - iconProgress
@@ -296,7 +296,7 @@ private fun AboutContent(
             ) {
                 Image(
                     modifier = Modifier
-                        .requiredSize(245.dp)
+                        .fillMaxSize()
                         .then(
                             if (enableBlur) {
                                 Modifier.textureBlur(
@@ -311,6 +311,7 @@ private fun AboutContent(
                         ),
                     painter = painterResource(id = R.drawable.ic_launcher_foreground),
                     contentDescription = null,
+                    colorFilter = if (enableBlur) null else ColorFilter.tint(colorScheme.onBackground),
                 )
             }
             Text(
@@ -363,6 +364,19 @@ private fun AboutContent(
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
             )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .graphicsLayer {
+                        alpha = 1 - versionCodeProgress
+                        scaleX = 1 - (versionCodeProgress * 0.05f)
+                        scaleY = 1 - (versionCodeProgress * 0.05f)
+                    },
+                color = colorScheme.onSurfaceVariantSummary,
+                text = "Kernel ${state.kernelVersion}",
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center,
+            )
         }
 
         // Scrollable content
@@ -404,7 +418,6 @@ private fun AboutContent(
             item(key = "about") {
                 Column(
                     modifier = Modifier
-                        .fillParentMaxHeight()
                         .padding(bottom = innerPadding.calculateBottomPadding() + 12.dp),
                 ) {
                     Card(

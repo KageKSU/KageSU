@@ -3,6 +3,7 @@ package com.kageksu.kagesu.ui.screen.about
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import android.system.Os
 import androidx.lifecycle.compose.dropUnlessResumed
 import com.kageksu.kagesu.BuildConfig
 import com.kageksu.kagesu.R
@@ -18,12 +19,13 @@ fun AboutScreen() {
         id = R.string.about_source_code,
         "<b><a href=\"https://github.com/KageKSU/KageSU\">GitHub</a></b>",
         "<b><a href=\"https://t.me/KageKSU\">Telegram</a></b>",
-        "<b><a href=\"https://kagesu.palaz.uk\">kagesu.palaz.uk</a></b>"
+        "<b><a href=\"https://kagesu.palaz.uk\">website</a></b>"
     )
     val state = AboutUiState(
         title = stringResource(R.string.about),
         appName = stringResource(R.string.app_name),
         versionName = BuildConfig.VERSION_NAME,
+        kernelVersion = Os.uname().release,
         links = extractLinks(htmlString),
     )
     val actions = AboutScreenActions(

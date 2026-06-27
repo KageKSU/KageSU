@@ -79,7 +79,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.FixedScale
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
@@ -642,12 +642,13 @@ private fun ModuleShortcutDialog(
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .background(Color.White)
+                                .background(Color(0xFF11111B))
                         )
                         Image(
                             painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                            modifier = Modifier.fillMaxSize(),
                             contentDescription = null,
-                            contentScale = FixedScale(1.5f)
+                            contentScale = ContentScale.Fit
                         )
                     }
                 }
