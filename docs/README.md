@@ -77,6 +77,7 @@ If you need to submit a translation for the manager, please go to [Crowdin](http
 ## Credit
 
 - [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): upstream
+- [ReSukiSU](https://github.com/ReSukiSU/ReSukiSU): multi-manager support (trusted manager certificate list)
 
 <details>
 <summary>SukiSU Ultra's credit</summary>

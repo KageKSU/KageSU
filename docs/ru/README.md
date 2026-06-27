@@ -77,6 +77,7 @@
 ## Благодарности
 
 - [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): вышестоящий проект
+- [ReSukiSU](https://github.com/ReSukiSU/ReSukiSU): поддержка нескольких менеджеров (список доверенных сертификатов менеджеров)
 
 <details>
 <summary>Благодарности SukiSU Ultra</summary>

@@ -77,6 +77,7 @@ Yönetici için bir çeviri göndermek istiyorsanız, lütfen [Crowdin](https://
 ## Katkıda Bulunanlar
 
 - [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): üst proje (upstream)
+- [ReSukiSU](https://github.com/ReSukiSU/ReSukiSU): çoklu yönetici desteği (güvenilen yönetici sertifika listesi)
 
 <details>
 <summary>SukiSU Ultra'nın katkıda bulunanları</summary>

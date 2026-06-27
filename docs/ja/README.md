@@ -76,6 +76,7 @@ Android デバイス向けのカーネルベースの root ソリューション
 ## クレジット
 
 - [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): アップストリーム
+- [ReSukiSU](https://github.com/ReSukiSU/ReSukiSU): マルチマネージャー対応（信頼するマネージャー証明書リスト）
 
 <details>
 <summary>SukiSU Ultra のクレジット</summary>

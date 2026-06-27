@@ -77,6 +77,7 @@
 ## 鸣谢
 
 - [SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)：上游
+- [ReSukiSU](https://github.com/ReSukiSU/ReSukiSU)：多管理器支持（受信任的管理器证书列表）
 
 <details>
 <summary>SukiSU Ultra 的鸣谢</summary>

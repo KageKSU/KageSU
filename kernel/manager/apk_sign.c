@@ -21,6 +21,33 @@
 #include "uapi/app_profile.h"
 #include "klog.h" // IWYU pragma: keep
 
+// Manager APKs trusted to be granted root, identified by the size + SHA-256 of
+// their v2 signing certificate (not by package name). The multi-manager scheme
+// and the third-party certificate list below are adapted from ReSukiSU
+// (https://github.com/ReSukiSU/ReSukiSU, kernel/manager/manager_sign.h).
+//
+// The first entries come from Kbuild (EXPECTED_*) so CI can inject the KageSU
+// release cert; keep them in sync with kernel/Kbuild. The builtin branch keeps
+// an equivalent list in this same file.
+struct apk_sign_key {
+    unsigned int size;
+    const char *sha256;
+};
+
+static const struct apk_sign_key apk_sign_keys[] = {
+    { EXPECTED_SIZE, EXPECTED_HASH }, // SukiSU-Ultra (Kbuild primary)
+#ifdef EXPECTED_SIZE2
+    { EXPECTED_SIZE2, EXPECTED_HASH2 }, // KageSU (Kbuild release cert)
+#endif
+    { 0x033b, "c371061b19d8c7d7d6133c6a9bafe198fa944e50c1b31c9d8daa8d7f1fc2d2d6" }, // KernelSU (tiann)
+    { 0x180, "7e0c6d7278a3bb8e364e0fcba95afaf3666cf5ff3c245a3b63c8833bd0445cc4" }, // KernelSU (5ec1cff)
+    { 0x3e6, "79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7" }, // KernelSU Next
+    { 0x396, "f415f4ed9435427e1fdf7f1fccd4dbc07b3d6b8751e4dbcec6f19671f427870b" }, // RKSU (rsuntk)
+    { 0x381, "52d52d8c8bfbe53dc2b6ff1c613184e2c03013e090fe8905d8e3d5dc2658c2e4" }, // WKSU
+    { 0x375, "484fcba6e6c43b1fb09700633bf2fb4758f13cb0b2f4457b80d075084b26c588" }, // KowSU (KOWX712)
+    { 0x377, "d3469712b6214462764a1d8d3e5cbe1d6819a0b629791b9f4101867821f1df64" }, // ReSukiSU
+};
+
 struct sdesc {
     struct shash_desc shash;
     char ctx[];
@@ -356,12 +383,14 @@ bool is_manager_apk(char *path)
         return false;
     }
 #endif
-    if (check_v2_signature(path, EXPECTED_SIZE, EXPECTED_HASH)) {
-        return true;
+    // Accept any trusted manager cert (Kbuild-configured KageSU/SukiSU plus the
+    // bundled third-party managers). check_block()/check_v2_signature() are left
+    // exactly as upstream so SukiSU updates merge cleanly; only this loop and
+    // the apk_sign_keys[] table are fork-local.
+    int i;
+    for (i = 0; i < ARRAY_SIZE(apk_sign_keys); i++) {
+        if (check_v2_signature(path, apk_sign_keys[i].size, apk_sign_keys[i].sha256))
+            return true;
     }
-#ifdef EXPECTED_SIZE2
-    return check_v2_signature(path, EXPECTED_SIZE2, EXPECTED_HASH2);
-#else
     return false;
-#endif
 }
