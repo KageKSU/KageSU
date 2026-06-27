@@ -86,7 +86,7 @@ fun AboutScreenMaterial(
                     ) {
                         Image(
                             modifier = Modifier.fillMaxSize(),
-                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                            painter = painterResource(id = R.drawable.ic_logo),
                             contentDescription = null,
                             contentScale = ContentScale.Fit,
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
@@ -103,7 +103,7 @@ fun AboutScreenMaterial(
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
                     Text(
-                        text = "Kernel ${state.kernelVersion}",
+                        text = state.kernelVersion,
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
                 }

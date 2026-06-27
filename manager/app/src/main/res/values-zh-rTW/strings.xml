@@ -72,7 +72,8 @@
     <string name="home_click_to_learn_kernelsu">知曉安裝、使用 KernelSU 本體與其模組功能的方法</string>
     <string name="home_support_title">協助發展</string>
     <string name="home_support_content">KernelSU 一向以免費與開放原始碼自居，矢志不渝。若想協助我們，可以用小額捐款表達你對專案發展的大力支持。</string>
-    <string name="about_source_code"><![CDATA[前往 %1$s 檢閱原始碼<br/>前往 %2$s 加入頻道<br/>瀏覽我們的網站：%3$s]]></string>
+    <string name="about_source_code"><![CDATA[前往 %1$s 檢閱原始碼<br/>前往 %2$s 加入頻道]]></string>
+    <string name="about_website">瀏覽我們的網站</string>
     <string name="profile_default">預設</string>
     <string name="profile_template">模版</string>
     <string name="profile_custom">自定義</string>

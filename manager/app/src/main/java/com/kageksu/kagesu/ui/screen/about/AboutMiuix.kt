@@ -309,7 +309,7 @@ private fun AboutContent(
                                 )
                             } else Modifier
                         ),
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    painter = painterResource(id = R.drawable.ic_logo),
                     contentDescription = null,
                     colorFilter = if (enableBlur) null else ColorFilter.tint(colorScheme.onBackground),
                 )
@@ -373,7 +373,7 @@ private fun AboutContent(
                         scaleY = 1 - (versionCodeProgress * 0.05f)
                     },
                 color = colorScheme.onSurfaceVariantSummary,
-                text = "Kernel ${state.kernelVersion}",
+                text = state.kernelVersion,
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
             )

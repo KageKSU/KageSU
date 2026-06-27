@@ -15,12 +15,12 @@ import com.kageksu.kagesu.ui.navigation3.LocalNavigator
 fun AboutScreen() {
     val navigator = LocalNavigator.current
     val uriHandler = LocalUriHandler.current
+    val websiteText = stringResource(R.string.about_website)
     val htmlString = stringResource(
         id = R.string.about_source_code,
         "<b><a href=\"https://github.com/KageKSU/KageSU\">GitHub</a></b>",
         "<b><a href=\"https://t.me/KageKSU\">Telegram</a></b>",
-        "<b><a href=\"https://kagesu.palaz.uk\">website</a></b>"
-    )
+    ) + "<br/><b><a href=\"https://kagesu.palaz.uk\">$websiteText</a></b>"
     val state = AboutUiState(
         title = stringResource(R.string.about),
         appName = stringResource(R.string.app_name),
