@@ -77,12 +77,12 @@ fun AboutScreenMaterial(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 12.dp)
-                        .padding(top = 16.dp, bottom = 48.dp),
+                        .padding(vertical = 48.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box(
                         contentAlignment = Alignment.Center,
-                        modifier = Modifier.size(128.dp)
+                        modifier = Modifier.size(96.dp)
                     ) {
                         Image(
                             modifier = Modifier.fillMaxSize(),
