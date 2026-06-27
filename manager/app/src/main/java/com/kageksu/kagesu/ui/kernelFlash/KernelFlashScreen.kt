@@ -45,7 +45,10 @@ fun KernelFlashScreen(
 
     var logText by rememberSaveable { mutableStateOf("") }
     var showFloatAction by rememberSaveable { mutableStateOf(false) }
-    val logContent = rememberSaveable { StringBuilder() }
+    // StringBuilder can't be stored in a Bundle, so rememberSaveable throws on
+    // state-save (e.g. rotating/backgrounding mid-flash). Use remember; the real
+    // flash state is kept in horizonKernelState. (KernelSU PR #3474, via ReSukiSU)
+    val logContent = remember { StringBuilder() }
 
     val horizonKernelState = remember {
         if (KernelFlashStateHolder.currentState != null &&
