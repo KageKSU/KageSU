@@ -54,7 +54,7 @@
     <string name="home_click_to_learn_kernelsu">KernelSU のインストール方法やモジュールの使い方はこちら</string>
     <string name="home_support_title">支援する</string>
     <string name="home_support_content">KernelSU はこれからもずっと無料でオープンソースです。寄付をして頂くことで、開発を支援していただけます。</string>
-    <string name="about_source_code"><![CDATA[%1$s でソースコードを表示<br/>%2$s チャンネルに参加]]></string>
+    <string name="about_source_code"><![CDATA[%1$s でソースコードを表示<br/>%2$s チャンネルに参加<br/>ウェブサイトもご覧ください:%3$s]]></string>
     <string name="profile_default">既定</string>
     <string name="profile_template">テンプレート</string>
     <string name="profile_custom">カスタム</string>
