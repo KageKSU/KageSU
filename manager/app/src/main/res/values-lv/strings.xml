@@ -130,4 +130,15 @@
     <string name="settings_kernel_umount">Kodola atvienošana</string>
     <string name="settings_kernel_umount_summary">Kodola līmeņa atvienošanas uzvedība, ko kontrolē KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Novērš turpmāku privilēģiju paaugstināšanu, izmantojot KernelSU, šī root profila kontekstā.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Dublēšana un atjaunošana</string>
+    <string name="config_backup_summary">Eksportējiet vai atjaunojiet lietotņu profilus, veidnes un iestatījumus</string>
+    <string name="config_backup_export">Eksportēt konfigurāciju</string>
+    <string name="config_backup_export_summary">Saglabāt root profilus, veidnes un funkciju iestatījumus failā</string>
+    <string name="config_backup_import">Atjaunot konfigurāciju</string>
+    <string name="config_backup_import_summary">Lietot iepriekš eksportētu konfigurācijas failu</string>
+    <string name="config_backup_export_success">Konfigurācija eksportēta</string>
+    <string name="config_backup_export_failed">Eksportēšana neizdevās: %1$s</string>
+    <string name="config_backup_import_success">Atjaunots: pielietoti %1$d profili, izlaisti %2$d</string>
+    <string name="config_backup_import_failed">Atjaunošana neizdevās: %1$s</string>
 </resources>

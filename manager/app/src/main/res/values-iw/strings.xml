@@ -82,4 +82,15 @@
     <string name="settings_kernel_umount">ביטול טעינת קרנל</string>
     <string name="settings_kernel_umount_summary">התנהגות ביטול טעינה ברמת הקרנל הנשלטת על ידי KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">מונע הסלמת הרשאות נוספת דרך KernelSU מתוך ההקשר של פרופיל root זה.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">גיבוי ושחזור</string>
+    <string name="config_backup_summary">ייצוא או שחזור של פרופילי אפליקציות, תבניות והגדרות</string>
+    <string name="config_backup_export">ייצוא תצורה</string>
+    <string name="config_backup_export_summary">שמירת פרופילי root, תבניות והגדרות תכונות לקובץ</string>
+    <string name="config_backup_import">שחזור תצורה</string>
+    <string name="config_backup_import_summary">החלת קובץ תצורה שיוצא בעבר</string>
+    <string name="config_backup_export_success">התצורה יוצאה</string>
+    <string name="config_backup_export_failed">הייצוא נכשל: %1$s</string>
+    <string name="config_backup_import_success">שוחזר: %1$d פרופילים הוחלו, %2$d דולגו</string>
+    <string name="config_backup_import_failed">השחזור נכשל: %1$s</string>
 </resources>

@@ -65,4 +65,15 @@
     <string name="settings_kernel_umount">جداسازی هسته</string>
     <string name="settings_kernel_umount_summary">رفتار جداسازی در سطح هسته که توسط KernelSU کنترل می‌شود</string>
     <string name="profile_flags_desc_no_new_privs">از افزایش بیشتر سطح دسترسی از طریق KernelSU در چارچوب این پروفایل روت جلوگیری می‌کند.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">پشتیبان‌گیری و بازیابی</string>
+    <string name="config_backup_summary">صادرات یا بازیابی نمایه‌های برنامه، الگوها و تنظیمات</string>
+    <string name="config_backup_export">صدور پیکربندی</string>
+    <string name="config_backup_export_summary">ذخیره نمایه‌های روت، الگوها و تنظیمات ویژگی‌ها در یک فایل</string>
+    <string name="config_backup_import">بازیابی پیکربندی</string>
+    <string name="config_backup_import_summary">اعمال فایل پیکربندی صادرشده قبلی</string>
+    <string name="config_backup_export_success">پیکربندی صادر شد</string>
+    <string name="config_backup_export_failed">صادرات ناموفق بود: %1$s</string>
+    <string name="config_backup_import_success">بازیابی شد: %1$d نمایه اعمال شد، %2$d رد شد</string>
+    <string name="config_backup_import_failed">بازیابی ناموفق بود: %1$s</string>
 </resources>

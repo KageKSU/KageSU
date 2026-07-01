@@ -140,4 +140,15 @@
     <string name="refresh_refresh">Opdaterer…</string>
     <string name="refresh_complete">Opdateret</string>
     <string name="profile_flags_desc_no_new_privs">Forhindrer yderligere priviligeringseskalering via KernelSU inden for konteksten af denne root-profil.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Sikkerhedskopiering og gendannelse</string>
+    <string name="config_backup_summary">Eksportér eller gendan app-profiler, skabeloner og indstillinger</string>
+    <string name="config_backup_export">Eksportér konfiguration</string>
+    <string name="config_backup_export_summary">Gem root-profiler, skabeloner og funktionsindstillinger til en fil</string>
+    <string name="config_backup_import">Gendan konfiguration</string>
+    <string name="config_backup_import_summary">Anvend en tidligere eksporteret konfigurationsfil</string>
+    <string name="config_backup_export_success">Konfiguration eksporteret</string>
+    <string name="config_backup_export_failed">Eksport mislykkedes: %1$s</string>
+    <string name="config_backup_import_success">Gendannet: %1$d profiler anvendt, %2$d sprunget over</string>
+    <string name="config_backup_import_failed">Gendannelse mislykkedes: %1$s</string>
 </resources>

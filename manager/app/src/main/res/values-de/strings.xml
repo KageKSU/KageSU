@@ -142,4 +142,15 @@
     <string name="install_upload_lkm_file">Nutze lokale LKM Datei</string>
     <string name="install_only_support_ko_file">Nur .ko Dateien unterstützt</string>
     <string name="profile_flags_desc_no_new_privs">Verhindert eine weitere Rechteausweitung über KernelSU innerhalb dieses Root-Profils.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Sichern &amp; Wiederherstellen</string>
+    <string name="config_backup_summary">App-Profile, Vorlagen und Einstellungen exportieren oder wiederherstellen</string>
+    <string name="config_backup_export">Konfiguration exportieren</string>
+    <string name="config_backup_export_summary">Root-Profile, Vorlagen und Funktionseinstellungen in eine Datei speichern</string>
+    <string name="config_backup_import">Konfiguration wiederherstellen</string>
+    <string name="config_backup_import_summary">Eine zuvor exportierte Konfigurationsdatei anwenden</string>
+    <string name="config_backup_export_success">Konfiguration exportiert</string>
+    <string name="config_backup_export_failed">Export fehlgeschlagen: %1$s</string>
+    <string name="config_backup_import_success">Wiederhergestellt: %1$d Profile angewendet, %2$d übersprungen</string>
+    <string name="config_backup_import_failed">Wiederherstellung fehlgeschlagen: %1$s</string>
 </resources>

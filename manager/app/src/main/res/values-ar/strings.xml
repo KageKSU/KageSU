@@ -134,4 +134,15 @@
     <string name="settings_kernel_umount">إلغاء تحميل النواة</string>
     <string name="settings_kernel_umount_summary">سلوك إلغاء تحميل مستوى النواة الذي يسيطر عليه KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">يمنع المزيد من تصعيد الصلاحيات عبر KernelSU من داخل سياق ملف تعريف الروت هذا.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">النسخ الاحتياطي والاستعادة</string>
+    <string name="config_backup_summary">تصدير أو استعادة ملفات تعريف التطبيقات والقوالب والإعدادات</string>
+    <string name="config_backup_export">تصدير الإعدادات</string>
+    <string name="config_backup_export_summary">حفظ ملفات تعريف الروت والقوالب وإعدادات الميزات إلى ملف</string>
+    <string name="config_backup_import">استعادة الإعدادات</string>
+    <string name="config_backup_import_summary">تطبيق ملف إعدادات تم تصديره سابقًا</string>
+    <string name="config_backup_export_success">تم تصدير الإعدادات</string>
+    <string name="config_backup_export_failed">فشل التصدير: %1$s</string>
+    <string name="config_backup_import_success">تمت الاستعادة: تم تطبيق %1$d ملف تعريف، وتخطي %2$d</string>
+    <string name="config_backup_import_failed">فشلت الاستعادة: %1$s</string>
 </resources>

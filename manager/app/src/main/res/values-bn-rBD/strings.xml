@@ -52,4 +52,15 @@
     <string name="settings_kernel_umount">কার্নেল আনমাউন্ট</string>
     <string name="settings_kernel_umount_summary">KernelSU দ্বারা নিয়ন্ত্রিত কার্নেল-লেভেল আনমাউন্ট আচরণ</string>
     <string name="profile_flags_desc_no_new_privs">এই রুট প্রোফাইলের প্রেক্ষাপটে KernelSU-এর মাধ্যমে আরও বিশেষাধিকার বৃদ্ধি প্রতিরোধ করে।</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">ব্যাকআপ ও পুনরুদ্ধার</string>
+    <string name="config_backup_summary">অ্যাপ প্রোফাইল, টেমপ্লেট ও সেটিংস রপ্তানি বা পুনরুদ্ধার করুন</string>
+    <string name="config_backup_export">কনফিগারেশন রপ্তানি করুন</string>
+    <string name="config_backup_export_summary">রুট প্রোফাইল, টেমপ্লেট ও ফিচার সেটিংস একটি ফাইলে সংরক্ষণ করুন</string>
+    <string name="config_backup_import">কনফিগারেশন পুনরুদ্ধার করুন</string>
+    <string name="config_backup_import_summary">পূর্বে রপ্তানি করা কনফিগারেশন ফাইল প্রয়োগ করুন</string>
+    <string name="config_backup_export_success">কনফিগারেশন রপ্তানি হয়েছে</string>
+    <string name="config_backup_export_failed">রপ্তানি ব্যর্থ: %1$s</string>
+    <string name="config_backup_import_success">পুনরুদ্ধার হয়েছে: %1$d প্রোফাইল প্রয়োগ, %2$d বাদ</string>
+    <string name="config_backup_import_failed">পুনরুদ্ধার ব্যর্থ: %1$s</string>
 </resources>

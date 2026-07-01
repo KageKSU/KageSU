@@ -83,4 +83,15 @@
     <string name="settings_kernel_umount">कर्नेल अनमाउंट</string>
     <string name="settings_kernel_umount_summary">KernelSU द्वारा नियंत्रित कर्नेल-स्तरीय अनमाउंट व्यवहार</string>
     <string name="profile_flags_desc_no_new_privs">इस रूट प्रोफाइल के संदर्भ में KernelSU के माध्यम से आगे विशेषाधिकार बढ़ाने से रोकता है।</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">बैकअप और पुनर्स्थापना</string>
+    <string name="config_backup_summary">ऐप प्रोफ़ाइल, टेम्पलेट और सेटिंग्स निर्यात या पुनर्स्थापित करें</string>
+    <string name="config_backup_export">कॉन्फ़िगरेशन निर्यात करें</string>
+    <string name="config_backup_export_summary">रूट प्रोफ़ाइल, टेम्पलेट और फ़ीचर सेटिंग्स को फ़ाइल में सहेजें</string>
+    <string name="config_backup_import">कॉन्फ़िगरेशन पुनर्स्थापित करें</string>
+    <string name="config_backup_import_summary">पहले निर्यात की गई कॉन्फ़िगरेशन फ़ाइल लागू करें</string>
+    <string name="config_backup_export_success">कॉन्फ़िगरेशन निर्यात किया गया</string>
+    <string name="config_backup_export_failed">निर्यात विफल: %1$s</string>
+    <string name="config_backup_import_success">पुनर्स्थापित: %1$d प्रोफ़ाइल लागू, %2$d छोड़े गए</string>
+    <string name="config_backup_import_failed">पुनर्स्थापना विफल: %1$s</string>
 </resources>

@@ -82,4 +82,15 @@
     <string name="settings_kernel_umount">Branduolio atjungimas</string>
     <string name="settings_kernel_umount_summary">Branduolio lygio atjungimo elgsena, valdoma KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Neleidžia toliau didinti privilegijų per KernelSU šio root profilio kontekste.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Atsarginė kopija ir atkūrimas</string>
+    <string name="config_backup_summary">Eksportuokite arba atkurkite programų profilius, šablonus ir nustatymus</string>
+    <string name="config_backup_export">Eksportuoti konfigūraciją</string>
+    <string name="config_backup_export_summary">Įrašyti root profilius, šablonus ir funkcijų nustatymus į failą</string>
+    <string name="config_backup_import">Atkurti konfigūraciją</string>
+    <string name="config_backup_import_summary">Pritaikyti anksčiau eksportuotą konfigūracijos failą</string>
+    <string name="config_backup_export_success">Konfigūracija eksportuota</string>
+    <string name="config_backup_export_failed">Eksportuoti nepavyko: %1$s</string>
+    <string name="config_backup_import_success">Atkurta: pritaikyta profilių %1$d, praleista %2$d</string>
+    <string name="config_backup_import_failed">Atkurti nepavyko: %1$s</string>
 </resources>

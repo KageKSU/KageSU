@@ -38,4 +38,15 @@
     <string name="settings_kernel_umount">Umount kernel</string>
     <string name="settings_kernel_umount_summary">Tingkah laku umount peringkat kernel dikawal oleh KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Menghalang peningkatan keistimewaan lanjut melalui KernelSU dalam konteks profil root ini.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Sandaran &amp; pemulihan</string>
+    <string name="config_backup_summary">Eksport atau pulihkan profil apl, templat dan tetapan</string>
+    <string name="config_backup_export">Eksport konfigurasi</string>
+    <string name="config_backup_export_summary">Simpan profil root, templat dan tetapan ciri ke fail</string>
+    <string name="config_backup_import">Pulihkan konfigurasi</string>
+    <string name="config_backup_import_summary">Gunakan fail konfigurasi yang dieksport sebelum ini</string>
+    <string name="config_backup_export_success">Konfigurasi dieksport</string>
+    <string name="config_backup_export_failed">Eksport gagal: %1$s</string>
+    <string name="config_backup_import_success">Dipulihkan: %1$d profil digunakan, %2$d dilangkau</string>
+    <string name="config_backup_import_failed">Pemulihan gagal: %1$s</string>
 </resources>

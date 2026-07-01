@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="profile_flags_desc_no_new_privs">Pinipigilan ang karagdagang pagtaas ng pribilehiyo sa pamamagitan ng KernelSU mula sa loob ng konteksto ng root profile na ito.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Backup at pagpapanumbalik</string>
+    <string name="config_backup_summary">I-export o ibalik ang mga profile ng app, template at setting</string>
+    <string name="config_backup_export">I-export ang konfigurasyon</string>
+    <string name="config_backup_export_summary">I-save ang mga root profile, template at setting ng feature sa isang file</string>
+    <string name="config_backup_import">Ibalik ang konfigurasyon</string>
+    <string name="config_backup_import_summary">Ilapat ang dating na-export na file ng konfigurasyon</string>
+    <string name="config_backup_export_success">Na-export ang konfigurasyon</string>
+    <string name="config_backup_export_failed">Nabigo ang pag-export: %1$s</string>
+    <string name="config_backup_import_success">Naibalik: %1$d profile ang inilapat, %2$d ang nilaktawan</string>
+    <string name="config_backup_import_failed">Nabigo ang pagbalik: %1$s</string>
 </resources>

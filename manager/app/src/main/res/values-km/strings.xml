@@ -8,4 +8,15 @@
     <string name="settings_kernel_umount">Kernel umount</string>
     <string name="settings_kernel_umount_summary">ឥរិយាបថ umount កម្រិតខឺណែលគ្រប់គ្រងដោយ KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">ទប់ស្កាត់ការបង្កើនសិទ្ធិបន្ថែមតាមរយៈ KernelSU នៅក្នុងបរិបទនៃប្រវត្តិរូប root នេះ។</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">បម្រុងទុក និងស្ដារ</string>
+    <string name="config_backup_summary">នាំចេញ ឬស្ដារប្រវត្តិរូបកម្មវិធី គំរូ និងការកំណត់</string>
+    <string name="config_backup_export">នាំចេញការកំណត់រចនាសម្ព័ន្ធ</string>
+    <string name="config_backup_export_summary">រក្សាទុកប្រវត្តិរូប root គំរូ និងការកំណត់មុខងារទៅជាឯកសារ</string>
+    <string name="config_backup_import">ស្ដារការកំណត់រចនាសម្ព័ន្ធ</string>
+    <string name="config_backup_import_summary">អនុវត្តឯកសារកំណត់រចនាសម្ព័ន្ធដែលបាននាំចេញពីមុន</string>
+    <string name="config_backup_export_success">បាននាំចេញការកំណត់រចនាសម្ព័ន្ធ</string>
+    <string name="config_backup_export_failed">ការនាំចេញបានបរាជ័យ៖ %1$s</string>
+    <string name="config_backup_import_success">បានស្ដារ៖ ប្រវត្តិរូប %1$d ត្រូវបានអនុវត្ត, %2$d ត្រូវបានរំលង</string>
+    <string name="config_backup_import_failed">ការស្ដារបានបរាជ័យ៖ %1$s</string>
 </resources>

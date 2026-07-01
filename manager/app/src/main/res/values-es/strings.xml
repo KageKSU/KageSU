@@ -126,4 +126,15 @@
     <string name="settings_kernel_umount">Desmontaje del kernel</string>
     <string name="settings_kernel_umount_summary">Comportamiento de desmontaje a nivel de kernel controlado por KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Impide una mayor escalada de privilegios mediante KernelSU dentro del contexto de este perfil root.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Copia de seguridad y restauración</string>
+    <string name="config_backup_summary">Exporta o restaura perfiles de apps, plantillas y ajustes</string>
+    <string name="config_backup_export">Exportar configuración</string>
+    <string name="config_backup_export_summary">Guarda perfiles root, plantillas y ajustes de funciones en un archivo</string>
+    <string name="config_backup_import">Restaurar configuración</string>
+    <string name="config_backup_import_summary">Aplica un archivo de configuración exportado previamente</string>
+    <string name="config_backup_export_success">Configuración exportada</string>
+    <string name="config_backup_export_failed">Error al exportar: %1$s</string>
+    <string name="config_backup_import_success">Restaurado: %1$d perfiles aplicados, %2$d omitidos</string>
+    <string name="config_backup_import_failed">Error al restaurar: %1$s</string>
 </resources>

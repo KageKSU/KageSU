@@ -176,4 +176,15 @@
     <string name="tab_info">Інформація</string>
     <string name="safe_mode_module_disabled">Встановлення модулів вимкнено в безпечному режимі</string>
     <string name="profile_flags_desc_no_new_privs">Запобігає подальшому підвищенню привілеїв через KernelSU у контексті цього root-профілю.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Резервне копіювання та відновлення</string>
+    <string name="config_backup_summary">Експорт або відновлення профілів додатків, шаблонів і налаштувань</string>
+    <string name="config_backup_export">Експортувати конфігурацію</string>
+    <string name="config_backup_export_summary">Зберегти root-профілі, шаблони та налаштування функцій у файл</string>
+    <string name="config_backup_import">Відновити конфігурацію</string>
+    <string name="config_backup_import_summary">Застосувати раніше експортований файл конфігурації</string>
+    <string name="config_backup_export_success">Конфігурацію експортовано</string>
+    <string name="config_backup_export_failed">Помилка експорту: %1$s</string>
+    <string name="config_backup_import_success">Відновлено: застосовано профілів — %1$d, пропущено — %2$d</string>
+    <string name="config_backup_import_failed">Помилка відновлення: %1$s</string>
 </resources>

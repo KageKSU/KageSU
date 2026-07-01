@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.DeveloperMode
 import androidx.compose.material.icons.rounded.ElectricalServices
 import androidx.compose.material.icons.rounded.Fence
+import androidx.compose.material.icons.rounded.SettingsBackupRestore
 import androidx.compose.material.icons.rounded.FolderDelete
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Policy
@@ -242,6 +243,28 @@ fun SettingPagerMiuix(
                                 },
                                 onClick = {
                                     actions.onOpenTools()
+                                }
+                            )
+                        }
+                        val backupTitle = stringResource(id = R.string.config_backup_title)
+                        Card(
+                            modifier = Modifier
+                                .padding(top = 12.dp)
+                                .fillMaxWidth()
+                        ) {
+                            ArrowPreference(
+                                title = backupTitle,
+                                summary = stringResource(id = R.string.config_backup_summary),
+                                startAction = {
+                                    Icon(
+                                        Icons.Rounded.SettingsBackupRestore,
+                                        modifier = Modifier.padding(end = 6.dp),
+                                        contentDescription = backupTitle,
+                                        tint = colorScheme.onBackground
+                                    )
+                                },
+                                onClick = {
+                                    actions.onOpenBackupRestore()
                                 }
                             )
                         }

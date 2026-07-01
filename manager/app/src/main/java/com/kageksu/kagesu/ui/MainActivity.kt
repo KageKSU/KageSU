@@ -83,6 +83,7 @@ import com.kageksu.kagesu.ui.screen.module.ModulePager
 import com.kageksu.kagesu.ui.screen.modulerepo.ModuleRepoDetailScreen
 import com.kageksu.kagesu.ui.screen.modulerepo.ModuleRepoScreen
 import com.kageksu.kagesu.ui.screen.settings.SettingPager
+import com.kageksu.kagesu.ui.screen.backup.BackupRestoreScreen
 import com.kageksu.kagesu.ui.screen.settings.tools.ToolsScreen
 import com.kageksu.kagesu.ui.screen.sulog.SulogScreen
 import com.kageksu.kagesu.ui.screen.superuser.SuperUserPager
@@ -237,6 +238,7 @@ class MainActivity : ComponentActivity() {
                                 entry<Route.SuSFS> { WallpaperPage { SuSFSScreen() } }
                                 entry<Route.Tool> { WallpaperPage { ToolsScreen() } }
                                 entry<Route.UmountManager> { WallpaperPage { UmountManagerScreen() } }
+                                entry<Route.BackupRestore> { WallpaperPage { BackupRestoreScreen() } }
                             }
                         )
                     }

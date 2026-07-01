@@ -127,4 +127,15 @@
     <string name="settings_kernel_umount">Demontare kernel</string>
     <string name="settings_kernel_umount_summary">Comportament de demontare la nivel de kernel controlat de KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Împiedică escaladarea suplimentară a privilegiilor prin KernelSU în contextul acestui profil root.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Copie de rezervă și restaurare</string>
+    <string name="config_backup_summary">Exportați sau restaurați profiluri de aplicații, șabloane și setări</string>
+    <string name="config_backup_export">Exportă configurația</string>
+    <string name="config_backup_export_summary">Salvează profilurile root, șabloanele și setările funcțiilor într-un fișier</string>
+    <string name="config_backup_import">Restaurează configurația</string>
+    <string name="config_backup_import_summary">Aplică un fișier de configurație exportat anterior</string>
+    <string name="config_backup_export_success">Configurație exportată</string>
+    <string name="config_backup_export_failed">Exportul a eșuat: %1$s</string>
+    <string name="config_backup_import_success">Restaurat: %1$d profiluri aplicate, %2$d omise</string>
+    <string name="config_backup_import_failed">Restaurarea a eșuat: %1$s</string>
 </resources>

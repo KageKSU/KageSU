@@ -602,4 +602,14 @@
     <string name="home_kernel_full_version">Kernel full version</string>
     <string name="settings_show_fullstatus">Show FullStatus</string>
     <string name="settings_show_fullstatus_summary">Display device FullStatus in home page info card</string>
+    <string name="config_backup_title">Backup &amp; restore</string>
+    <string name="config_backup_summary">Export or restore app profiles, templates and settings</string>
+    <string name="config_backup_export">Export configuration</string>
+    <string name="config_backup_export_summary">Save root profiles, templates and feature settings to a file</string>
+    <string name="config_backup_import">Restore configuration</string>
+    <string name="config_backup_import_summary">Apply a previously exported configuration file</string>
+    <string name="config_backup_export_success">Configuration exported</string>
+    <string name="config_backup_export_failed">Export failed: %1$s</string>
+    <string name="config_backup_import_success">Restored: %1$d profiles applied, %2$d skipped</string>
+    <string name="config_backup_import_failed">Restore failed: %1$s</string>
 </resources>

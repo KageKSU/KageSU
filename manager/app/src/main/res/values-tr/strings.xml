@@ -548,4 +548,15 @@
     <string name="icon_switch_title">Alternatif Simge</string>
     <string name="icon_switch_summary">Başlatıcı simgesini KernelSU simgesi ile değiştirir</string>
     <string name="refresh">Yenile</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Yedekle ve geri yükle</string>
+    <string name="config_backup_summary">Uygulama profillerini, şablonları ve ayarları dışa aktarın veya geri yükleyin</string>
+    <string name="config_backup_export">Yapılandırmayı dışa aktar</string>
+    <string name="config_backup_export_summary">Root profillerini, şablonları ve özellik ayarlarını bir dosyaya kaydet</string>
+    <string name="config_backup_import">Yapılandırmayı geri yükle</string>
+    <string name="config_backup_import_summary">Daha önce dışa aktarılan yapılandırma dosyasını uygula</string>
+    <string name="config_backup_export_success">Yapılandırma dışa aktarıldı</string>
+    <string name="config_backup_export_failed">Dışa aktarma başarısız: %1$s</string>
+    <string name="config_backup_import_success">Geri yüklendi: %1$d profil uygulandı, %2$d atlandı</string>
+    <string name="config_backup_import_failed">Geri yükleme başarısız: %1$s</string>
 </resources>

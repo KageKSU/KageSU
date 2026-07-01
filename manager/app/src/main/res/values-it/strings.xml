@@ -127,4 +127,15 @@
     <string name="settings_kernel_umount">Umount del kernel</string>
     <string name="settings_kernel_umount_summary">Comportamento di umount a livello di kernel controllato da KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Impedisce un\'ulteriore escalation dei privilegi tramite KernelSU nel contesto di questo profilo root.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Backup e ripristino</string>
+    <string name="config_backup_summary">Esporta o ripristina profili app, modelli e impostazioni</string>
+    <string name="config_backup_export">Esporta configurazione</string>
+    <string name="config_backup_export_summary">Salva profili root, modelli e impostazioni delle funzioni in un file</string>
+    <string name="config_backup_import">Ripristina configurazione</string>
+    <string name="config_backup_import_summary">Applica un file di configurazione esportato in precedenza</string>
+    <string name="config_backup_export_success">Configurazione esportata</string>
+    <string name="config_backup_export_failed">Esportazione non riuscita: %1$s</string>
+    <string name="config_backup_import_success">Ripristinato: %1$d profili applicati, %2$d ignorati</string>
+    <string name="config_backup_import_failed">Ripristino non riuscito: %1$s</string>
 </resources>

@@ -126,4 +126,15 @@ Liitu meie %2$si kanaliga</string>
     <string name="settings_kernel_umount">Kernel umount</string>
     <string name="settings_kernel_umount_summary">Kerneli tasemel lahtihaakimise käitumine, mida kontrollib KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Takistab õiguste edasist tõstmist KernelSU kaudu selle root-profiili kontekstis.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Varundamine ja taastamine</string>
+    <string name="config_backup_summary">Ekspordi või taasta rakenduste profiilid, mallid ja seaded</string>
+    <string name="config_backup_export">Ekspordi konfiguratsioon</string>
+    <string name="config_backup_export_summary">Salvesta root-profiilid, mallid ja funktsioonide seaded faili</string>
+    <string name="config_backup_import">Taasta konfiguratsioon</string>
+    <string name="config_backup_import_summary">Rakenda varem eksporditud konfiguratsioonifail</string>
+    <string name="config_backup_export_success">Konfiguratsioon eksporditud</string>
+    <string name="config_backup_export_failed">Eksport ebaõnnestus: %1$s</string>
+    <string name="config_backup_import_success">Taastatud: %1$d profiili rakendatud, %2$d vahele jäetud</string>
+    <string name="config_backup_import_failed">Taastamine ebaõnnestus: %1$s</string>
 </resources>

@@ -100,4 +100,15 @@ Kanalımıza %2$s qoşulun</string>
     <string name="settings_kernel_umount">Nüvə umount</string>
     <string name="settings_kernel_umount_summary">KernelSU tərəfindən idarə olunan nüvə səviyyəsində umount davranışı</string>
     <string name="profile_flags_desc_no_new_privs">Bu root profili kontekstində KernelSU vasitəsilə əlavə səlahiyyət yüksəltməsinin qarşısını alır.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Yedəkləmə və bərpa</string>
+    <string name="config_backup_summary">Tətbiq profillərini, şablonları və parametrləri ixrac və ya bərpa edin</string>
+    <string name="config_backup_export">Konfiqurasiyanı ixrac et</string>
+    <string name="config_backup_export_summary">Root profillərini, şablonları və funksiya parametrlərini fayla saxla</string>
+    <string name="config_backup_import">Konfiqurasiyanı bərpa et</string>
+    <string name="config_backup_import_summary">Əvvəllər ixrac edilmiş konfiqurasiya faylını tətbiq et</string>
+    <string name="config_backup_export_success">Konfiqurasiya ixrac edildi</string>
+    <string name="config_backup_export_failed">İxrac alınmadı: %1$s</string>
+    <string name="config_backup_import_success">Bərpa edildi: %1$d profil tətbiq edildi, %2$d ötürüldü</string>
+    <string name="config_backup_import_failed">Bərpa alınmadı: %1$s</string>
 </resources>

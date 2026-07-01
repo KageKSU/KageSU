@@ -497,4 +497,15 @@ Bật: Kích hoạt tính năng giả mạo sus tcontext của \'su\' thành \'k
     <string name="icon_switch_summary">Thay đổi icon KageSU thành icon của KernelSU</string>
     <string name="refresh">Làm mới</string>
     <string name="home_kernel_full_version">Phiên bản Kernel</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Sao lưu &amp; khôi phục</string>
+    <string name="config_backup_summary">Xuất hoặc khôi phục hồ sơ ứng dụng, mẫu và cài đặt</string>
+    <string name="config_backup_export">Xuất cấu hình</string>
+    <string name="config_backup_export_summary">Lưu hồ sơ root, mẫu và cài đặt tính năng vào một tệp</string>
+    <string name="config_backup_import">Khôi phục cấu hình</string>
+    <string name="config_backup_import_summary">Áp dụng tệp cấu hình đã xuất trước đó</string>
+    <string name="config_backup_export_success">Đã xuất cấu hình</string>
+    <string name="config_backup_export_failed">Xuất thất bại: %1$s</string>
+    <string name="config_backup_import_success">Đã khôi phục: áp dụng %1$d hồ sơ, bỏ qua %2$d</string>
+    <string name="config_backup_import_failed">Khôi phục thất bại: %1$s</string>
 </resources>

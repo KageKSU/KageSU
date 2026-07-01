@@ -223,4 +223,15 @@
     <!-- SuSFS Loop Path Related Strings -->
     <!-- SuSFS Loop Path Feature Description -->
     <!-- SUS Map Related Strings -->
+    <!-- config backup/restore -->
+    <string name="config_backup_title">バックアップと復元</string>
+    <string name="config_backup_summary">アプリプロファイル、テンプレート、設定をエクスポートまたは復元</string>
+    <string name="config_backup_export">設定をエクスポート</string>
+    <string name="config_backup_export_summary">root プロファイル、テンプレート、機能設定をファイルに保存</string>
+    <string name="config_backup_import">設定を復元</string>
+    <string name="config_backup_import_summary">以前にエクスポートした設定ファイルを適用</string>
+    <string name="config_backup_export_success">設定をエクスポートしました</string>
+    <string name="config_backup_export_failed">エクスポートに失敗しました: %1$s</string>
+    <string name="config_backup_import_success">復元しました: %1$d 個のプロファイルを適用、%2$d 個をスキップ</string>
+    <string name="config_backup_import_failed">復元に失敗しました: %1$s</string>
 </resources>

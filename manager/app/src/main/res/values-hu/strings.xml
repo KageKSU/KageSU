@@ -128,4 +128,15 @@ Csatlakozzon a %2$s csatornánkhoz</string>
     <string name="settings_kernel_umount">Kernel leválasztása</string>
     <string name="settings_kernel_umount_summary">KernelSU által vezérelt kernel szintű leválasztási viselkedés</string>
     <string name="profile_flags_desc_no_new_privs">Megakadályozza a jogosultságok további kiterjesztését a KernelSU-n keresztül ezen root profil kontextusán belül.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Biztonsági mentés és visszaállítás</string>
+    <string name="config_backup_summary">Alkalmazásprofilok, sablonok és beállítások exportálása vagy visszaállítása</string>
+    <string name="config_backup_export">Konfiguráció exportálása</string>
+    <string name="config_backup_export_summary">Root profilok, sablonok és funkcióbeállítások mentése fájlba</string>
+    <string name="config_backup_import">Konfiguráció visszaállítása</string>
+    <string name="config_backup_import_summary">Korábban exportált konfigurációs fájl alkalmazása</string>
+    <string name="config_backup_export_success">Konfiguráció exportálva</string>
+    <string name="config_backup_export_failed">Az exportálás sikertelen: %1$s</string>
+    <string name="config_backup_import_success">Visszaállítva: %1$d profil alkalmazva, %2$d kihagyva</string>
+    <string name="config_backup_import_failed">A visszaállítás sikertelen: %1$s</string>
 </resources>

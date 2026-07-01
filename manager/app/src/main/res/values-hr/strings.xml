@@ -173,4 +173,15 @@
     <string name="tab_releases">Izdanja</string>
     <string name="tab_info">Info</string>
     <string name="profile_flags_desc_no_new_privs">Sprječava daljnju eskalaciju privilegija putem KernelSU-a unutar konteksta ovog root profila.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Sigurnosna kopija i vraćanje</string>
+    <string name="config_backup_summary">Izvezite ili vratite profile aplikacija, predloške i postavke</string>
+    <string name="config_backup_export">Izvezi konfiguraciju</string>
+    <string name="config_backup_export_summary">Spremi root profile, predloške i postavke značajki u datoteku</string>
+    <string name="config_backup_import">Vrati konfiguraciju</string>
+    <string name="config_backup_import_summary">Primijeni prethodno izvezenu datoteku konfiguracije</string>
+    <string name="config_backup_export_success">Konfiguracija izvezena</string>
+    <string name="config_backup_export_failed">Izvoz nije uspio: %1$s</string>
+    <string name="config_backup_import_success">Vraćeno: %1$d profila primijenjeno, %2$d preskočeno</string>
+    <string name="config_backup_import_failed">Vraćanje nije uspjelo: %1$s</string>
 </resources>

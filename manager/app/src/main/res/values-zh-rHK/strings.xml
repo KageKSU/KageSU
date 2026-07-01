@@ -280,4 +280,15 @@
     <!-- SuSFS Loop Path Related Strings -->
     <!-- SuSFS Loop Path Feature Description -->
     <!-- SUS Map Related Strings -->
+    <!-- config backup/restore -->
+    <string name="config_backup_title">備份與還原</string>
+    <string name="config_backup_summary">匯出或還原應用程式設定檔、範本和設定</string>
+    <string name="config_backup_export">匯出配置</string>
+    <string name="config_backup_export_summary">將 root 設定檔、範本和功能設定儲存到檔案</string>
+    <string name="config_backup_import">還原配置</string>
+    <string name="config_backup_import_summary">套用先前匯出的配置檔案</string>
+    <string name="config_backup_export_success">配置已匯出</string>
+    <string name="config_backup_export_failed">匯出失敗：%1$s</string>
+    <string name="config_backup_import_success">已還原：套用了 %1$d 個設定檔，略過 %2$d 個</string>
+    <string name="config_backup_import_failed">還原失敗：%1$s</string>
 </resources>

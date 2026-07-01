@@ -273,4 +273,15 @@
     <!-- SuSFS Loop Path Related Strings -->
     <!-- SuSFS Loop Path Feature Description -->
     <!-- SUS Map Related Strings -->
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Cadangkan &amp; pulihkan</string>
+    <string name="config_backup_summary">Ekspor atau pulihkan profil aplikasi, templat, dan pengaturan</string>
+    <string name="config_backup_export">Ekspor konfigurasi</string>
+    <string name="config_backup_export_summary">Simpan profil root, templat, dan pengaturan fitur ke file</string>
+    <string name="config_backup_import">Pulihkan konfigurasi</string>
+    <string name="config_backup_import_summary">Terapkan file konfigurasi yang diekspor sebelumnya</string>
+    <string name="config_backup_export_success">Konfigurasi diekspor</string>
+    <string name="config_backup_export_failed">Ekspor gagal: %1$s</string>
+    <string name="config_backup_import_success">Dipulihkan: %1$d profil diterapkan, %2$d dilewati</string>
+    <string name="config_backup_import_failed">Pemulihan gagal: %1$s</string>
 </resources>

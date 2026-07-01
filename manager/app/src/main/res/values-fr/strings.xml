@@ -249,4 +249,15 @@
     <string name="download_cancel">Annuler</string>
     <string name="download_install">Installer</string>
     <string name="profile_flags_desc_no_new_privs">Empêche toute élévation de privilèges supplémentaire via KernelSU dans le contexte de ce profil root.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Sauvegarde et restauration</string>
+    <string name="config_backup_summary">Exporter ou restaurer les profils d\'app, modèles et paramètres</string>
+    <string name="config_backup_export">Exporter la configuration</string>
+    <string name="config_backup_export_summary">Enregistrer les profils root, modèles et paramètres dans un fichier</string>
+    <string name="config_backup_import">Restaurer la configuration</string>
+    <string name="config_backup_import_summary">Appliquer un fichier de configuration exporté précédemment</string>
+    <string name="config_backup_export_success">Configuration exportée</string>
+    <string name="config_backup_export_failed">Échec de l\'exportation : %1$s</string>
+    <string name="config_backup_import_success">Restauré : %1$d profils appliqués, %2$d ignorés</string>
+    <string name="config_backup_import_failed">Échec de la restauration : %1$s</string>
 </resources>

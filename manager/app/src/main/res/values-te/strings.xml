@@ -21,4 +21,15 @@
     <string name="settings_kernel_umount">కెర్నల్ అన్‌మౌంట్</string>
     <string name="settings_kernel_umount_summary">KernelSU ద్వారా నియంత్రించబడే కెర్నల్-స్థాయి అన్‌మౌంట్ ప్రవర్తన</string>
     <string name="profile_flags_desc_no_new_privs">ఈ రూట్ ప్రొఫైల్ సందర్భంలో KernelSU ద్వారా మరింత హక్కుల పెంపును నిరోధిస్తుంది.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">బ్యాకప్ మరియు పునరుద్ధరణ</string>
+    <string name="config_backup_summary">యాప్ ప్రొఫైల్‌లు, టెంప్లేట్‌లు మరియు సెట్టింగ్‌లను ఎగుమతి లేదా పునరుద్ధరించండి</string>
+    <string name="config_backup_export">కాన్ఫిగరేషన్‌ను ఎగుమతి చేయండి</string>
+    <string name="config_backup_export_summary">రూట్ ప్రొఫైల్‌లు, టెంప్లేట్‌లు మరియు ఫీచర్ సెట్టింగ్‌లను ఫైల్‌కు సేవ్ చేయండి</string>
+    <string name="config_backup_import">కాన్ఫిగరేషన్‌ను పునరుద్ధరించండి</string>
+    <string name="config_backup_import_summary">గతంలో ఎగుమతి చేసిన కాన్ఫిగరేషన్ ఫైల్‌ను వర్తింపజేయండి</string>
+    <string name="config_backup_export_success">కాన్ఫిగరేషన్ ఎగుమతి చేయబడింది</string>
+    <string name="config_backup_export_failed">ఎగుమతి విఫలమైంది: %1$s</string>
+    <string name="config_backup_import_success">పునరుద్ధరించబడింది: %1$d ప్రొఫైల్‌లు వర్తింపజేయబడ్డాయి, %2$d దాటవేయబడ్డాయి</string>
+    <string name="config_backup_import_failed">పునరుద్ధరణ విఫలమైంది: %1$s</string>
 </resources>

@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.material.icons.filled.RemoveModerator
+import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.Dashboard
@@ -189,6 +190,24 @@ fun SettingPagerMaterial(
                             headlineContent = { Text(toolsTitle) },
                             supportingContent = { Text(stringResource(id = R.string.settings_tools_summary)) },
                             leadingContent = { Icon(Icons.Filled.Fence, toolsTitle) },
+                            trailingContent = {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                    null
+                                )
+                            }
+                        )
+                    }
+                )
+                val backupTitle = stringResource(id = R.string.config_backup_title)
+                SegmentedColumn(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    content = listOf {
+                        SegmentedListItem(
+                            onClick = actions.onOpenBackupRestore,
+                            headlineContent = { Text(backupTitle) },
+                            supportingContent = { Text(stringResource(id = R.string.config_backup_summary)) },
+                            leadingContent = { Icon(Icons.Filled.SettingsBackupRestore, backupTitle) },
                             trailingContent = {
                                 Icon(
                                     Icons.AutoMirrored.Filled.KeyboardArrowRight,

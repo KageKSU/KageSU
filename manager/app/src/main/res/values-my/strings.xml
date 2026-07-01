@@ -5,4 +5,15 @@
     <string name="settings_kernel_umount">Kernel ဖြုတ်မည်</string>
     <string name="settings_kernel_umount_summary">KernelSU မှ ထိန်းချုပ်ထားသော Kernel အဆင့် ဖြုတ်မည့် အပြုအမူ</string>
     <string name="profile_flags_desc_no_new_privs">ဤ root profile ၏ context အတွင်း KernelSU မှတစ်ဆင့် privilege များကို ထပ်မံမြှင့်တင်ခြင်းကို တားဆီးသည်။</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">အရန်သိမ်းခြင်းနှင့် ပြန်လည်ရယူခြင်း</string>
+    <string name="config_backup_summary">အက်ပ်ပရိုဖိုင်များ၊ ပုံစံခွက်များနှင့် ဆက်တင်များကို ထုတ်ယူ သို့မဟုတ် ပြန်လည်ရယူပါ</string>
+    <string name="config_backup_export">ဖွဲ့စည်းမှုကို ထုတ်ယူပါ</string>
+    <string name="config_backup_export_summary">root ပရိုဖိုင်များ၊ ပုံစံခွက်များနှင့် လုပ်ဆောင်ချက်ဆက်တင်များကို ဖိုင်တစ်ခုသို့ သိမ်းပါ</string>
+    <string name="config_backup_import">ဖွဲ့စည်းမှုကို ပြန်လည်ရယူပါ</string>
+    <string name="config_backup_import_summary">ယခင်ထုတ်ယူထားသော ဖွဲ့စည်းမှုဖိုင်ကို အသုံးပြုပါ</string>
+    <string name="config_backup_export_success">ဖွဲ့စည်းမှုကို ထုတ်ယူပြီးပါပြီ</string>
+    <string name="config_backup_export_failed">ထုတ်ယူမှု မအောင်မြင်ပါ- %1$s</string>
+    <string name="config_backup_import_success">ပြန်လည်ရယူပြီး- ပရိုဖိုင် %1$d ခု အသုံးပြု, %2$d ခု ကျော်သွား</string>
+    <string name="config_backup_import_failed">ပြန်လည်ရယူမှု မအောင်မြင်ပါ- %1$s</string>
 </resources>

@@ -154,4 +154,15 @@
     <string name="feature_status_managed_summary">Deze functie wordt beheerd door een module</string>
     <string name="settings_mode_enable_by_default">Inschakelen (Standaard)</string>
     <string name="profile_flags_desc_no_new_privs">Voorkomt verdere bevoegdheidsescalatie via KernelSU binnen de context van dit root-profiel.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Back-up en herstel</string>
+    <string name="config_backup_summary">App-profielen, sjablonen en instellingen exporteren of herstellen</string>
+    <string name="config_backup_export">Configuratie exporteren</string>
+    <string name="config_backup_export_summary">Root-profielen, sjablonen en functie-instellingen opslaan in een bestand</string>
+    <string name="config_backup_import">Configuratie herstellen</string>
+    <string name="config_backup_import_summary">Een eerder geëxporteerd configuratiebestand toepassen</string>
+    <string name="config_backup_export_success">Configuratie geëxporteerd</string>
+    <string name="config_backup_export_failed">Exporteren mislukt: %1$s</string>
+    <string name="config_backup_import_success">Hersteld: %1$d profielen toegepast, %2$d overgeslagen</string>
+    <string name="config_backup_import_failed">Herstellen mislukt: %1$s</string>
 </resources>

@@ -68,4 +68,15 @@
     <string name="settings_kernel_umount">ಕರ್ನಲ್ ಅನ್‌ಮೌಂಟ್</string>
     <string name="settings_kernel_umount_summary">KernelSU ನಿಂದ ನಿಯಂತ್ರಿಸಲ್ಪಡುವ ಕರ್ನಲ್-ಮಟ್ಟದ ಅನ್‌ಮೌಂಟ್ ನಡವಳಿಕೆ</string>
     <string name="profile_flags_desc_no_new_privs">ಈ ರೂಟ್ ಪ್ರೊಫೈಲ್‌ನ ಸಂದರ್ಭದೊಳಗೆ KernelSU ಮುಖಾಂತರ ಹೆಚ್ಚಿನ ಹಕ್ಕು ಏರಿಕೆಯನ್ನು ತಡೆಯುತ್ತದೆ.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">ಬ್ಯಾಕಪ್ ಮತ್ತು ಮರುಸ್ಥಾಪನೆ</string>
+    <string name="config_backup_summary">ಆ್ಯಪ್ ಪ್ರೊಫೈಲ್‌ಗಳು, ಟೆಂಪ್ಲೇಟ್‌ಗಳು ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ರಫ್ತು ಅಥವಾ ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="config_backup_export">ಕಾನ್ಫಿಗರೇಶನ್ ರಫ್ತು ಮಾಡಿ</string>
+    <string name="config_backup_export_summary">ರೂಟ್ ಪ್ರೊಫೈಲ್‌ಗಳು, ಟೆಂಪ್ಲೇಟ್‌ಗಳು ಮತ್ತು ವೈಶಿಷ್ಟ್ಯ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಫೈಲ್‌ಗೆ ಉಳಿಸಿ</string>
+    <string name="config_backup_import">ಕಾನ್ಫಿಗರೇಶನ್ ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="config_backup_import_summary">ಹಿಂದೆ ರಫ್ತು ಮಾಡಿದ ಕಾನ್ಫಿಗರೇಶನ್ ಫೈಲ್ ಅನ್ವಯಿಸಿ</string>
+    <string name="config_backup_export_success">ಕಾನ್ಫಿಗರೇಶನ್ ರಫ್ತು ಮಾಡಲಾಗಿದೆ</string>
+    <string name="config_backup_export_failed">ರಫ್ತು ವಿಫಲವಾಗಿದೆ: %1$s</string>
+    <string name="config_backup_import_success">ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ: %1$d ಪ್ರೊಫೈಲ್‌ಗಳು ಅನ್ವಯ, %2$d ಬಿಟ್ಟುಬಿಡಲಾಗಿದೆ</string>
+    <string name="config_backup_import_failed">ಮರುಸ್ಥಾಪನೆ ವಿಫಲವಾಗಿದೆ: %1$s</string>
 </resources>

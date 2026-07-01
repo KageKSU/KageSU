@@ -172,4 +172,15 @@
     <string name="tab_releases">Версии</string>
     <string name="tab_info">Информация</string>
     <string name="profile_flags_desc_no_new_privs">Предотвратява по-нататъшно повишаване на привилегиите чрез KernelSU в контекста на този root профил.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Архивиране и възстановяване</string>
+    <string name="config_backup_summary">Експортиране или възстановяване на профили, шаблони и настройки</string>
+    <string name="config_backup_export">Експортиране на конфигурацията</string>
+    <string name="config_backup_export_summary">Запазване на root профили, шаблони и настройки във файл</string>
+    <string name="config_backup_import">Възстановяване на конфигурацията</string>
+    <string name="config_backup_import_summary">Прилагане на предварително експортиран файл с конфигурация</string>
+    <string name="config_backup_export_success">Конфигурацията е експортирана</string>
+    <string name="config_backup_export_failed">Експортирането е неуспешно: %1$s</string>
+    <string name="config_backup_import_success">Възстановено: %1$d профила приложени, %2$d пропуснати</string>
+    <string name="config_backup_import_failed">Възстановяването е неуспешно: %1$s</string>
 </resources>

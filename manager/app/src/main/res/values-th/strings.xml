@@ -201,4 +201,15 @@
     <string name="current_kmi">เวอร์ชัน KMI ของอุปกรณ์นี้: %s</string>
     <string name="current_device_kmi">อุปกรณ์นี้ใช้ KMI</string>
     <string name="profile_flags_desc_no_new_privs">ป้องกันการยกระดับสิทธิ์เพิ่มเติมผ่าน KernelSU ภายในบริบทของโปรไฟล์รูทนี้</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">สำรองและกู้คืน</string>
+    <string name="config_backup_summary">ส่งออกหรือกู้คืนโปรไฟล์แอป เทมเพลต และการตั้งค่า</string>
+    <string name="config_backup_export">ส่งออกการกำหนดค่า</string>
+    <string name="config_backup_export_summary">บันทึกโปรไฟล์ root เทมเพลต และการตั้งค่าฟีเจอร์ลงในไฟล์</string>
+    <string name="config_backup_import">กู้คืนการกำหนดค่า</string>
+    <string name="config_backup_import_summary">ใช้ไฟล์การกำหนดค่าที่ส่งออกไว้ก่อนหน้านี้</string>
+    <string name="config_backup_export_success">ส่งออกการกำหนดค่าแล้ว</string>
+    <string name="config_backup_export_failed">ส่งออกไม่สำเร็จ: %1$s</string>
+    <string name="config_backup_import_success">กู้คืนแล้ว: ใช้ %1$d โปรไฟล์ ข้าม %2$d</string>
+    <string name="config_backup_import_failed">กู้คืนไม่สำเร็จ: %1$s</string>
 </resources>

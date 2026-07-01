@@ -101,4 +101,15 @@
     <string name="settings_kernel_umount">Jedrno odklapljanje</string>
     <string name="settings_kernel_umount_summary">Vedenje odklapljanja na ravni jedra, ki ga nadzoruje KernelSU</string>
     <string name="profile_flags_desc_no_new_privs">Prepreči nadaljnje stopnjevanje privilegijev prek KernelSU znotraj konteksta tega root profila.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Varnostno kopiranje in obnovitev</string>
+    <string name="config_backup_summary">Izvozite ali obnovite profile aplikacij, predloge in nastavitve</string>
+    <string name="config_backup_export">Izvozi konfiguracijo</string>
+    <string name="config_backup_export_summary">Shrani root profile, predloge in nastavitve funkcij v datoteko</string>
+    <string name="config_backup_import">Obnovi konfiguracijo</string>
+    <string name="config_backup_import_summary">Uporabi predhodno izvoženo konfiguracijsko datoteko</string>
+    <string name="config_backup_export_success">Konfiguracija izvožena</string>
+    <string name="config_backup_export_failed">Izvoz ni uspel: %1$s</string>
+    <string name="config_backup_import_success">Obnovljeno: uporabljenih profilov %1$d, preskočenih %2$d</string>
+    <string name="config_backup_import_failed">Obnovitev ni uspela: %1$s</string>
 </resources>

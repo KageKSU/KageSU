@@ -11,4 +11,15 @@
     <string name="settings_kernel_umount">Kernel umount</string>
     <string name="settings_kernel_umount_summary">Ponašanje umount-a na nivou kernela kontrolisano od strane KernelSU-a</string>
     <string name="profile_flags_desc_no_new_privs">Sprečava dalje podizanje privilegija putem KernelSU-a u okviru ovog root profila.</string>
+    <!-- config backup/restore -->
+    <string name="config_backup_title">Резервна копија и враћање</string>
+    <string name="config_backup_summary">Извезите или вратите профиле апликација, шаблоне и подешавања</string>
+    <string name="config_backup_export">Извези конфигурацију</string>
+    <string name="config_backup_export_summary">Сачувај root профиле, шаблоне и подешавања функција у датотеку</string>
+    <string name="config_backup_import">Врати конфигурацију</string>
+    <string name="config_backup_import_summary">Примени претходно извезену датотеку конфигурације</string>
+    <string name="config_backup_export_success">Конфигурација извезена</string>
+    <string name="config_backup_export_failed">Извоз није успео: %1$s</string>
+    <string name="config_backup_import_success">Враћено: примењено профила %1$d, прескочено %2$d</string>
+    <string name="config_backup_import_failed">Враћање није успело: %1$s</string>
 </resources>
