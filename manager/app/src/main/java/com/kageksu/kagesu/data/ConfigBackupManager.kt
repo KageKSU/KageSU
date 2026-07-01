@@ -10,13 +10,15 @@ import com.kageksu.kagesu.data.model.ConfigBackup
 import com.kageksu.kagesu.data.repository.SettingsRepository
 import com.kageksu.kagesu.data.repository.SuperUserRepository
 import com.kageksu.kagesu.data.repository.TemplateRepository
-import kotlinx.serialization.json.Json
+import org.json.JSONArray
+import org.json.JSONObject
 
 /**
- * Gathers the current KageSU configuration into a [ConfigBackup] and applies a
- * previously-exported one. Pure logic; the ViewModel owns coroutine scope, file IO
- * (SAF) and user feedback. Repositories are injected so this stays testable and
- * matches the manual-DI style used by the existing ViewModels.
+ * Gathers the current KageSU configuration into a JSON snapshot and applies a
+ * previously-exported one. Uses org.json (the manager ships neither a
+ * kotlinx-serialization-json nor a Gson runtime — see SuSFS BackupData for the
+ * same convention). Repositories are injected to match the manual-DI style used
+ * by the existing ViewModels.
  */
 class ConfigBackupManager(
     private val context: Context,
@@ -24,12 +26,6 @@ class ConfigBackupManager(
     private val settingsRepository: SettingsRepository,
     private val templateRepository: TemplateRepository,
 ) {
-    private val json = Json {
-        prettyPrint = true
-        ignoreUnknownKeys = true
-        encodeDefaults = true
-    }
-
     /** Build a snapshot of the current config. */
     suspend fun export(): Result<String> = runCatching {
         val apps = superUserRepository.getAppList().getOrThrow().first
@@ -50,7 +46,7 @@ class ConfigBackupManager(
             templates = templateRepository.exportTemplates().getOrNull(),
             settings = gatherSettings(),
         )
-        json.encodeToString(ConfigBackup.serializer(), backup)
+        encode(backup)
     }
 
     /**
@@ -59,7 +55,7 @@ class ConfigBackupManager(
      * the whole import on a single missing package.
      */
     suspend fun import(content: String): Result<RestoreReport> = runCatching {
-        val backup = json.decodeFromString(ConfigBackup.serializer(), content)
+        val backup = decode(content)
         require(backup.version <= CONFIG_BACKUP_VERSION) {
             "Backup was made by a newer KageSU (schema v${backup.version}); update the app first."
         }
@@ -85,6 +81,103 @@ class ConfigBackupManager(
             skippedProfiles = skippedProfiles,
             templatesRestored = backup.templates != null,
         )
+    }
+
+    // ---- JSON encode/decode (org.json) ----
+
+    private fun encode(b: ConfigBackup): String {
+        val root = JSONObject()
+        root.put("version", b.version)
+        root.put("exportedAt", b.exportedAt)
+        root.put("managerVersionCode", b.managerVersionCode)
+        b.templates?.let { root.put("templates", it) }
+
+        val profilesArr = JSONArray()
+        for (p in b.profiles) {
+            val o = JSONObject()
+            o.put("name", p.name)
+            o.put("allowSu", p.allowSu)
+            o.put("rootUseDefault", p.rootUseDefault)
+            p.rootTemplate?.let { o.put("rootTemplate", it) }
+            o.put("uid", p.uid)
+            o.put("gid", p.gid)
+            o.put("groups", JSONArray(p.groups))
+            o.put("capabilities", JSONArray(p.capabilities))
+            o.put("context", p.context)
+            o.put("namespace", p.namespace)
+            o.put("nonRootUseDefault", p.nonRootUseDefault)
+            o.put("umountModules", p.umountModules)
+            o.put("rules", p.rules)
+            o.put("flags", p.flags)
+            profilesArr.put(o)
+        }
+        root.put("profiles", profilesArr)
+
+        val s = b.settings
+        val so = JSONObject()
+        s.suEnabled?.let { so.put("suEnabled", it) }
+        s.suCompatMode?.let { so.put("suCompatMode", it) }
+        s.kernelUmountEnabled?.let { so.put("kernelUmountEnabled", it) }
+        s.selinuxHideEnabled?.let { so.put("selinuxHideEnabled", it) }
+        s.sulogEnabled?.let { so.put("sulogEnabled", it) }
+        s.adbRootEnabled?.let { so.put("adbRootEnabled", it) }
+        s.defaultUmountModules?.let { so.put("defaultUmountModules", it) }
+        root.put("settings", so)
+
+        return root.toString(2)
+    }
+
+    private fun decode(content: String): ConfigBackup {
+        val root = JSONObject(content)
+
+        val profiles = mutableListOf<BackupProfile>()
+        val arr = root.optJSONArray("profiles") ?: JSONArray()
+        for (i in 0 until arr.length()) {
+            val o = arr.getJSONObject(i)
+            profiles.add(
+                BackupProfile(
+                    name = o.getString("name"),
+                    allowSu = o.optBoolean("allowSu", false),
+                    rootUseDefault = o.optBoolean("rootUseDefault", true),
+                    rootTemplate = if (o.has("rootTemplate") && !o.isNull("rootTemplate")) o.getString("rootTemplate") else null,
+                    uid = o.optInt("uid", Natives.ROOT_UID),
+                    gid = o.optInt("gid", Natives.ROOT_GID),
+                    groups = intList(o.optJSONArray("groups")),
+                    capabilities = intList(o.optJSONArray("capabilities")),
+                    context = o.optString("context", Natives.KERNEL_SU_DOMAIN),
+                    namespace = o.optInt("namespace", Natives.Profile.Namespace.INHERITED.ordinal),
+                    nonRootUseDefault = o.optBoolean("nonRootUseDefault", true),
+                    umountModules = o.optBoolean("umountModules", true),
+                    rules = o.optString("rules", ""),
+                    flags = o.optLong("flags", Natives.FLAG_KSU_NO_NEW_PRIVS),
+                )
+            )
+        }
+
+        val so = root.optJSONObject("settings") ?: JSONObject()
+        val settings = BackupSettings(
+            suEnabled = if (so.has("suEnabled")) so.getBoolean("suEnabled") else null,
+            suCompatMode = if (so.has("suCompatMode")) so.getInt("suCompatMode") else null,
+            kernelUmountEnabled = if (so.has("kernelUmountEnabled")) so.getBoolean("kernelUmountEnabled") else null,
+            selinuxHideEnabled = if (so.has("selinuxHideEnabled")) so.getBoolean("selinuxHideEnabled") else null,
+            sulogEnabled = if (so.has("sulogEnabled")) so.getBoolean("sulogEnabled") else null,
+            adbRootEnabled = if (so.has("adbRootEnabled")) so.getBoolean("adbRootEnabled") else null,
+            defaultUmountModules = if (so.has("defaultUmountModules")) so.getBoolean("defaultUmountModules") else null,
+        )
+
+        return ConfigBackup(
+            version = root.optInt("version", CONFIG_BACKUP_VERSION),
+            exportedAt = root.optLong("exportedAt", 0L),
+            managerVersionCode = root.optLong("managerVersionCode", 0L),
+            profiles = profiles,
+            templates = if (root.has("templates") && !root.isNull("templates")) root.getString("templates") else null,
+            settings = settings,
+        )
+    }
+
+    private fun intList(arr: JSONArray?): List<Int> {
+        if (arr == null) return emptyList()
+        return (0 until arr.length()).map { arr.getInt(it) }
     }
 
     private fun gatherSettings(): BackupSettings = BackupSettings(
