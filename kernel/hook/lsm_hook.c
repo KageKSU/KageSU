@@ -108,6 +108,15 @@ static int ksu_task_fix_setuid(struct cred *new, const struct cred *old, int fla
 }
 #endif
 
+#ifdef CONFIG_KSU_SUSFS
+static int ksu_task_fix_setuid_susfs(struct cred *new, const struct cred *old, int flags)
+{
+    if (likely(new))
+        ksu_handle_setresuid(new->uid.val, new->euid.val, new->suid.val);
+    return 0;
+}
+#endif
+
 static struct security_hook_list ksu_hooks[] = {
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 10, 0) || defined(CONFIG_IS_HW_HISI) ||                                     \
     defined(CONFIG_KSU_ALLOWLIST_WORKAROUND)
@@ -115,6 +124,12 @@ static struct security_hook_list ksu_hooks[] = {
 #endif
 #ifndef CONFIG_KSU_SUSFS
     LSM_HOOK_INIT(task_fix_setuid, ksu_task_fix_setuid),
+#elif LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0)
+    // On non-GKI (<5.10) SUSFS builds the susfs setresuid registration that
+    // reaches ksu_handle_setresuid only exists in the >=5.10 paths, so register
+    // the fd-install hook here. GKI (>=5.10) already has that path and must not
+    // double-register.
+    LSM_HOOK_INIT(task_fix_setuid, ksu_task_fix_setuid_susfs),
 #endif
 };
 
