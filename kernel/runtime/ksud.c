@@ -51,7 +51,9 @@ void on_post_fs_data(void)
     ksu_load_allow_list();
     ksu_observer_init();
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0)
     ksu_selinux_hide_handle_post_fs_data();
+#endif
 
     // sanity check, this may influence the performance
     stop_input_hook();
@@ -211,7 +213,9 @@ int ksu_handle_execveat_ksud(int *fd, struct filename **filename_ptr,
             check_argv(*argv, 1, "second_stage", buf, sizeof(buf)))
         {
             pr_info("/system/bin/init second_stage executed\n");
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0)
             ksu_selinux_hide_handle_second_stage();
+#endif
             apply_kernelsu_rules();
             cache_sid();
             setup_ksu_cred();
@@ -268,7 +272,9 @@ int ksu_handle_execveat_ksud(int *fd, struct filename **filename_ptr, struct use
         char buf[16];
         if (!init_second_stage_executed && check_argv(*argv, 1, "second_stage", buf, sizeof(buf))) {
             pr_info("/system/bin/init second_stage executed\n");
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0)
             ksu_selinux_hide_handle_second_stage();
+#endif
             apply_kernelsu_rules();
             cache_sid();
             setup_ksu_cred();
