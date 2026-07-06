@@ -240,6 +240,17 @@
     <string name="settings_mode_default">Default</string>
     <string name="more_settings">More settings</string>
     <string name="theme_settings">Theme settings</string>
+    <!-- KageSU: Miuix interface options (Theme page) -->
+    <string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="ui_mode_miuix" translatable="false">Miuix</string>
+    <string name="ui_mode_material" translatable="false">Material</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
     <string name="selinux">SELinux</string>
     <string name="selinux_enabled">Enabled</string>
     <string name="selinux_disabled">Disabled</string>

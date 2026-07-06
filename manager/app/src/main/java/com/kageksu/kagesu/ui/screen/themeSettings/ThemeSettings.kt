@@ -108,6 +108,8 @@ import com.kageksu.kagesu.ui.screen.themeSettings.util.restartActivity
 import com.kageksu.kagesu.ui.theme.BackgroundManager
 import com.kageksu.kagesu.ui.theme.CardConfig
 import com.kageksu.kagesu.ui.theme.ThemeConfig
+import com.kageksu.kagesu.ui.theme.UiMode
+import com.kageksu.kagesu.ui.theme.UiModeConfig
 import com.kageksu.kagesu.ui.theme.blurEffect
 import com.kageksu.kagesu.ui.theme.blurSource
 import com.kageksu.kagesu.ui.theme.renderBackgroundBlur
@@ -348,6 +350,10 @@ fun ThemeSettingsScreen() {
             }
 
             item {
+                InterfaceSettings()
+            }
+
+            item {
                 // Predictive Back Settings
                 val transition = LocalNavAnimatedContentScope.current.transition
 
@@ -477,6 +483,54 @@ fun PredictiveBackAnimationDirectionWidget(
             PredictiveBackExitDirection.entries.getOrNull(index)?.let(onSelect)
         }
     )
+}
+
+@Composable
+private fun InterfaceSettings() {
+    val context = LocalContext.current
+    val currentUiMode = UiModeConfig.getUiMode(context)
+    val isMiuix = currentUiMode == UiMode.Miuix
+
+    SegmentedColumn(title = stringResource(R.string.settings_interface)) {
+        item {
+            SettingsChooseWidget(
+                title = stringResource(R.string.ui_mode_title),
+                description = stringResource(R.string.ui_mode_summary),
+                items = listOf(
+                    stringResource(R.string.ui_mode_miuix),
+                    stringResource(R.string.ui_mode_material),
+                ),
+                selectedIndex = if (isMiuix) 0 else 1,
+                onSelectedIndexChange = { idx ->
+                    UiModeConfig.setUiMode(context, if (idx == 0) UiMode.Miuix else UiMode.Material)
+                    restartActivity(context)
+                },
+            )
+        }
+        item(visible = isMiuix) {
+            SettingsSwitchWidget(
+                title = stringResource(R.string.settings_miuix_blur),
+                description = stringResource(R.string.settings_miuix_blur_summary),
+                checked = UiModeConfig.getBlur(context),
+                onCheckedChange = { UiModeConfig.setBlur(context, it); restartActivity(context) },
+            )
+        }
+        item(visible = isMiuix) {
+            SettingsSwitchWidget(
+                title = stringResource(R.string.settings_floating_bar),
+                description = stringResource(R.string.settings_floating_bar_summary),
+                checked = UiModeConfig.getFloatingBar(context),
+                onCheckedChange = { UiModeConfig.setFloatingBar(context, it); restartActivity(context) },
+            )
+        }
+        item(visible = isMiuix && UiModeConfig.getFloatingBar(context)) {
+            SettingsSwitchWidget(
+                title = stringResource(R.string.settings_floating_bar_glass),
+                checked = UiModeConfig.getFloatingBarBlur(context),
+                onCheckedChange = { UiModeConfig.setFloatingBarBlur(context, it); restartActivity(context) },
+            )
+        }
+    }
 }
 
 @Composable

@@ -80,6 +80,8 @@ import com.kageksu.kagesu.KernelSUApplication
 import com.kageksu.kagesu.Natives
 import com.kageksu.kagesu.ui.activity.PermissionRequestInterface
 import com.kageksu.kagesu.ui.activity.component.NavigationBar
+import com.kageksu.kagesu.ui.component.bottombar.BottomBarMiuix
+import com.kageksu.kagesu.ui.component.bottombar.NavigationRailMiuix
 import com.kageksu.kagesu.ui.activity.util.ThemeChangeContentObserver
 import com.kageksu.kagesu.ui.activity.util.ThemeUtils
 import com.kageksu.kagesu.ui.animation.predictiveback.AOSPCrossActivityAnimation
@@ -114,7 +116,12 @@ import com.kageksu.kagesu.ui.screen.moduleRepo.OnlineModuleDetailScreen
 import com.kageksu.kagesu.ui.screen.themeSettings.ThemeSettingsScreen
 import com.kageksu.kagesu.ui.screen.themeSettings.util.applyLanguage
 import com.kageksu.kagesu.ui.susfs.SuSFSConfigScreen
+import com.kageksu.kagesu.ui.theme.KageSURoot
 import com.kageksu.kagesu.ui.theme.KernelSUTheme
+import com.kageksu.kagesu.ui.theme.LocalEnableBlur
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
+import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.backgroundImagePainter
 import com.kageksu.kagesu.ui.theme.blurBackgroundImageBitmap
@@ -143,6 +150,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import top.yukonga.miuix.kmp.blur.LayerBackdrop
+import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.blur.rememberLayerBackdrop
 import top.yukonga.miuix.kmp.shader.isRenderEffectSupported
 import kotlin.coroutines.resume
@@ -248,7 +256,7 @@ class MainActivity : ComponentActivity() {
             }
 
             setContent {
-                KernelSUTheme {
+                KageSURoot {
                     val context = LocalContext.current
 
                     LaunchedEffect(zipUri) {
@@ -802,6 +810,9 @@ fun MainScreen() {
     var animateJob by remember { mutableStateOf<Job?>(null) }
     var lastRequestedPage by remember { mutableIntStateOf(pagerState.currentPage) }
 
+    // Backdrop the Miuix (liquid-glass) bottom bar samples.
+    val miuixBackdrop = rememberLayerBackdrop()
+
     val handlePageChange: (Int) -> Unit = remember(pagerState, coroutineScope) {
         { page ->
             uiSelectedPage = page
@@ -861,6 +872,7 @@ fun MainScreen() {
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
+                        .layerBackdrop(miuixBackdrop)
                         .blurSource(),
                     state = pagerState,
                     userScrollEnabled = userScrollEnabled,
@@ -883,10 +895,18 @@ fun MainScreen() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        NavigationBar(
-                            destinations = pages,
-                            isBottomBar = true,
-                        )
+                        if (LocalUiMode.current == UiMode.Miuix) {
+                            BottomBarMiuix(
+                                blurBackdrop = rememberBlurBackdrop(LocalEnableBlur.current),
+                                backdrop = miuixBackdrop,
+                                modifier = Modifier,
+                            )
+                        } else {
+                            NavigationBar(
+                                destinations = pages,
+                                isBottomBar = true,
+                            )
+                        }
                     },
                     containerColor = Color.Transparent,
                 ) { innerPadding ->
@@ -894,10 +914,17 @@ fun MainScreen() {
                 }
             } else {
                 Row(modifier = Modifier.fillMaxSize()) {
-                    NavigationBar(
-                        destinations = pages,
-                        isBottomBar = false,
-                    )
+                    if (LocalUiMode.current == UiMode.Miuix) {
+                        NavigationRailMiuix(
+                            blurBackdrop = rememberBlurBackdrop(LocalEnableBlur.current),
+                            modifier = Modifier,
+                        )
+                    } else {
+                        NavigationBar(
+                            destinations = pages,
+                            isBottomBar = false,
+                        )
+                    }
                     content(0.dp)
                 }
             }
