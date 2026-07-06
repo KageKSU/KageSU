@@ -1,6 +1,10 @@
 #ifndef MANAGER_SIGN_H
 #define MANAGER_SIGN_H
 
+// KageKSU/KageSU (primary manager)
+#define EXPECTED_SIZE_KAGESU 0x2f0
+#define EXPECTED_HASH_KAGESU "794f0b612b7732134078a2cf370499a8eab22b1bfb72994f2fa33edc7a91e5ea"
+
 // tiann/KernelSU
 #define EXPECTED_SIZE_OFFICIAL 0x033b
 #define EXPECTED_HASH_OFFICIAL "c371061b19d8c7d7d6133c6a9bafe198fa944e50c1b31c9d8daa8d7f1fc2d2d6"
