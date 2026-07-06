@@ -1,6 +1,9 @@
 package com.kageksu.kagesu.ui.theme
 
 import android.app.Activity
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -87,6 +90,10 @@ fun MiuixKernelSUTheme(
         colorSpec = colorSpec,
     )
 
+    // Safety net: provide a Material color scheme too, so any screen not yet
+    // ported to Miuix still renders themed (not with broken/uninitialized colors)
+    // while the Miuix screen transplant is in progress.
+    MaterialTheme(colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()) {
     MiuixTheme(
         controller = controller,
         content = {
@@ -105,4 +112,5 @@ fun MiuixKernelSUTheme(
             }
         }
     )
+    }
 }
