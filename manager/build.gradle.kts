@@ -26,10 +26,12 @@ fun getGitDescribe(): String {
     }.standardOutput.asText.get().trim()
 }
 
-// KageSU version scheme: starts clean at 1_0000 for the v1.0.0 tag and grows by
-// one per commit. BASELINE is the commit count at v1.0.0 (see the v1.0.0 tag).
+// KageSU version scheme, continuing the ReSukiSU (v4.x) lineage this branch is
+// based on. major*10000 keeps the code in the 4_xxxx range (above ReSukiSU's
+// ~35000 so upgrades apply); BASELINE is tuned so the v4.1.1 tag lands at 4_1000
+// and the code grows by one per commit thereafter.
 fun getVersionCode(): Int {
-    val major = 1
-    val baseline = 4309
+    val major = 4
+    val baseline = 3310
     return major * 10000 + getGitCommitCount() - baseline
 }
