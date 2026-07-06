@@ -57,4 +57,12 @@
     <string name="settings_sucompat_summary">تغییر مسیر /system/bin/su به ksud برای برنامه‌هایی که مجوز Superuser در پروفایل برنامه دارند؛ فقط برای فرآیندهای جدید موثر است.</string>
     <string name="settings_kernel_umount">جداسازی هسته</string>
     <string name="settings_kernel_umount_summary">رفتار جداسازی در سطح هسته که توسط KernelSU کنترل می‌شود</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>

@@ -1,9 +1,6 @@
 package com.kageksu.kagesu.ui.theme
 
 import android.app.Activity
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -33,17 +30,15 @@ fun isInDarkTheme(): Boolean = isInDarkTheme(ThemeConfig.forceDarkMode)
 
 @Composable
 fun KageSURoot(content: @Composable () -> Unit) {
-    val context = LocalContext.current
-    val uiMode = remember { UiModeConfig.getUiMode(context) }
-    val enableBlur = remember { UiModeConfig.getBlur(context) }
-    val enableFloating = remember { UiModeConfig.getFloatingBar(context) }
-    val enableFloatingBlur = remember { UiModeConfig.getFloatingBarBlur(context) }
+    // Reactive: reading these Compose-state values makes theme + chrome update
+    // live when the user flips the mode/toggles (no restart, no write race).
+    val uiMode = UiModeConfig.uiMode
 
     CompositionLocalProvider(
         LocalUiMode provides uiMode,
-        LocalEnableBlur provides enableBlur,
-        LocalEnableFloatingBottomBar provides enableFloating,
-        LocalEnableFloatingBottomBarBlur provides enableFloatingBlur,
+        LocalEnableBlur provides UiModeConfig.enableBlur,
+        LocalEnableFloatingBottomBar provides UiModeConfig.floatingBar,
+        LocalEnableFloatingBottomBarBlur provides UiModeConfig.floatingBarBlur,
     ) {
         when (uiMode) {
             UiMode.Miuix -> MiuixKernelSUTheme(content = content)
@@ -90,10 +85,6 @@ fun MiuixKernelSUTheme(
         colorSpec = colorSpec,
     )
 
-    // Safety net: provide a Material color scheme too, so any screen not yet
-    // ported to Miuix still renders themed (not with broken/uninitialized colors)
-    // while the Miuix screen transplant is in progress.
-    MaterialTheme(colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()) {
     MiuixTheme(
         controller = controller,
         content = {
@@ -112,5 +103,4 @@ fun MiuixKernelSUTheme(
             }
         }
     )
-    }
 }

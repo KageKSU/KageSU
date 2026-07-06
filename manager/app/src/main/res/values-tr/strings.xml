@@ -662,4 +662,12 @@
     <string name="module_shortcut_permission_tip_xiaomi">Lütfen bu uygulama için Xiaomi ayarlarından \"Ana ekranda kısayol oluşturma\" yetkisini etkinleştirin.</string>
     <string name="module_shortcut_permission_tip_oppo">Lütfen bu uygulama için OPPO ayarlarından \"Ana ekran kısayolları\" yetkisini etkinleştirin.</string>
     <string name="module_shortcut_permission_tip_default">Eğer kısayol oluşturulamazsa sistem ayarlarından bu uygulamaya ana ekranda kısayol oluşturma yetkisi verin.</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>

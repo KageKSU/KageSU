@@ -121,6 +121,7 @@ import com.kageksu.kagesu.ui.theme.KernelSUTheme
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.theme.LocalUiMode
 import com.kageksu.kagesu.ui.theme.UiMode
+import com.kageksu.kagesu.ui.theme.UiModeConfig
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.backgroundImagePainter
@@ -198,6 +199,8 @@ class MainActivity : ComponentActivity() {
             }
 
             super.onCreate(savedInstanceState)
+
+            UiModeConfig.load(this)
 
             homeViewModel =
                 ViewModelProvider(applicationContext as KernelSUApplication)[HomeViewModel::class.java]

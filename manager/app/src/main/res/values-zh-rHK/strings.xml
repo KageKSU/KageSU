@@ -666,4 +666,12 @@
     <string name="module_shortcut_permission_tip_xiaomi">請喺 Xiaomi 設定中為本應用程式啟用「建立桌面捷徑」權限。</string>
     <string name="module_shortcut_permission_tip_oppo">請喺 OPPO 設定中為本應用程式啟用「桌面捷徑」權限。</string>
     <string name="module_shortcut_permission_tip_default">若建立捷徑失敗，請喺系統設定中為本應用程式啟用桌面捷徑權限。</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>

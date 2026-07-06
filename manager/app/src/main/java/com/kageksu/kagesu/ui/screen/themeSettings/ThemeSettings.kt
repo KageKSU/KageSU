@@ -488,8 +488,7 @@ fun PredictiveBackAnimationDirectionWidget(
 @Composable
 private fun InterfaceSettings() {
     val context = LocalContext.current
-    val currentUiMode = UiModeConfig.getUiMode(context)
-    val isMiuix = currentUiMode == UiMode.Miuix
+    val isMiuix = UiModeConfig.uiMode == UiMode.Miuix
 
     SegmentedColumn(title = stringResource(R.string.settings_interface)) {
         item {
@@ -503,7 +502,6 @@ private fun InterfaceSettings() {
                 selectedIndex = if (isMiuix) 0 else 1,
                 onSelectedIndexChange = { idx ->
                     UiModeConfig.setUiMode(context, if (idx == 0) UiMode.Miuix else UiMode.Material)
-                    restartActivity(context)
                 },
             )
         }
@@ -511,23 +509,23 @@ private fun InterfaceSettings() {
             SettingsSwitchWidget(
                 title = stringResource(R.string.settings_miuix_blur),
                 description = stringResource(R.string.settings_miuix_blur_summary),
-                checked = UiModeConfig.getBlur(context),
-                onCheckedChange = { UiModeConfig.setBlur(context, it); restartActivity(context) },
+                checked = UiModeConfig.enableBlur,
+                onCheckedChange = { UiModeConfig.setBlur(context, it) },
             )
         }
         item(visible = isMiuix) {
             SettingsSwitchWidget(
                 title = stringResource(R.string.settings_floating_bar),
                 description = stringResource(R.string.settings_floating_bar_summary),
-                checked = UiModeConfig.getFloatingBar(context),
-                onCheckedChange = { UiModeConfig.setFloatingBar(context, it); restartActivity(context) },
+                checked = UiModeConfig.floatingBar,
+                onCheckedChange = { UiModeConfig.setFloatingBar(context, it) },
             )
         }
-        item(visible = isMiuix && UiModeConfig.getFloatingBar(context)) {
+        item(visible = isMiuix && UiModeConfig.floatingBar) {
             SettingsSwitchWidget(
                 title = stringResource(R.string.settings_floating_bar_glass),
-                checked = UiModeConfig.getFloatingBarBlur(context),
-                onCheckedChange = { UiModeConfig.setFloatingBarBlur(context, it); restartActivity(context) },
+                checked = UiModeConfig.floatingBarBlur,
+                onCheckedChange = { UiModeConfig.setFloatingBarBlur(context, it) },
             )
         }
     }

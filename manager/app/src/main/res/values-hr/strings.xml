@@ -72,4 +72,12 @@
     <string name="settings_sucompat">Preusmjeri su binarnu datoteku</string>
     <string name="settings_sucompat_summary">Omogućava aplikacijama kojima je dodijeljeno dopuštenje Superuser u Profilu aplikacije da dobiju superuser shell izvršavanjem /system/bin/su; učinkovito samo za nove procese.</string>
     <string name="settings_kernel_umount_summary">Ponašanje umount na razini kernela koje kontrolira KernelSU</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>

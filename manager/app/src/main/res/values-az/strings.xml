@@ -74,4 +74,12 @@
     <string name="settings_sucompat_summary">Tətbiq Profilinə Superuser icazəsi verilmiş proqramları /system/bin/su vasitəsilə superuser shell əldə etməyə icazə verir; yalnız yeni proseslər üçün effektivdir.</string>
     <string name="settings_kernel_umount">Nüvə umount</string>
     <string name="settings_kernel_umount_summary">KernelSU tərəfindən idarə olunan nüvə səviyyəsində umount davranışı</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>

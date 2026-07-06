@@ -114,4 +114,12 @@
     <string name="settings_sucompat_summary">Stelt apps met Superuser-toestemming in App Profiel in staat om een superuser-shell te verkrijgen door /system/bin/su uit te voeren; alleen effectief voor nieuwe processen.</string>
     <string name="settings_kernel_umount">Kernel ontkoppelen</string>
     <string name="settings_kernel_umount_summary">Kernel-niveau ontkoppelgedrag beheerd door KernelSU</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>

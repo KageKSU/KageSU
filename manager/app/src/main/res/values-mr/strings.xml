@@ -76,4 +76,12 @@
     <string name="settings_sucompat_summary">ॲप प्रोफाईलमध्ये सुपरयुझर परवानगी दिलेल्या ॲप्ससाठी /system/bin/su ला ksud वर पुनर्निर्देशित करा; फक्त नवीन प्रक्रियांसाठी प्रभावी.</string>
     <string name="settings_kernel_umount">कर्नल अनमाउंट</string>
     <string name="settings_kernel_umount_summary">KernelSU द्वारे नियंत्रित कर्नल-स्तरीय अनमाउंट वर्तन</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>

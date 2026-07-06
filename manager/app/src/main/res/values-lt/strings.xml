@@ -78,4 +78,12 @@
     <string name="settings_sucompat_summary">Nukreipti /system/bin/su į ksud programoms, kurioms suteiktas Superuser leidimas programos profilyje; veiksminga tik naujiems procesams.</string>
     <string name="settings_kernel_umount">Branduolio atjungimas</string>
     <string name="settings_kernel_umount_summary">Branduolio lygio atjungimo elgsena, valdoma KernelSU</string>
+<string name="settings_interface">Interface</string>
+    <string name="ui_mode_title">UI style</string>
+    <string name="ui_mode_summary">Choose between the Miuix and Material designs</string>
+    <string name="settings_miuix_blur">Blur effects</string>
+    <string name="settings_miuix_blur_summary">Frost bars and cards over the wallpaper</string>
+    <string name="settings_floating_bar">Floating navigation bar</string>
+    <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
+    <string name="settings_floating_bar_glass">Liquid glass</string>
 </resources>
