@@ -9,6 +9,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
@@ -23,12 +24,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,6 +56,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -61,8 +65,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
@@ -331,6 +339,35 @@ fun ModuleMiuix(bottomPadding: Dp) {
         }
     }
 
+    // Hide the install FAB on scroll down, reveal on scroll up (SukiSU-Ultra behavior).
+    var fabVisible by remember { mutableStateOf(true) }
+    var scrollDistance by remember { mutableFloatStateOf(0f) }
+    val fabScrollConnection = remember(listState) {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val info = listState.layoutInfo
+                val isScrolledToEnd = info.visibleItemsInfo.lastOrNull()?.index == info.totalItemsCount - 1 &&
+                        (info.visibleItemsInfo.lastOrNull()?.size ?: 0) < info.viewportEndOffset
+                if (!isScrolledToEnd) {
+                    scrollDistance += available.y
+                    if (scrollDistance < -50f) {
+                        if (fabVisible) fabVisible = false
+                        scrollDistance = 0f
+                    } else if (scrollDistance > 50f) {
+                        if (!fabVisible) fabVisible = true
+                        scrollDistance = 0f
+                    }
+                }
+                return Offset.Zero
+            }
+        }
+    }
+    val fabOffset by animateDpAsState(
+        targetValue = if (fabVisible) 0.dp else 180.dp + WindowInsets.systemBars.asPaddingValues().calculateBottomPadding(),
+        animationSpec = tween(durationMillis = 350),
+        label = "moduleFabOffset",
+    )
+
     Scaffold(
         topBar = {
             BlurredBar(backdrop) {
@@ -379,7 +416,9 @@ fun ModuleMiuix(bottomPadding: Dp) {
         floatingActionButton = {
             if (!hideInstallButton) {
                 FloatingActionButton(
-                    modifier = Modifier.padding(bottom = bottomPadding + 20.dp, end = 20.dp),
+                    modifier = Modifier
+                        .offset { IntOffset(x = 0, y = fabOffset.roundToPx()) }
+                        .padding(bottom = bottomPadding + 20.dp, end = 20.dp),
                     onClick = {
                         selectZipLauncher.launch(
                             Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -422,7 +461,8 @@ fun ModuleMiuix(bottomPadding: Dp) {
                             .fillMaxHeight()
                             .scrollEndHaptic()
                             .overScrollVertical()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            .nestedScroll(scrollBehavior.nestedScrollConnection)
+                            .nestedScroll(fabScrollConnection),
                         contentPadding = contentPadding,
                         overscrollEffect = null,
                     ) {
