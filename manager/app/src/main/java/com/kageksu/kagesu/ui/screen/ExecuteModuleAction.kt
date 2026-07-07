@@ -51,6 +51,8 @@ import com.kageksu.kagesu.ui.component.SwipeableSnackbarHost
 import com.kageksu.kagesu.ui.component.settings.AppBackButton
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
 import com.kageksu.kagesu.ui.theme.CardConfig
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.blurEffect
 import com.kageksu.kagesu.ui.theme.blurSource
@@ -68,6 +70,10 @@ import java.util.Locale
 @SuppressLint("LocalContextGetResourceValueCall")
 @Composable
 fun ExecuteModuleActionScreen(moduleId: String) {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        ExecuteModuleActionMiuix(moduleId)
+        return
+    }
     var text by rememberSaveable { mutableStateOf("") }
     var tempText : String
     val logContent = remember { StringBuilder() }
