@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -119,6 +120,8 @@ import com.kageksu.kagesu.ui.susfs.SuSFSConfigScreen
 import com.kageksu.kagesu.ui.theme.KageSURoot
 import com.kageksu.kagesu.ui.theme.KernelSUTheme
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
+import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBar
+import com.kageksu.kagesu.ui.theme.LocalEnableFloatingBottomBarBlur
 import com.kageksu.kagesu.ui.theme.LocalUiMode
 import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.UiModeConfig
@@ -154,6 +157,7 @@ import top.yukonga.miuix.kmp.blur.LayerBackdrop
 import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.blur.rememberLayerBackdrop
 import top.yukonga.miuix.kmp.shader.isRenderEffectSupported
+import top.yukonga.miuix.kmp.theme.MiuixTheme
 import kotlin.coroutines.resume
 
 private fun Modifier.blockPointerInputWhen(enabled: Boolean): Modifier {
@@ -813,8 +817,21 @@ fun MainScreen() {
     var animateJob by remember { mutableStateOf<Job?>(null) }
     var lastRequestedPage by remember { mutableIntStateOf(pagerState.currentPage) }
 
-    // Backdrop the Miuix (liquid-glass) bottom bar samples.
-    val miuixBackdrop = rememberLayerBackdrop()
+    val uiMode = LocalUiMode.current
+    val isMiuix = uiMode == UiMode.Miuix
+    val enableBlur = LocalEnableBlur.current
+    val enableFloatingBottomBar = LocalEnableFloatingBottomBar.current
+    val enableFloatingBottomBarBlur = LocalEnableFloatingBottomBarBlur.current
+
+    // Backdrop that captures the pager content so the non-floating Miuix bottom bar
+    // can frost it (BlurredBar). Null when blur is off/unsupported.
+    val blurBackdrop = rememberBlurBackdrop(enableBlur)
+    // Backdrop the Miuix (liquid-glass) floating bottom bar samples.
+    val surfaceColor = MiuixTheme.colorScheme.surface
+    val miuixBackdrop = rememberLayerBackdrop {
+        drawRect(surfaceColor)
+        drawContent()
+    }
 
     val handlePageChange: (Int) -> Unit = remember(pagerState, coroutineScope) {
         { page ->
@@ -872,10 +889,25 @@ fun MainScreen() {
         ) {
             val isPortrait = maxWidth < maxHeight || (maxHeight / maxWidth > 1.4f)
             val content = @Composable { paddingBottom: Dp ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .then(
+                            // Record the pager content into blurBackdrop so the non-floating
+                            // Miuix bar can frost it. Without this the bar samples an empty
+                            // layer and renders transparent instead of blurred.
+                            if (isMiuix && blurBackdrop != null) Modifier.layerBackdrop(blurBackdrop)
+                            else Modifier
+                        )
+                ) {
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
-                        .layerBackdrop(miuixBackdrop)
+                        .then(
+                            if (isMiuix && enableFloatingBottomBar && enableFloatingBottomBarBlur)
+                                Modifier.layerBackdrop(miuixBackdrop)
+                            else Modifier
+                        )
                         .blurSource(),
                     state = pagerState,
                     userScrollEnabled = userScrollEnabled,
@@ -892,18 +924,23 @@ fun MainScreen() {
                         destination.direction(paddingBottom)
                     }
                 }
+                }
             }
 
             if (isPortrait) {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        if (LocalUiMode.current == UiMode.Miuix) {
-                            BottomBarMiuix(
-                                blurBackdrop = rememberBlurBackdrop(LocalEnableBlur.current),
-                                backdrop = miuixBackdrop,
-                                modifier = Modifier,
-                            )
+                        if (isMiuix) {
+                            // fillMaxWidth + BottomCenter align so the floating pill is
+                            // centered instead of pinned to the left edge.
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                BottomBarMiuix(
+                                    blurBackdrop = blurBackdrop,
+                                    backdrop = miuixBackdrop,
+                                    modifier = Modifier.align(Alignment.BottomCenter),
+                                )
+                            }
                         } else {
                             NavigationBar(
                                 destinations = pages,
@@ -917,9 +954,9 @@ fun MainScreen() {
                 }
             } else {
                 Row(modifier = Modifier.fillMaxSize()) {
-                    if (LocalUiMode.current == UiMode.Miuix) {
+                    if (isMiuix) {
                         NavigationRailMiuix(
-                            blurBackdrop = rememberBlurBackdrop(LocalEnableBlur.current),
+                            blurBackdrop = blurBackdrop,
                             modifier = Modifier,
                         )
                     } else {

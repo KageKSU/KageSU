@@ -59,10 +59,15 @@ fun MiuixKernelSUTheme(
     val context = LocalContext.current
     val dynamic = ThemeConfig.useDynamicColor
 
+    // Always use Monet modes: they are the only ones where miuix's ThemeController
+    // honors `keyColor`. The plain System/Light/Dark modes ignore keyColor and paint
+    // the fixed default palette, so a custom seed color would have no effect (bug:
+    // "can't choose colors for miuix"). Dynamic-off => keyColor = seed; dynamic-on =>
+    // keyColor = null => platform (wallpaper) dynamic colors.
     val colorSchemeMode = when (ThemeConfig.forceDarkMode) {
-        null -> if (dynamic) ColorSchemeMode.MonetSystem else ColorSchemeMode.System
-        true -> if (dynamic) ColorSchemeMode.MonetDark else ColorSchemeMode.Dark
-        false -> if (dynamic) ColorSchemeMode.MonetLight else ColorSchemeMode.Light
+        null -> ColorSchemeMode.MonetSystem
+        true -> ColorSchemeMode.MonetDark
+        false -> ColorSchemeMode.MonetLight
     }
 
     val paletteStyle = try {
