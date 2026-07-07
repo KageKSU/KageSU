@@ -104,6 +104,8 @@ import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.screen.LabelText
 import com.kageksu.kagesu.ui.theme.CardConfig
 import com.kageksu.kagesu.ui.theme.CardConfig.cardElevation
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.blurEffect
 import com.kageksu.kagesu.ui.theme.blurSource
@@ -129,6 +131,10 @@ import kotlinx.coroutines.withContext
 fun HomePage(
     bottomPadding: Dp,
 ) {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        HomeMiuix(bottomPadding)
+        return
+    }
     val context = LocalContext.current
     val viewModel = viewModel<HomeViewModel>(
         viewModelStoreOwner = ksuApp
