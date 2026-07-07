@@ -1271,20 +1271,6 @@ fun ModuleItem(
     onClick: (ModuleViewModel.ModuleInfo) -> Unit,
     onModuleAddShortcut: (ModuleViewModel.ModuleInfo) -> Unit,
 ) {
-    if (LocalUiMode.current == UiMode.Miuix) {
-        ModuleItemMiuix(
-            viewModel = viewModel,
-            module = module,
-            moduleSizes = moduleSizes,
-            updateUrl = updateUrl,
-            onUninstallClicked = onUninstallClicked,
-            onCheckChanged = onCheckChanged,
-            onUpdate = onUpdate,
-            onClick = onClick,
-            onModuleAddShortcut = onModuleAddShortcut,
-        )
-        return
-    }
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     val prefs = context.appPreferences

@@ -4,9 +4,16 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,18 +23,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.add
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Wysiwyg
+import androidx.compose.material.icons.automirrored.rounded.Undo
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -36,21 +47,24 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Extension
 import androidx.compose.material.icons.outlined.PlayArrow
-import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.Warning
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -62,42 +76,58 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kageksu.kagesu.Natives
 import com.kageksu.kagesu.R
 import com.kageksu.kagesu.data.appPreferences
 import com.kageksu.kagesu.ksuApp
+import com.kageksu.kagesu.ui.component.ConfirmResult
 import com.kageksu.kagesu.ui.component.InstallConfirmationDialog
 import com.kageksu.kagesu.ui.component.ZipFileDetector.parseModuleInfo
 import com.kageksu.kagesu.ui.component.ZipFileInfo
 import com.kageksu.kagesu.ui.component.ZipType
-import com.kageksu.kagesu.ui.util.module.ModuleUtils
-import com.kageksu.kagesu.ui.component.miuix.StatusTag
+import com.kageksu.kagesu.ui.component.rememberConfirmDialog
+import com.kageksu.kagesu.ui.component.rememberLoadingDialog
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
 import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.screen.FlashIt
 import com.kageksu.kagesu.ui.theme.LocalEnableBlur
+import com.kageksu.kagesu.ui.theme.isInDarkTheme
 import com.kageksu.kagesu.ui.util.BlurredBar
+import com.kageksu.kagesu.ui.util.LocalPermissionRequestInterface
 import com.kageksu.kagesu.ui.util.LocalSnackbarHost
+import com.kageksu.kagesu.ui.util.downloader.download
 import com.kageksu.kagesu.ui.util.hasMagisk
+import com.kageksu.kagesu.ui.util.module.ModuleUtils
+import com.kageksu.kagesu.ui.util.module.Shortcut
+import com.kageksu.kagesu.ui.util.reboot
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
+import com.kageksu.kagesu.ui.util.toggleModule
+import com.kageksu.kagesu.ui.util.undoUninstallModule
+import com.kageksu.kagesu.ui.util.uninstallModule
 import com.kageksu.kagesu.ui.viewmodel.ModuleViewModel
 import com.kageksu.kagesu.ui.webui.WebUIActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.HorizontalDivider
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
+import top.yukonga.miuix.kmp.basic.InfiniteProgressIndicator
 import top.yukonga.miuix.kmp.basic.ListPopupColumn
 import top.yukonga.miuix.kmp.basic.ListPopupDefaults
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.PopupPositionProvider
+import top.yukonga.miuix.kmp.basic.PullToRefresh
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Switch
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.basic.DropdownImpl
+import top.yukonga.miuix.kmp.basic.rememberPullToRefreshState
 import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.overlay.OverlayListPopup
 import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
@@ -105,10 +135,9 @@ import top.yukonga.miuix.kmp.utils.overScrollVertical
 import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
 /**
- * Miuix rendering of the Module page. Miuix chrome (collapsing TopAppBar, FAB,
- * scroll haptics) + Miuix module cards, reusing ReSukiSU's ModuleList (all the
- * enable/uninstall/update/shortcut logic) and install flow unchanged. Dispatched
- * from ModulePage / ModuleItem when Miuix; Material untouched.
+ * Native Miuix Module page. Miuix chrome + list + cards + miuix PullToRefresh,
+ * wired to ReSukiSU's ModuleViewModel and its module operations
+ * (toggle/uninstall/update/webui/action). Dispatched from ModulePage when Miuix.
  */
 @Composable
 fun ModuleMiuix(bottomPadding: Dp) {
@@ -120,13 +149,36 @@ fun ModuleMiuix(bottomPadding: Dp) {
     val snackBarHost = LocalSnackbarHost.current
     val scope = rememberCoroutineScope()
     val listState = rememberLazyListState()
-    var lastClickTime by remember { mutableStateOf(0L) }
+    val layoutDirection = LocalLayoutDirection.current
+    val permissionRequestInterface = LocalPermissionRequestInterface.current
+
+    val loadingDialog = rememberLoadingDialog()
+    val confirmDialog = rememberConfirmDialog()
 
     val scrollBehavior = MiuixScrollBehavior()
     val enableBlur = LocalEnableBlur.current
     val backdrop = rememberBlurBackdrop(enableBlur)
     val barColor = if (backdrop != null) Color.Transparent else colorScheme.surface
 
+    // Snackbar / dialog strings
+    val rebootToApply = stringResource(R.string.reboot_to_apply)
+    val rebootStr = stringResource(R.string.reboot)
+    val failedEnable = stringResource(R.string.module_failed_to_enable)
+    val failedDisable = stringResource(R.string.module_failed_to_disable)
+    val successUninstall = stringResource(R.string.module_uninstall_success)
+    val failedUninstall = stringResource(R.string.module_uninstall_failed)
+    val moduleStr = stringResource(R.string.module)
+    val uninstallStr = stringResource(R.string.uninstall)
+    val cancelStr = stringResource(android.R.string.cancel)
+    val moduleUninstallConfirm = stringResource(R.string.module_uninstall_confirm)
+    val metaModuleUninstallConfirm = stringResource(R.string.metamodule_uninstall_confirm)
+    val updateText = stringResource(R.string.module_update)
+    val changelogText = stringResource(R.string.module_changelog)
+    val downloadingText = stringResource(R.string.module_downloading)
+    val startDownloadingText = stringResource(R.string.module_start_downloading)
+    val fetchChangeLogFailed = stringResource(R.string.module_changelog_failed)
+
+    // Install flow
     var showConfirmationDialog by remember { mutableStateOf(false) }
     var pendingZipFiles by remember { mutableStateOf<List<ZipFileInfo>>(emptyList()) }
     InstallConfirmationDialog(
@@ -144,7 +196,6 @@ fun ModuleMiuix(bottomPadding: Dp) {
             pendingZipFiles = emptyList()
         }
     )
-
     val selectZipLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) {
@@ -153,40 +204,27 @@ fun ModuleMiuix(bottomPadding: Dp) {
         scope.launch {
             val zipFiles = mutableListOf<ZipFileInfo>()
             val clipData = data.clipData
-            if (clipData != null) {
-                val selected = mutableListOf<Uri>()
-                for (i in 0 until clipData.itemCount) {
-                    val uri = clipData.getItemAt(i).uri
-                    try {
-                        if (!ModuleUtils.isUriAccessible(context, uri)) continue
-                        ModuleUtils.takePersistableUriPermission(context, uri)
-                        selected.add(uri)
-                    } catch (e: Exception) {
-                        Log.e("ModuleMiuix", "Error processing URI: $uri, ${e.message}")
-                    }
-                }
-                if (selected.isEmpty()) {
-                    snackBarHost.showSnackbar("Unable to access selected module files")
-                    return@launch
-                }
-                selected.forEach { zipFiles.add(parseModuleInfo(context, it)) }
-                pendingZipFiles = zipFiles
-                showConfirmationDialog = true
+            val uris = if (clipData != null) {
+                (0 until clipData.itemCount).map { i -> clipData.getItemAt(i).uri }
             } else {
-                val uri = data.data ?: return@launch
+                listOfNotNull(data.data)
+            }
+            val accessible = uris.filter { uri ->
                 try {
-                    if (!ModuleUtils.isUriAccessible(context, uri)) {
-                        snackBarHost.showSnackbar("Unable to access selected module files")
-                        return@launch
-                    }
+                    if (!ModuleUtils.isUriAccessible(context, uri)) return@filter false
                     ModuleUtils.takePersistableUriPermission(context, uri)
-                    zipFiles.add(parseModuleInfo(context, uri))
-                    pendingZipFiles = zipFiles
-                    showConfirmationDialog = true
+                    true
                 } catch (e: Exception) {
-                    snackBarHost.showSnackbar("Error processing module file: ${e.message}")
+                    Log.e("ModuleMiuix", "URI error: $uri, ${e.message}"); false
                 }
             }
+            if (accessible.isEmpty()) {
+                snackBarHost.showSnackbar("Unable to access selected module files")
+                return@launch
+            }
+            accessible.forEach { zipFiles.add(parseModuleInfo(context, it)) }
+            pendingZipFiles = zipFiles
+            showConfirmationDialog = true
         }
     }
 
@@ -201,9 +239,89 @@ fun ModuleMiuix(bottomPadding: Dp) {
         }
     }
 
-    val isSafeMode = Natives.isSafeMode
     val hasMagisk = hasMagisk()
-    val hideInstallButton = isSafeMode || hasMagisk
+    val hideInstallButton = Natives.isSafeMode || hasMagisk
+
+    // Operations
+    fun doToggle(module: ModuleViewModel.ModuleInfo) {
+        viewModel.viewModelScope.launch {
+            val ok = loadingDialog.withLoading {
+                withContext(Dispatchers.IO) { toggleModule(module.dirId, !module.enabled) }
+            }
+            if (ok) {
+                viewModel.fetchModuleList()
+                val r = snackBarHost.showSnackbar(rebootToApply, rebootStr, duration = SnackbarDuration.Long)
+                if (r == SnackbarResult.ActionPerformed) reboot()
+            } else {
+                snackBarHost.showSnackbar((if (module.enabled) failedDisable else failedEnable).format(module.name))
+            }
+        }
+    }
+
+    fun doUninstall(module: ModuleViewModel.ModuleInfo) {
+        viewModel.viewModelScope.launch {
+            val isUninstall = !module.remove
+            if (isUninstall) {
+                val fmt = if (module.metamodule) metaModuleUninstallConfirm else moduleUninstallConfirm
+                val confirm = confirmDialog.awaitConfirm(
+                    moduleStr, content = fmt.format(module.name), confirm = uninstallStr, dismiss = cancelStr
+                )
+                if (confirm != ConfirmResult.Confirmed) return@launch
+            }
+            val ok = loadingDialog.withLoading {
+                withContext(Dispatchers.IO) {
+                    if (isUninstall) {
+                        Shortcut.deleteModuleActionShortcut(context, module.id)
+                        Shortcut.deleteModuleWebUiShortcut(context, module.id)
+                        uninstallModule(module.dirId)
+                    } else undoUninstallModule(module.dirId)
+                }
+            }
+            if (ok) {
+                viewModel.fetchModuleList()
+                viewModel.markNeedRefresh()
+            }
+            if (!isUninstall) return@launch
+            val msg = (if (ok) successUninstall else failedUninstall).format(module.name)
+            val r = snackBarHost.showSnackbar(msg, if (ok) rebootStr else null, duration = SnackbarDuration.Long)
+            if (r == SnackbarResult.ActionPerformed) reboot()
+        }
+    }
+
+    fun doUpdate(module: ModuleViewModel.ModuleInfo) {
+        val upd = module.moduleUpdate ?: return
+        viewModel.viewModelScope.launch {
+            val req = okhttp3.Request.Builder().url(upd.changelog).build()
+            val changelogResult = loadingDialog.withLoading {
+                withContext(Dispatchers.IO) {
+                    runCatching { ksuApp.okhttpClient.newCall(req).execute().body!!.string() }
+                }
+            }
+            val changelog = changelogResult.getOrElse {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, fetchChangeLogFailed.format(it.message), Toast.LENGTH_SHORT).show()
+                }
+                return@launch
+            }
+            val confirm = confirmDialog.awaitConfirm(changelogText, content = changelog, markdown = true, confirm = updateText)
+            if (confirm != ConfirmResult.Confirmed) return@launch
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, startDownloadingText.format(module.name), Toast.LENGTH_SHORT).show()
+            }
+            val fileName = "${module.name}-${upd.version}.zip"
+            withContext(Dispatchers.IO) {
+                download(
+                    context, permissionRequestInterface, upd.zipUrl, fileName,
+                    onDownloaded = { uri -> navigator.push(Route.Flash(FlashIt.FlashModuleUpdate(uri))) },
+                    onDownloading = {
+                        scope.launch(Dispatchers.Main) {
+                            Toast.makeText(context, downloadingText.format(module.name), Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                )
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -222,13 +340,11 @@ fun ModuleMiuix(bottomPadding: Dp) {
                             sortEnabledFirst = uiState.sortEnabledFirst,
                             onToggleActionFirst = {
                                 val v = !uiState.sortActionFirst
-                                viewModel.setSortActionFirst(v)
-                                prefs.putBoolean("module_sort_action_first", v)
+                                viewModel.setSortActionFirst(v); prefs.putBoolean("module_sort_action_first", v)
                             },
                             onToggleEnabledFirst = {
                                 val v = !uiState.sortEnabledFirst
-                                viewModel.setSortEnabledFirst(v)
-                                prefs.putBoolean("module_sort_enabled_first", v)
+                                viewModel.setSortEnabledFirst(v); prefs.putBoolean("module_sort_enabled_first", v)
                             },
                         )
                     },
@@ -239,74 +355,89 @@ fun ModuleMiuix(bottomPadding: Dp) {
         contentWindowInsets = WindowInsets.systemBars.add(WindowInsets.displayCutout)
             .only(WindowInsetsSides.Horizontal)
     ) { innerPadding ->
-        Box(modifier = Modifier.fillMaxSize()) {
-            Box(
-                modifier = (if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier)
-                    .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding())
-            ) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    var searchField by remember { mutableStateOf(TextFieldValue(uiState.search)) }
-                    LaunchedEffect(uiState.search) {
-                        if (uiState.search != searchField.text) {
-                            searchField = TextFieldValue(uiState.search, selection = TextRange(uiState.search.length))
-                        }
-                    }
-                    TextField(
-                        value = searchField,
-                        onValueChange = {
-                            searchField = it
-                            viewModel.updateSearch(it.text)
-                        },
-                        label = stringResource(R.string.search_modules),
-                        useLabelAsPlaceholder = true,
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 12.dp, vertical = 6.dp),
-                        leadingIcon = {
-                            Icon(
-                                Icons.Filled.Search, null,
-                                Modifier.padding(start = 12.dp).size(20.dp),
-                                tint = colorScheme.onSurfaceContainerVariant,
-                            )
-                        },
-                    )
+        val pullState = rememberPullToRefreshState()
+        val contentPadding = PaddingValues(
+            top = innerPadding.calculateTopPadding() + 60.dp,
+            start = innerPadding.calculateStartPadding(layoutDirection),
+            end = innerPadding.calculateEndPadding(layoutDirection),
+            bottom = bottomPadding + 84.dp, // clear nav bar + install FAB
+        )
 
-                    when {
-                        hasMagisk -> EmptyState(Icons.Outlined.Warning, stringResource(R.string.module_magisk_conflict))
-                        uiState.moduleList.isEmpty() -> EmptyState(Icons.Outlined.Extension, stringResource(R.string.module_empty))
-                        else -> ModuleList(
-                            viewModel = viewModel,
-                            uiState = uiState,
-                            listState = listState,
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Fixed search field under the collapsing bar
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = innerPadding.calculateTopPadding() + 6.dp, start = 12.dp, end = 12.dp)
+            ) {
+                var searchField by remember { mutableStateOf(TextFieldValue(uiState.search)) }
+                LaunchedEffect(uiState.search) {
+                    if (uiState.search != searchField.text) {
+                        searchField = TextFieldValue(uiState.search, selection = TextRange(uiState.search.length))
+                    }
+                }
+                TextField(
+                    value = searchField,
+                    onValueChange = { searchField = it; viewModel.updateSearch(it.text) },
+                    label = stringResource(R.string.search_modules),
+                    useLabelAsPlaceholder = true,
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    leadingIcon = {
+                        Icon(Icons.Filled.Search, null, Modifier.padding(start = 12.dp).size(20.dp), tint = colorScheme.onSurfaceContainerVariant)
+                    },
+                )
+            }
+
+            when {
+                hasMagisk -> CenterState(Icons.Outlined.Warning, stringResource(R.string.module_magisk_conflict))
+                uiState.moduleList.isEmpty() && uiState.isRefreshing -> Box(Modifier.fillMaxSize(), Alignment.Center) { InfiniteProgressIndicator() }
+                uiState.moduleList.isEmpty() -> CenterState(Icons.Outlined.Extension, stringResource(R.string.module_empty))
+                else -> PullToRefresh(
+                    isRefreshing = uiState.isRefreshing,
+                    pullToRefreshState = pullState,
+                    onRefresh = { viewModel.fetchModuleList(true) },
+                    contentPadding = contentPadding,
+                ) {
+                    Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
+                        androidx.compose.foundation.lazy.LazyColumn(
+                            state = listState,
                             modifier = Modifier
-                                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                                .fillMaxHeight()
                                 .scrollEndHaptic()
-                                .overScrollVertical(),
-                            onUpdateModule = { navigator.push(Route.Flash(FlashIt.FlashModuleUpdate(it))) },
-                            onClickModule = { id, name, hasWebUi ->
-                                val now = System.currentTimeMillis()
-                                if (now - lastClickTime < 600) return@ModuleList
-                                lastClickTime = now
-                                if (hasWebUi) {
-                                    try {
-                                        context.startActivity(
-                                            Intent(context, WebUIActivity::class.java)
-                                                .setData("kernelsu://webui/$id".toUri())
-                                                .putExtra("id", id)
-                                                .putExtra("name", name)
-                                        )
-                                    } catch (e: Exception) {
-                                        scope.launch { snackBarHost.showSnackbar("Error launching WebUI: ${e.message}") }
-                                    }
-                                }
-                            },
-                            context = context,
-                            snackBarHost = snackBarHost,
-                            bottomPadding = bottomPadding,
-                            topPadding = 0.dp,
-                        )
+                                .overScrollVertical()
+                                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            contentPadding = contentPadding,
+                            overscrollEffect = null,
+                        ) {
+                            items(uiState.moduleList, key = { it.id }, contentType = { "module" }) { module ->
+                                ModuleItemMiuix(
+                                    module = module,
+                                    updateUrl = module.moduleUpdate?.zipUrl.orEmpty(),
+                                    onToggle = { doToggle(module) },
+                                    onUninstall = { doUninstall(module) },
+                                    onUpdate = { doUpdate(module) },
+                                    onExecuteAction = {
+                                        navigator.push(Route.ExecuteModuleAction(module.dirId))
+                                        viewModel.markNeedRefresh()
+                                    },
+                                    onOpenWebUi = {
+                                        if (module.hasWebUi) {
+                                            try {
+                                                context.startActivity(
+                                                    Intent(context, WebUIActivity::class.java)
+                                                        .setData("kernelsu://webui/${module.id}".toUri())
+                                                        .putExtra("id", module.id)
+                                                        .putExtra("name", module.name)
+                                                )
+                                            } catch (e: Exception) {
+                                                scope.launch { snackBarHost.showSnackbar("Error launching WebUI: ${e.message}") }
+                                            }
+                                        }
+                                    },
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -317,6 +448,7 @@ fun ModuleMiuix(bottomPadding: Dp) {
                         .align(Alignment.BottomEnd)
                         .padding(end = 20.dp, bottom = bottomPadding + 20.dp)
                         .size(56.dp),
+                    backgroundColor = colorScheme.primary,
                     onClick = {
                         selectZipLauncher.launch(
                             Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -325,7 +457,6 @@ fun ModuleMiuix(bottomPadding: Dp) {
                             }
                         )
                     },
-                    backgroundColor = colorScheme.primary,
                 ) {
                     Icon(Icons.Filled.Add, stringResource(R.string.install), tint = colorScheme.onPrimary)
                 }
@@ -335,7 +466,7 @@ fun ModuleMiuix(bottomPadding: Dp) {
 }
 
 @Composable
-private fun EmptyState(icon: androidx.compose.ui.graphics.vector.ImageVector, text: String) {
+private fun CenterState(icon: androidx.compose.ui.graphics.vector.ImageVector, text: String) {
     Box(modifier = Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(icon, null, Modifier.size(96.dp).padding(bottom = 16.dp), tint = colorScheme.onSurfaceVariantSummary)
@@ -362,16 +493,12 @@ private fun ModuleSortPopup(
             ListPopupColumn {
                 DropdownImpl(
                     text = stringResource(R.string.module_sort_action_first),
-                    optionSize = 2,
-                    isSelected = sortActionFirst,
-                    index = 0,
+                    optionSize = 2, isSelected = sortActionFirst, index = 0,
                     onSelectedIndexChange = { onToggleActionFirst() },
                 )
                 DropdownImpl(
                     text = stringResource(R.string.module_sort_enabled_first),
-                    optionSize = 2,
-                    isSelected = sortEnabledFirst,
-                    index = 1,
+                    optionSize = 2, isSelected = sortEnabledFirst, index = 1,
                     onSelectedIndexChange = { onToggleEnabledFirst() },
                 )
             }
@@ -383,121 +510,129 @@ private fun ModuleSortPopup(
 }
 
 @Composable
-fun ModuleItemMiuix(
-    viewModel: ModuleViewModel,
+private fun ModuleItemMiuix(
     module: ModuleViewModel.ModuleInfo,
-    moduleSizes: Map<String, String>,
     updateUrl: String,
-    onUninstallClicked: (ModuleViewModel.ModuleInfo) -> Unit,
-    onCheckChanged: (Boolean) -> Unit,
-    onUpdate: (ModuleViewModel.ModuleInfo) -> Unit,
-    onClick: (ModuleViewModel.ModuleInfo) -> Unit,
-    onModuleAddShortcut: (ModuleViewModel.ModuleInfo) -> Unit,
+    onToggle: (Boolean) -> Unit,
+    onUninstall: () -> Unit,
+    onUpdate: () -> Unit,
+    onExecuteAction: () -> Unit,
+    onOpenWebUi: () -> Unit,
 ) {
-    val navigator = LocalNavigator.current
+    val secondaryContainer = colorScheme.secondaryContainer.copy(alpha = 0.8f)
+    val actionIconTint = colorScheme.onSurface.copy(alpha = if (isInDarkTheme()) 0.7f else 0.9f)
+    val updateBg = colorScheme.tertiaryContainer.copy(alpha = 0.6f)
+    val updateTint = colorScheme.onTertiaryContainer.copy(alpha = 0.8f)
+    val hasUpdate = updateUrl.isNotEmpty()
     val decoration = if (module.remove) TextDecoration.LineThrough else null
+    val hasDescription = module.description.isNotBlank()
+    var expanded by rememberSaveable(module.id) { mutableStateOf(false) }
 
-    LaunchedEffect(module.dirId) { viewModel.loadSize(module.dirId) }
-    val sizeStr = moduleSizes[module.dirId]
-
-    val clickable = module.hasActionScript || module.hasWebUi
     Card(
         modifier = Modifier
-            .padding(bottom = 12.dp)
-            .fillMaxWidth(),
+            .padding(horizontal = 12.dp)
+            .padding(bottom = 12.dp),
+        insideMargin = PaddingValues(16.dp),
+        onClick = { if (hasDescription) expanded = !expanded },
     ) {
-        Column(
-            modifier = Modifier
-                .run {
-                    if (clickable) combinedClickable(
-                        onLongClick = { onModuleAddShortcut(module) },
-                        onClick = { if (module.hasWebUi) onClick(module) },
-                    ) else this
-                }
-                .padding(20.dp, 16.dp, 20.dp, 12.dp)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(1f).padding(end = 4.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text(
                         text = module.name,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight(550),
                         color = colorScheme.onSurface,
                         textDecoration = decoration,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false),
                     )
-                    Text(
-                        text = "${stringResource(R.string.module_version)}: ${module.version}",
-                        fontSize = 12.sp,
-                        color = colorScheme.onSurfaceVariantSummary,
-                        textDecoration = decoration,
-                    )
-                    Text(
-                        text = "${stringResource(R.string.module_author)}: ${module.author}",
-                        fontSize = 12.sp,
-                        color = colorScheme.onSurfaceVariantSummary,
-                        textDecoration = decoration,
-                    )
-                }
-                Switch(
-                    checked = module.enabled,
-                    enabled = !module.update,
-                    onCheckedChange = onCheckChanged,
-                )
-            }
-
-            Spacer(Modifier.height(10.dp))
-            Text(
-                text = module.description,
-                fontSize = 12.sp,
-                color = colorScheme.onSurfaceVariantSummary,
-                maxLines = 4,
-                overflow = TextOverflow.Ellipsis,
-                textDecoration = decoration,
-            )
-
-            Spacer(Modifier.height(12.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                StatusTag(module.dirId, colorScheme.primary.copy(alpha = 0.15f), colorScheme.primary)
-                if (module.metamodule) {
-                    StatusTag("META", colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer)
-                }
-                StatusTag(sizeStr ?: "0 KB", colorScheme.secondaryContainer, colorScheme.onSecondaryContainer)
-            }
-
-            Spacer(Modifier.height(12.dp))
-            HorizontalDivider()
-            Spacer(Modifier.height(6.dp))
-
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
-                if (module.hasActionScript) {
-                    IconButton(
-                        enabled = !module.remove && module.enabled,
-                        onClick = {
-                            navigator.push(Route.ExecuteModuleAction(module.dirId))
-                            viewModel.markNeedRefresh()
-                        },
-                    ) { Icon(Icons.Outlined.PlayArrow, null, Modifier.size(20.dp), tint = colorScheme.onSurface) }
-                }
-                if (module.hasWebUi) {
-                    IconButton(
-                        enabled = !module.remove && module.enabled,
-                        onClick = { onClick(module) },
-                    ) { Icon(Icons.AutoMirrored.Outlined.Wysiwyg, null, Modifier.size(20.dp), tint = colorScheme.onSurface) }
-                }
-                Spacer(Modifier.weight(1f))
-                if (updateUrl.isNotEmpty()) {
-                    IconButton(
-                        enabled = !module.remove,
-                        onClick = { onUpdate(module) },
-                    ) { Icon(Icons.Outlined.Download, null, Modifier.size(20.dp), tint = colorScheme.primary) }
-                }
-                IconButton(onClick = { onUninstallClicked(module) }) {
-                    if (!module.remove) {
-                        Icon(Icons.Outlined.Delete, null, Modifier.size(20.dp), tint = colorScheme.onSurface)
-                    } else {
-                        Icon(Icons.Outlined.Refresh, null, Modifier.size(20.dp).rotate(180f), tint = colorScheme.onSurface)
+                    if (module.metamodule) {
+                        Text(
+                            text = "META",
+                            fontSize = 12.sp,
+                            color = updateTint,
+                            modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(updateBg).padding(horizontal = 6.dp, vertical = 2.dp),
+                            fontWeight = FontWeight(750),
+                            maxLines = 1,
+                            softWrap = false,
+                        )
                     }
                 }
+                Text(
+                    text = "${stringResource(R.string.module_version)}: ${module.version}",
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(top = 2.dp),
+                    fontWeight = FontWeight(550),
+                    color = colorScheme.onSurfaceVariantSummary,
+                    textDecoration = decoration,
+                )
+                Text(
+                    text = "${stringResource(R.string.module_author)}: ${module.author}",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight(550),
+                    color = colorScheme.onSurfaceVariantSummary,
+                    textDecoration = decoration,
+                )
+            }
+            Switch(
+                enabled = !module.update,
+                checked = module.enabled,
+                onCheckedChange = { if (it != module.enabled) onToggle(it) },
+            )
+        }
+
+        if (hasDescription) {
+            Box(modifier = Modifier.padding(top = 2.dp).animateContentSize(tween(250, easing = FastOutSlowInEasing))) {
+                Text(
+                    text = module.description,
+                    fontSize = 14.sp,
+                    color = colorScheme.onSurfaceVariantSummary,
+                    overflow = if (expanded) TextOverflow.Clip else TextOverflow.Ellipsis,
+                    maxLines = if (expanded) Int.MAX_VALUE else 4,
+                    textDecoration = decoration,
+                )
+            }
+        }
+
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), thickness = 0.5.dp, color = colorScheme.outline.copy(alpha = 0.5f))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            AnimatedVisibility(visible = module.enabled && !module.remove && !module.update, enter = fadeIn(), exit = fadeOut()) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    if (module.hasActionScript) {
+                        IconButton(minHeight = 35.dp, minWidth = 35.dp, backgroundColor = secondaryContainer, onClick = onExecuteAction) {
+                            Icon(Icons.Outlined.PlayArrow, stringResource(R.string.action), Modifier.size(22.dp), tint = actionIconTint)
+                        }
+                    }
+                    if (module.hasWebUi) {
+                        IconButton(minHeight = 35.dp, minWidth = 35.dp, backgroundColor = secondaryContainer, onClick = onOpenWebUi) {
+                            Icon(Icons.AutoMirrored.Outlined.Wysiwyg, null, Modifier.size(22.dp), tint = actionIconTint)
+                        }
+                    }
+                }
+            }
+            Spacer(Modifier.weight(1f))
+            if (hasUpdate) {
+                IconButton(minHeight = 35.dp, minWidth = 35.dp, backgroundColor = updateBg, enabled = !module.remove, modifier = Modifier.padding(end = 8.dp), onClick = onUpdate) {
+                    Icon(Icons.Outlined.Download, stringResource(R.string.module_update), Modifier.size(20.dp), tint = updateTint)
+                }
+            }
+            IconButton(
+                minHeight = 35.dp, minWidth = 35.dp,
+                backgroundColor = secondaryContainer,
+                onClick = onUninstall,
+            ) {
+                Icon(
+                    if (module.remove) Icons.AutoMirrored.Rounded.Undo else Icons.Outlined.Delete,
+                    stringResource(R.string.uninstall),
+                    Modifier.size(20.dp),
+                    tint = actionIconTint,
+                )
             }
         }
     }
