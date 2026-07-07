@@ -64,6 +64,8 @@ import com.kageksu.kagesu.ui.component.settings.SettingsBaseWidget
 import com.kageksu.kagesu.ui.component.settings.lazySegmentColumn
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
 import com.kageksu.kagesu.ui.theme.CardConfig
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.blurEffect
 import com.kageksu.kagesu.ui.theme.blurSource
@@ -76,6 +78,10 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UmountManagerScreen() {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        UmountManagerMiuix()
+        return
+    }
     val viewModel = viewModel<UmountManagerScreenViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())

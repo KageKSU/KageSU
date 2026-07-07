@@ -59,6 +59,8 @@ import com.kageksu.kagesu.ui.component.settings.SettingsBaseWidget
 import com.kageksu.kagesu.ui.component.settings.SettingsTextFieldWidget
 import com.kageksu.kagesu.ui.component.settings.lazySegmentColumn
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.blurSource
 import com.kageksu.kagesu.ui.util.LocalSnackbarHost
 import com.kageksu.kagesu.ui.viewmodel.DynamicManagerAppItem
@@ -68,6 +70,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun DynamicManagerScreen() {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        DynamicManagerMiuix()
+        return
+    }
     val navigator = LocalNavigator.current
     val viewModel = viewModel<DynamicManagerViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -239,7 +245,7 @@ fun DynamicManagerScreen() {
 }
 
 @Composable
-private fun rememberDynamicManagerManualDialog(
+internal fun rememberDynamicManagerManualDialog(
     onConfirm: (Int, String) -> Unit,
 ): DialogHandle {
     return rememberCustomDialog { dismiss ->
