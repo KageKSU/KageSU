@@ -45,27 +45,15 @@ See the [documentation](https://kagesu.palaz.uk).
 
 If you need to submit a translation for the manager, please go to [Crowdin](https://crowdin.com/project/KageSU).
 
-## Sponsor
+## Maintainer
 
-- [ShirkNeko](https://afdian.com/a/shirkneko) (maintainer of SukiSU)
-- [weishu](https://github.com/sponsors/tiann) (author of KernelSU)
+KageSU is maintained by [palazik](https://github.com/palazik). Join the community on [Telegram](https://t.me/KageKSU).
 
-<details>
-<summary>ShirkNeko's sponsorship list</summary>
-
-- [Ktouls](https://github.com/Ktouls) Thanks so much for bringing me support.
-- [zaoqi123](https://github.com/zaoqi123) Thanks for the milk tea.
-- [wswzgdg](https://github.com/wswzgdg) Many thanks for supporting this project.
-- [yspbwx2010](https://github.com/yspbwx2010) Many thanks.
-- [DARKWWEE](https://github.com/DARKWWEE) 100 USDT
-- [Saksham Singla](https://github.com/TypeFlu) Provide and maintain the website
-- [OukaroMF](https://github.com/OukaroMF) Donation of website domain name
-</details>
+If you'd like to support the upstream projects KageSU is built on, consider sponsoring [ShirkNeko](https://afdian.com/a/shirkneko) (SukiSU) and [weishu](https://github.com/sponsors/tiann) (KernelSU).
 
 ## License
 
 - The file in the “kernel” directory is under [GPL-2.0-only](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) license.
-- The images of the files `ic_launcher(?!.*alt.*).*` with anime character sticker are copyrighted by [怡子曰曰](https://space.bilibili.com/10545509), the Brand Intellectual Property in the images is owned by [明风 OuO](https://space.bilibili.com/274939213), and the vectorization is done by @MiRinChan. Before using these files, in addition to complying with [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt), you also need to comply with the authorization of the two authors to use these artistic contents.
 - Except for the files or directories mentioned above, all other parts are under [GPL-3.0 or later](https://www.gnu.org/licenses/gpl-3.0.html) license.
 
 ## Credit
