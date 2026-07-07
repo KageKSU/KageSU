@@ -53,18 +53,50 @@ import com.kageksu.kagesu.ui.component.WarningCard
 import com.kageksu.kagesu.ui.component.settings.AppBackButton
 import com.kageksu.kagesu.ui.component.settings.SegmentedColumn
 import com.kageksu.kagesu.ui.component.settings.SettingsJumpPageWidget
+import android.system.Os
+import androidx.lifecycle.compose.dropUnlessResumed
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
 import com.kageksu.kagesu.ui.navigation.Navigator
 import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.theme.CardConfig
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.blurEffect
 import com.kageksu.kagesu.ui.theme.blurSource
 import com.kageksu.kagesu.ui.theme.renderBackgroundBlur
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AboutScreen() {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        val navigator = LocalNavigator.current
+        val uriHandler = LocalUriHandler.current
+        val websiteText = stringResource(R.string.about_website)
+        val htmlString = stringResource(
+            id = R.string.about_source_code,
+            "<b><a href=\"https://github.com/KageKSU/KageSU\">GitHub</a></b>",
+            "<b><a href=\"https://t.me/KageKSU\">Telegram</a></b>",
+        ) + "<br/><b><a href=\"https://kagesu.palaz.uk\">$websiteText</a></b>"
+        val state = AboutUiState(
+            title = stringResource(R.string.about),
+            appName = stringResource(R.string.app_name),
+            versionName = BuildConfig.VERSION_NAME,
+            kernelVersion = Os.uname().release,
+            links = extractLinks(htmlString),
+        )
+        val actions = AboutScreenActions(
+            onBack = dropUnlessResumed { navigator.pop() },
+            onOpenLink = uriHandler::openUri,
+        )
+        AboutScreenMiuix(state, actions)
+        return
+    }
+    AboutScreenMaterialBody()
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun AboutScreenMaterialBody() {
     val navigator = LocalNavigator.current
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
