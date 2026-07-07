@@ -86,4 +86,6 @@
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code">Peržiūrėkite šaltinio kodą %1$s<br/>Prisijunkite prie mūsų %2$s kanalo</string>
+    <string name="about_website">Apsilankykite mūsų svetainėje</string>
 </resources>

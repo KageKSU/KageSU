@@ -725,4 +725,6 @@ Enabled: Увімкнути підміну sus tcontext \'su\' на \'u:r:priv_a
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[Переглянути вихідний код на %1$s<br/>Приєднуйтесь до нашого каналу %2$s]]></string>
+    <string name="about_website">Відвідайте наш сайт</string>
 </resources>

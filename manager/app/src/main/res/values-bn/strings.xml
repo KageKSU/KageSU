@@ -68,4 +68,6 @@
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[Bekijk source code op %1$s<br/>আমাদের %2$s চ্যানেল মার্জ করুন]]></string>
+    <string name="about_website">আমাদের ওয়েবসাইট দেখুন</string>
 </resources>

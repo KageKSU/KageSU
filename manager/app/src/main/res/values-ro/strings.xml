@@ -122,4 +122,6 @@
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[Vezi codul sursă la %1$s<br/>Alătură-te canalului nostru %2$s]]></string>
+    <string name="about_website">Vizitează site-ul nostru</string>
 </resources>

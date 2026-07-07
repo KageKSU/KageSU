@@ -728,4 +728,6 @@
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[前往 %1$s 檢閱原始碼<br/>前往 %2$s 加入頻道]]></string>
+    <string name="about_website">瀏覽我們的網站</string>
 </resources>

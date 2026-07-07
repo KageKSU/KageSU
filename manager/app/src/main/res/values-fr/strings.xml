@@ -267,4 +267,6 @@
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[Voir le code source à %1$s<br/>Rejoignez notre canal %2$s]]></string>
+    <string name="about_website">Visitez notre site web</string>
 </resources>

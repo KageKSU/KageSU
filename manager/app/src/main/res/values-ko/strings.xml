@@ -610,4 +610,6 @@
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[%1$s에서 소스 코드 보기<br/>%2$s 채널 참가하기]]></string>
+    <string name="about_website">웹사이트를 확인하세요</string>
 </resources>

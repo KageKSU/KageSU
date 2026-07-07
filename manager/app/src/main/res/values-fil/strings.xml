@@ -76,4 +76,6 @@
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[Tignan ang source code sa %1$s<br/>Sumali sa aming %2$s channel]]></string>
+    <string name="about_website">Bisitahin ang aming website</string>
 </resources>

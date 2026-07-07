@@ -569,4 +569,6 @@ Diaktifkan: Aktifkan pemalsuan sus tcontext dari \'su\' dengan \'u:r:priv_app:s0
     <string name="settings_floating_bar">Floating navigation bar</string>
     <string name="settings_floating_bar_summary">Detach the bottom bar so it floats above content</string>
     <string name="settings_floating_bar_glass">Liquid glass</string>
+    <string name="about_source_code"><![CDATA[Lihat kode sumber di %1$s<br/>Gabung saluran %2$s kami]]></string>
+    <string name="about_website">Kunjungi situs web kami</string>
 </resources>
