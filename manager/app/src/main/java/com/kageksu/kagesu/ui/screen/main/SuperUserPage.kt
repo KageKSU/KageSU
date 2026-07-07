@@ -98,6 +98,8 @@ import com.kageksu.kagesu.ui.component.settings.lazySegmentColumn
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
 import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.screen.LabelText
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.blurSource
 import com.kageksu.kagesu.ui.util.LocalSnackbarHost
 import com.kageksu.kagesu.ui.util.module.ModuleModify
@@ -117,6 +119,10 @@ data class BottomSheetMenuItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuperUserPage(bottomPadding: Dp) {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        SuperUserMiuix(bottomPadding)
+        return
+    }
     val context = LocalContext.current
     val viewModel = viewModel<SuperUserViewModel>(
         viewModelStoreOwner = ksuApp
