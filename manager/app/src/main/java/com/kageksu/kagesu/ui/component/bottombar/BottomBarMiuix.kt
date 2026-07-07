@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.Security
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -52,6 +53,10 @@ fun BottomBarMiuix(
     if (!fullFeatured) return
 
     val page = LocalSelectedPage.current
+    // Back the selected page with a State so FloatingBottomBar's `snapshotFlow { selectedIndex() }`
+    // actually re-observes it. Capturing the plain Int made the highlighted pill stay on the old
+    // tab after switching pages (SukiSU reads a mutableIntStateOf inside the lambda; this mirrors it).
+    val pageState = rememberUpdatedState(page)
     val handlePageChange = LocalHandlePageChange.current
     val enableFloatingBottomBar = LocalEnableFloatingBottomBar.current
     val enableFloatingBottomBarBlur = LocalEnableFloatingBottomBarBlur.current
@@ -91,7 +96,7 @@ fun BottomBarMiuix(
                     onClick = {},
                 )
                 .padding(bottom = 12.dp + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()),
-            selectedIndex = { page },
+            selectedIndex = { pageState.value },
             onSelected = { handlePageChange(it) },
             backdrop = backdrop,
             tabsCount = items.size,
