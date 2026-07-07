@@ -112,6 +112,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import top.yukonga.miuix.kmp.basic.Card
+import top.yukonga.miuix.kmp.basic.FloatingActionButton
 import top.yukonga.miuix.kmp.basic.HorizontalDivider
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
@@ -323,6 +324,13 @@ fun ModuleMiuix(bottomPadding: Dp) {
         }
     }
 
+    var searchField by remember { mutableStateOf(TextFieldValue(uiState.search)) }
+    LaunchedEffect(uiState.search) {
+        if (uiState.search != searchField.text) {
+            searchField = TextFieldValue(uiState.search, selection = TextRange(uiState.search.length))
+        }
+    }
+
     Scaffold(
         topBar = {
             BlurredBar(backdrop) {
@@ -349,7 +357,40 @@ fun ModuleMiuix(bottomPadding: Dp) {
                         )
                     },
                     scrollBehavior = scrollBehavior,
+                    bottomContent = {
+                        TextField(
+                            value = searchField,
+                            onValueChange = { searchField = it; viewModel.updateSearch(it.text) },
+                            label = stringResource(R.string.search_modules),
+                            useLabelAsPlaceholder = true,
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                                .padding(bottom = 6.dp),
+                            leadingIcon = {
+                                Icon(Icons.Filled.Search, null, Modifier.padding(start = 12.dp).size(20.dp), tint = colorScheme.onSurfaceContainerVariant)
+                            },
+                        )
+                    },
                 )
+            }
+        },
+        floatingActionButton = {
+            if (!hideInstallButton) {
+                FloatingActionButton(
+                    modifier = Modifier.padding(bottom = bottomPadding + 20.dp, end = 20.dp),
+                    onClick = {
+                        selectZipLauncher.launch(
+                            Intent(Intent.ACTION_GET_CONTENT).apply {
+                                type = "application/zip"
+                                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                            }
+                        )
+                    },
+                ) {
+                    Icon(Icons.Filled.Add, stringResource(R.string.install), Modifier.size(32.dp), tint = colorScheme.onPrimary)
+                }
             }
         },
         contentWindowInsets = WindowInsets.systemBars.add(WindowInsets.displayCutout)
@@ -357,60 +398,35 @@ fun ModuleMiuix(bottomPadding: Dp) {
     ) { innerPadding ->
         val pullState = rememberPullToRefreshState()
         val contentPadding = PaddingValues(
-            top = innerPadding.calculateTopPadding() + 60.dp,
+            top = innerPadding.calculateTopPadding(),
             start = innerPadding.calculateStartPadding(layoutDirection),
             end = innerPadding.calculateEndPadding(layoutDirection),
-            bottom = bottomPadding + 84.dp, // clear nav bar + install FAB
+            bottom = bottomPadding + 12.dp,
         )
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            // Fixed search field under the collapsing bar
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = innerPadding.calculateTopPadding() + 6.dp, start = 12.dp, end = 12.dp)
+        when {
+            hasMagisk -> CenterState(Icons.Outlined.Warning, stringResource(R.string.module_magisk_conflict))
+            uiState.moduleList.isEmpty() && uiState.isRefreshing ->
+                Box(Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding()), Alignment.Center) { InfiniteProgressIndicator() }
+            uiState.moduleList.isEmpty() -> CenterState(Icons.Outlined.Extension, stringResource(R.string.module_empty))
+            else -> PullToRefresh(
+                isRefreshing = uiState.isRefreshing,
+                pullToRefreshState = pullState,
+                onRefresh = { viewModel.fetchModuleList(true) },
+                contentPadding = contentPadding,
             ) {
-                var searchField by remember { mutableStateOf(TextFieldValue(uiState.search)) }
-                LaunchedEffect(uiState.search) {
-                    if (uiState.search != searchField.text) {
-                        searchField = TextFieldValue(uiState.search, selection = TextRange(uiState.search.length))
-                    }
-                }
-                TextField(
-                    value = searchField,
-                    onValueChange = { searchField = it; viewModel.updateSearch(it.text) },
-                    label = stringResource(R.string.search_modules),
-                    useLabelAsPlaceholder = true,
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = {
-                        Icon(Icons.Filled.Search, null, Modifier.padding(start = 12.dp).size(20.dp), tint = colorScheme.onSurfaceContainerVariant)
-                    },
-                )
-            }
-
-            when {
-                hasMagisk -> CenterState(Icons.Outlined.Warning, stringResource(R.string.module_magisk_conflict))
-                uiState.moduleList.isEmpty() && uiState.isRefreshing -> Box(Modifier.fillMaxSize(), Alignment.Center) { InfiniteProgressIndicator() }
-                uiState.moduleList.isEmpty() -> CenterState(Icons.Outlined.Extension, stringResource(R.string.module_empty))
-                else -> PullToRefresh(
-                    isRefreshing = uiState.isRefreshing,
-                    pullToRefreshState = pullState,
-                    onRefresh = { viewModel.fetchModuleList(true) },
-                    contentPadding = contentPadding,
-                ) {
-                    Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
-                        androidx.compose.foundation.lazy.LazyColumn(
-                            state = listState,
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .scrollEndHaptic()
-                                .overScrollVertical()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            contentPadding = contentPadding,
-                            overscrollEffect = null,
-                        ) {
-                            items(uiState.moduleList, key = { it.id }, contentType = { "module" }) { module ->
+                Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
+                    androidx.compose.foundation.lazy.LazyColumn(
+                        state = listState,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .scrollEndHaptic()
+                            .overScrollVertical()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        contentPadding = contentPadding,
+                        overscrollEffect = null,
+                    ) {
+                        items(uiState.moduleList, key = { it.id }, contentType = { "module" }) { module ->
                                 ModuleItemMiuix(
                                     module = module,
                                     updateUrl = module.moduleUpdate?.zipUrl.orEmpty(),
@@ -442,26 +458,6 @@ fun ModuleMiuix(bottomPadding: Dp) {
                 }
             }
 
-            if (!hideInstallButton) {
-                IconButton(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(end = 20.dp, bottom = bottomPadding + 20.dp)
-                        .size(56.dp),
-                    backgroundColor = colorScheme.primary,
-                    onClick = {
-                        selectZipLauncher.launch(
-                            Intent(Intent.ACTION_GET_CONTENT).apply {
-                                type = "application/zip"
-                                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                            }
-                        )
-                    },
-                ) {
-                    Icon(Icons.Filled.Add, stringResource(R.string.install), tint = colorScheme.onPrimary)
-                }
-            }
-        }
     }
 }
 
