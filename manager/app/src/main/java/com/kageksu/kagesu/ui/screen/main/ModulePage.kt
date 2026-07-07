@@ -148,6 +148,8 @@ import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.screen.FlashIt
 import com.kageksu.kagesu.ui.screen.LabelText
 import com.kageksu.kagesu.ui.theme.CardConfig
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.blurSource
 import com.kageksu.kagesu.ui.theme.renderBackgroundBlur
@@ -182,6 +184,10 @@ private enum class ShortcutType {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModulePage(bottomPadding: Dp) {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        ModuleMiuix(bottomPadding)
+        return
+    }
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     val viewModel = viewModel<ModuleViewModel>(
@@ -659,7 +665,7 @@ private fun MetaModuleWarningCard(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun ModuleList(
+internal fun ModuleList(
     viewModel: ModuleViewModel,
     uiState: ModuleUiState,
     listState: LazyListState,
@@ -1265,6 +1271,20 @@ fun ModuleItem(
     onClick: (ModuleViewModel.ModuleInfo) -> Unit,
     onModuleAddShortcut: (ModuleViewModel.ModuleInfo) -> Unit,
 ) {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        ModuleItemMiuix(
+            viewModel = viewModel,
+            module = module,
+            moduleSizes = moduleSizes,
+            updateUrl = updateUrl,
+            onUninstallClicked = onUninstallClicked,
+            onCheckChanged = onCheckChanged,
+            onUpdate = onUpdate,
+            onClick = onClick,
+            onModuleAddShortcut = onModuleAddShortcut,
+        )
+        return
+    }
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     val prefs = context.appPreferences
