@@ -421,7 +421,7 @@ fun KernelSUTheme(
 }
 
 @Composable
-private fun ThemeInitializer(context: Context, systemIsDark: Boolean) {
+internal fun ThemeInitializer(context: Context, systemIsDark: Boolean) {
     val themeChanged = ThemeConfig.detectThemeChange(systemIsDark)
     val scope = rememberCoroutineScope()
 

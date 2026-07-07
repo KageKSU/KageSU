@@ -1,6 +1,10 @@
 package com.kageksu.kagesu.ui.theme
 
 import android.app.Activity
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -57,17 +61,35 @@ fun MiuixKernelSUTheme(
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
+    val systemIsDark = isSystemInDarkTheme()
+
+    // Load the persisted theme config (seed color, dynamic-color state, dark mode,
+    // palette style/spec, card + custom background). This normally runs inside the
+    // Material KernelSUTheme's ThemeInitializer; in Miuix mode that theme is not used,
+    // so without this the seed color/dynamic state stay at defaults on every cold
+    // start ("colors reset after reopening"). Exactly one theme is active at a time,
+    // so this never double-runs.
+    ThemeInitializer(context = context, systemIsDark = systemIsDark)
+
     val dynamic = ThemeConfig.useDynamicColor
 
     // Always use Monet modes: they are the only ones where miuix's ThemeController
     // honors `keyColor`. The plain System/Light/Dark modes ignore keyColor and paint
     // the fixed default palette, so a custom seed color would have no effect (bug:
-    // "can't choose colors for miuix"). Dynamic-off => keyColor = seed; dynamic-on =>
-    // keyColor = null => platform (wallpaper) dynamic colors.
+    // "can't choose colors for miuix").
     val colorSchemeMode = when (ThemeConfig.forceDarkMode) {
         null -> ColorSchemeMode.MonetSystem
         true -> ColorSchemeMode.MonetDark
         false -> ColorSchemeMode.MonetLight
+    }
+
+    // Match Material's color derivation: dynamic-on => seed from the real Android
+    // wallpaper palette (like dynamic*ColorScheme); dynamic-off => the chosen seed.
+    val resolvedKeyColor: Color = if (dynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (darkTheme) dynamicDarkColorScheme(context).primary
+        else dynamicLightColorScheme(context).primary
+    } else {
+        Color(ThemeConfig.seedColor)
     }
 
     val paletteStyle = try {
@@ -84,7 +106,7 @@ fun MiuixKernelSUTheme(
 
     val controller = ThemeController(
         colorSchemeMode,
-        keyColor = if (dynamic) null else Color(ThemeConfig.seedColor),
+        keyColor = resolvedKeyColor,
         isDark = darkTheme,
         paletteStyle = paletteStyle,
         colorSpec = colorSpec,

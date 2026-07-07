@@ -146,7 +146,7 @@ fun HomeMiuix(bottomPadding: Dp) {
                 onSusfs = { navigator.push(Route.SuSFSConfig) },
             )
         },
-        popupHost = { },
+
         contentWindowInsets = WindowInsets.systemBars.add(WindowInsets.displayCutout)
             .only(WindowInsetsSides.Horizontal)
     ) { innerPadding ->
