@@ -64,9 +64,9 @@ import com.kageksu.kagesu.ui.theme.LocalEnableBlur
 import com.kageksu.kagesu.ui.util.BlurredBar
 import com.kageksu.kagesu.ui.util.LocalPermissionRequestInterface
 import com.kageksu.kagesu.ui.util.LocalSnackbarHost
-import com.kageksu.kagesu.ui.util.module.RepoModule
 import com.kageksu.kagesu.ui.util.rememberBlurBackdrop
 import com.kageksu.kagesu.ui.viewmodel.ModuleRepoViewModel
+import com.kageksu.kagesu.ui.viewmodel.ModuleRepoViewModel.RepoModule
 import kotlinx.coroutines.launch
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.Card
