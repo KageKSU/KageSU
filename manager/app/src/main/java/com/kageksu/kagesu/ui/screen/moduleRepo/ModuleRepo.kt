@@ -107,6 +107,8 @@ import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.screen.FlashIt
 import com.kageksu.kagesu.ui.screen.LabelText
 import com.kageksu.kagesu.ui.theme.CardConfig
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.blurSource
 import com.kageksu.kagesu.ui.theme.renderBackgroundBlur
@@ -131,6 +133,10 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ModuleRepoScreen() {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        ModuleRepoMiuix()
+        return
+    }
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     val prefs = context.appPreferences
