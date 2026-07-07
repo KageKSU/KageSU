@@ -370,7 +370,7 @@ fun HomePage(
 }
 
 @Composable
-fun UpdateCard(newVersion: LatestVersionInfo) {
+private fun UpdateCard(newVersion: LatestVersionInfo) {
     val currentVersionCode = BuildConfig.VERSION_CODE
     val newVersionCode = newVersion.versionCode
     val newVersionUrl = newVersion.downloadUrl
@@ -690,7 +690,7 @@ private fun StatusCard(
 }
 
 @Composable
-fun LearnMoreCard() {
+private fun LearnMoreCard() {
     val uriHandler = LocalUriHandler.current
     val url = stringResource(R.string.home_learn_kernelsu_url)
 
@@ -727,7 +727,7 @@ fun LearnMoreCard() {
 }
 
 @Composable
-fun DonateCard() {
+private fun DonateCard() {
     val uriHandler = LocalUriHandler.current
 
     ElevatedCard(
