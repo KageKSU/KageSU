@@ -102,6 +102,8 @@ import com.kageksu.kagesu.ui.navigation.LocalNavigator
 import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.screen.FlashIt
 import com.kageksu.kagesu.ui.theme.CardConfig
+import com.kageksu.kagesu.ui.theme.LocalUiMode
+import com.kageksu.kagesu.ui.theme.UiMode
 import com.kageksu.kagesu.ui.theme.ThemeConfig
 import com.kageksu.kagesu.ui.theme.blurEffect
 import com.kageksu.kagesu.ui.theme.blurSource
@@ -124,6 +126,10 @@ private val SPACING_LARGE = 16.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsPage(bottomPadding: Dp) {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        SettingsMiuix(bottomPadding)
+        return
+    }
     val navigator = LocalNavigator.current
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val snackBarHost = LocalSnackbarHost.current
