@@ -153,13 +153,21 @@ fun clearDynamicManager(): Boolean {
     return result
 }
 
+// KageSU official manager signing cert (Kbuild KSU_EXPECTED_HASH2 / SIZE2). The release
+// manager is signed with this key on push builds, and the kernel trusts it for root. Compare
+// the hash only, so a difference in how the daemon prints the size (e.g. 0x2f0 vs 0x02f0)
+// doesn't wrongly mark an official build as "unofficial".
+private const val KAGESU_OFFICIAL_CERT_HASH =
+    "794f0b612b7732134078a2cf370499a8eab22b1bfb72994f2fa33edc7a91e5ea"
+
 suspend fun isOfficialSignature(): Boolean = withContext(Dispatchers.IO) {
     val shell = getRootShell()
     val out = shell.newJob()
         .add("${getKsuDaemonPath()} debug get-sign ${ksuApp.packageResourcePath}")
         .to(ArrayList<String>(), null).exec().out
-    out.firstOrNull()?.trim()
-        .orEmpty() == "size: 0x377, hash: d3469712b6214462764a1d8d3e5cbe1d6819a0b629791b9f4101867821f1df64"
+    val hash = out.firstOrNull()?.trim().orEmpty()
+        .substringAfter("hash:", "").trim()
+    hash.equals(KAGESU_OFFICIAL_CERT_HASH, ignoreCase = true)
 }
 
 suspend fun getFeatureStatus(feature: String): String = withContext(Dispatchers.IO) {
