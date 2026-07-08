@@ -23,6 +23,7 @@ import com.kageksu.kagesu.ui.LocalUiMode
 import com.kageksu.kagesu.ui.UiMode
 import top.yukonga.miuix.kmp.basic.InfiniteProgressIndicator
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun MarkdownContent(
     content: String,

@@ -167,6 +167,9 @@ base {
 
 configurations.all {
     exclude(group = "androidx.navigationevent", module = "navigationevent-compose")
+    // markwon pulls the legacy com.atlassian.commonmark (same org.commonmark package)
+    // which collides with the modern org.commonmark used by the ported Miuix markdown.
+    exclude(group = "com.atlassian.commonmark", module = "commonmark")
 }
 
 aboutLibraries {

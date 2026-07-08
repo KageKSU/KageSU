@@ -251,7 +251,7 @@ fun GithubMarkdown(
                                 val contentTypes = header?.split(SEMICOLON_SPLIT) ?: emptyList()
                                 val mimeType = contentTypes.firstOrNull() ?: "image/*"
                                 val charset = contentTypes.getOrNull(1)?.split(EQUALS_SPLIT)?.getOrNull(1) ?: "utf-8"
-                                WebResourceResponse(mimeType, charset, reply.body.byteStream())
+                                WebResourceResponse(mimeType, charset, reply.body?.byteStream())
                             } catch (e: IOException) {
                                 Log.e("GithubMarkdown", "Resource load failed", e)
                                 WebResourceResponse(
