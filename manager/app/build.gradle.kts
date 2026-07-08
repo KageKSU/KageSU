@@ -233,6 +233,13 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.me.zhanghai.android.appiconloader.coil)
+    implementation(libs.appiconloader)
+    implementation(libs.hiddenapibypass)
+    implementation(libs.commonmark)
+    implementation(libs.commonmark.ext.gfm.tables)
+    implementation(libs.commonmark.ext.gfm.strikethrough)
+    implementation(libs.commonmark.ext.autolink)
+    implementation(libs.commonmark.ext.task.list.items)
 
     implementation(libs.markdown)
     implementation(libs.androidx.webkit)

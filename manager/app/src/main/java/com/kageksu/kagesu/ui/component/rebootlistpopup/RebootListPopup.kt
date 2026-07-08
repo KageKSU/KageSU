@@ -38,6 +38,6 @@ fun getRebootListOption(): List<RebootListOption> {
 fun RebootListPopup() {
     when (LocalUiMode.current) {
         UiMode.Miuix -> RebootListPopupMiuix()
-        UiMode.Material -> RebootListPopupMaterial()
+        UiMode.Material -> RebootListPopupMiuix()
     }
 }

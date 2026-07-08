@@ -1,32 +1,7 @@
-<<<<<<<< HEAD:manager/app/src/main/java/com/kageksu/kagesu/ui/component/Dialog.kt
-package com.kageksu.kagesu.ui.component
-========
 package com.kageksu.kagesu.ui.component.dialog
->>>>>>>> kernelsu/main:manager/app/src/main/java/com/kageksu/kagesu/ui/component/dialog/Dialog.kt
 
 import android.os.Parcelable
 import android.util.Log
-<<<<<<<< HEAD:manager/app/src/main/java/com/kageksu/kagesu/ui/component/Dialog.kt
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.LoadingIndicator
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-========
->>>>>>>> kernelsu/main:manager/app/src/main/java/com/kageksu/kagesu/ui/component/dialog/Dialog.kt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -36,19 +11,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-<<<<<<<< HEAD:manager/app/src/main/java/com/kageksu/kagesu/ui/component/Dialog.kt
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import io.noties.markwon.Markwon
-import io.noties.markwon.utils.NoCopySpannableFactory
-========
->>>>>>>> kernelsu/main:manager/app/src/main/java/com/kageksu/kagesu/ui/component/dialog/Dialog.kt
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -85,16 +47,7 @@ private data class ConfirmDialogVisualsImpl(
     override val dismiss: String?,
 ) : ConfirmDialogVisuals {
     companion object {
-<<<<<<<< HEAD:manager/app/src/main/java/com/kageksu/kagesu/ui/component/Dialog.kt
-        val Empty: ConfirmDialogVisuals = ConfirmDialogVisualsImpl("", "",
-            isMarkdown = false,
-            isHtml = false,
-            confirm = null,
-            dismiss = null
-        )
-========
         val Empty: ConfirmDialogVisuals = ConfirmDialogVisualsImpl("", "", isMarkdown = false, isHtml = false, confirm = null, dismiss = null)
->>>>>>>> kernelsu/main:manager/app/src/main/java/com/kageksu/kagesu/ui/component/dialog/Dialog.kt
     }
 }
 
@@ -128,7 +81,6 @@ interface ConfirmDialogHandle : DialogHandle {
     )
 
     suspend fun awaitConfirm(
-
         title: String,
         content: String? = null,
         markdown: Boolean = false,
@@ -313,11 +265,7 @@ private class ConfirmDialogHandleImpl(
         dismiss: String?
     ): ConfirmResult {
         coroutineScope.launch {
-<<<<<<<< HEAD:manager/app/src/main/java/com/kageksu/kagesu/ui/component/Dialog.kt
-            updateVisuals(ConfirmDialogVisualsImpl(title, content, markdown, html,confirm, dismiss))
-========
             updateVisuals(ConfirmDialogVisualsImpl(title, content, markdown, html, confirm, dismiss))
->>>>>>>> kernelsu/main:manager/app/src/main/java/com/kageksu/kagesu/ui/component/dialog/Dialog.kt
             show()
         }
         return awaitResult()
@@ -354,7 +302,7 @@ fun rememberLoadingDialog(): LoadingDialogHandle {
 
     when (LocalUiMode.current) {
         UiMode.Miuix -> LoadingDialogMiuix(visible)
-        UiMode.Material -> LoadingDialogMaterial(visible)
+        UiMode.Material -> LoadingDialogMiuix(visible)
     }
 
     return remember {
@@ -387,7 +335,7 @@ private fun rememberConfirmDialog(visuals: ConfirmDialogVisuals, callback: Confi
             showDialog = visible
         )
 
-        UiMode.Material -> ConfirmDialogMaterial(
+        UiMode.Material -> ConfirmDialogMiuix(
             handle.visuals,
             confirm = { coroutineScope.launch { resultChannel.send(ConfirmResult.Confirmed) } },
             dismiss = { coroutineScope.launch { resultChannel.send(ConfirmResult.Canceled) } },
@@ -416,112 +364,3 @@ fun rememberConfirmDialog(onConfirm: NullableCallback = null, onDismiss: Nullabl
 fun rememberConfirmDialog(callback: ConfirmCallback): ConfirmDialogHandle {
     return rememberConfirmDialog(ConfirmDialogVisualsImpl.Empty, callback)
 }
-<<<<<<<< HEAD:manager/app/src/main/java/com/kageksu/kagesu/ui/component/Dialog.kt
-
-@Composable
-fun rememberCustomDialog(composable: @Composable (dismiss: () -> Unit) -> Unit): DialogHandle {
-    val visible = rememberSaveable {
-        mutableStateOf(false)
-    }
-    val coroutineScope = rememberCoroutineScope()
-    if (visible.value) {
-        composable { visible.value = false }
-    }
-    return remember {
-        CustomDialogHandleImpl(visible, coroutineScope)
-    }
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-private fun LoadingDialog() {
-    Dialog(
-        onDismissRequest = {},
-        properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false)
-    ) {
-        Surface(
-            modifier = Modifier.size(100.dp), shape = RoundedCornerShape(8.dp)
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-            ) {
-                LoadingIndicator()
-            }
-        }
-    }
-}
-
-@Composable
-private fun ConfirmDialog(visuals: ConfirmDialogVisuals, confirm: () -> Unit, dismiss: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = {
-            dismiss()
-        },
-        title = {
-            Text(text = visuals.title)
-        },
-        text = {
-            LazyColumn(
-                modifier = Modifier
-                    .heightIn(max = 325.dp)
-            ) {
-                item {
-                    if (visuals.isMarkdown) {
-                        MarkdownContent(content = visuals.content)
-                    } else if (visuals.isHtml) {
-                        GithubMarkdown(
-                            content = visuals.content,
-                            backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh
-                        )
-                    } else {
-                        Text(text = visuals.content)
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = confirm) {
-                Text(text = visuals.confirm ?: stringResource(id = android.R.string.ok))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = dismiss) {
-                Text(text = visuals.dismiss ?: stringResource(id = android.R.string.cancel))
-            }
-        },
-    )
-}
-
-@Composable
-private fun MarkdownContent(content: String) {
-    val contentColor = LocalContentColor.current
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-        AndroidView(
-            factory = { context ->
-                TextView(context).apply {
-                    movementMethod = LinkMovementMethod.getInstance()
-                    setSpannableFactory(NoCopySpannableFactory.getInstance())
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        breakStrategy = LineBreaker.BREAK_STRATEGY_SIMPLE
-                    }
-                    hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
-                    layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                    )
-                }
-            },
-            update = {
-                Markwon.create(it.context).setMarkdown(it, content)
-                it.setTextColor(contentColor.toArgb())
-            }
-        )
-    }
-}
-========
->>>>>>>> kernelsu/main:manager/app/src/main/java/com/kageksu/kagesu/ui/component/dialog/Dialog.kt
