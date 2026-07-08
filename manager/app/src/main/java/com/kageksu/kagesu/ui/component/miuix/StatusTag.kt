@@ -1,5 +1,6 @@
-// Miuix UI adapted from SukiSU-Ultra (https://github.com/SukiSU-Ultra/SukiSU-Ultra),
-// GPL-3.0; the original authors retain copyright. Adapted for KageSU on the ReSukiSU base.
+// Miuix UI originally authored by YuKongA (https://github.com/YuKongA) for SukiSU-Ultra
+// (https://github.com/SukiSU-Ultra/SukiSU-Ultra), GPL-3.0. Original author retains
+// copyright; adapted for KageSU on the ReSukiSU base. See docs/ATTRIBUTION.md.
 
 package com.kageksu.kagesu.ui.component.miuix
 
