@@ -56,7 +56,7 @@ KageSU 由 [palazik](https://github.com/palazik) 维护。欢迎加入 [Telegram
 
 ## 鸣谢
 
-- 本版本的 **Miuix 界面** 改编自 [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)（GPL-3.0），原作者保留版权。液态玻璃组件基于 [compose-miuix-ui](https://github.com/miuix-kotlin-multiplatform/miuix) 示例（Apache-2.0）。
+- 本版本的 **Miuix 界面** 最初由 [YuKongA](https://github.com/YuKongA) 为 [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)（GPL-3.0）编写，原作者保留版权，KageSU 仅作适配。液态玻璃部分基于 [compose-miuix-ui](https://github.com/miuix-kotlin-multiplatform/miuix)（Apache-2.0）。完整对照见 [docs/ATTRIBUTION.md](../ATTRIBUTION.md)。
 - [ReSukiSU/ReSukiSU](https://github.com/ReSukiSU/ReSukiSU)：上游（本分支基于 ReSukiSU）
 
 <details>

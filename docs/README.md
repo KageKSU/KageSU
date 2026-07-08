@@ -58,7 +58,7 @@ If you'd like to support the upstream projects KageSU is built on, consider spon
 
 ## Credit
 
-- The **Miuix UI** in this build is adapted from [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) (GPL-3.0); the original authors retain copyright. The liquid-glass components are based on the [compose-miuix-ui](https://github.com/miuix-kotlin-multiplatform/miuix) examples (Apache-2.0).
+- The **Miuix UI** in this build was originally authored by [YuKongA](https://github.com/YuKongA) for [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) (GPL-3.0); the original author retains copyright, KageSU only adapted it. Liquid-glass parts are based on [compose-miuix-ui](https://github.com/miuix-kotlin-multiplatform/miuix) (Apache-2.0). Full mapping in [docs/ATTRIBUTION.md](./ATTRIBUTION.md).
 - [ReSukiSU/ReSukiSU](https://github.com/ReSukiSU/ReSukiSU): upstream (this branch is based on ReSukiSU)
 
 <details>
