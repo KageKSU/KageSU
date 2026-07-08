@@ -3,7 +3,7 @@ name: Build Manager
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "dev", "ci", "sync-upstream", "upstream", "rework", "rework-miuix" ]
+    branches: [ "main", "dev", "ci", "sync-upstream", "rework", "upstream", "rework-miuix" ]
     paths:
       - '.github/workflows/build-manager.yml'
       - '.github/workflows/build-lkm.yml'
@@ -286,7 +286,7 @@ jobs:
           cp -f "$X86_64_KSUD" target/x86_64-linux-android/release/ksud
 
       - name: Prepare signing inputs
-        if: ${{ github.event_name == 'pull_request' || (github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/sync-upstream')) || github.ref_type == 'tag' }}
+        if: ${{ github.event_name == 'pull_request' || (github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/sync-upstream' || github.ref == 'refs/heads/rework')) || github.ref_type == 'tag' }}
         env:
           PR_KEYSTORE: ${{ needs.generate-key.outputs.keystore }}
           PR_KEYSTORE_PASSWORD: ${{ needs.generate-key.outputs.keystore_password }}
@@ -312,7 +312,7 @@ jobs:
           fi
 
       - name: Repack and resign
-        if: ${{ github.event_name == 'pull_request' || (github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/sync-upstream')) || github.ref_type == 'tag' }}
+        if: ${{ github.event_name == 'pull_request' || (github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/sync-upstream' || github.ref == 'refs/heads/rework')) || github.ref_type == 'tag' }}
         run: |
           python3 repack_apk_multi.py repack \
             -b ${{ matrix.build_type }} \
@@ -332,7 +332,7 @@ jobs:
           name: ${{ steps.determine.outputs.title }}-gradle-${{ matrix.build_type }}
         
       - name: Upload build artifact
-        if: ${{ github.event_name == 'pull_request' || (github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/sync-upstream')) || github.ref_type == 'tag' }}
+        if: ${{ github.event_name == 'pull_request' || (github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/sync-upstream' || github.ref == 'refs/heads/rework')) || github.ref_type == 'tag' }}
         uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.determine.outputs.title }}-${{ matrix.build_type }}
@@ -353,9 +353,10 @@ jobs:
       - name: Setup need_upload
         id: need_upload
         run: |
-          if [ ! -z "${{ secrets.BOT_TOKEN }}" ]; then
+          if [ -n "${{ secrets.TG_BOT_TOKEN }}" ] && [ -n "${{ vars.TG_CHANNEL_ID }}" ]; then
             echo "UPLOAD=true" >> $GITHUB_OUTPUT
           else
+            echo "Telegram upload disabled: TG_BOT_TOKEN secret or TG_CHANNEL_ID variable is not configured."
             echo "UPLOAD=false" >> $GITHUB_OUTPUT
           fi
 
@@ -364,16 +365,12 @@ jobs:
         run: |
           if [ "${{ matrix.manager_type }}" == "spoofed" ]; then
             echo "title=Spoofed-Manager" >> $GITHUB_OUTPUT
-            echo "topicid=${{ vars.MESSAGE_SPOOFED_THREAD_ID }}" >> $GITHUB_OUTPUT
+            echo "topicid=214" >> $GITHUB_OUTPUT
           else
             echo "title=Manager" >> $GITHUB_OUTPUT
-            echo "topicid=${{ vars.MESSAGE_THREAD_ID }}" >> $GITHUB_OUTPUT
+            echo "topicid=${{ vars.TG_TOPIC_ID }}" >> $GITHUB_OUTPUT
           fi
 
-          if [[ "${{ github.ref }}" != "refs/heads/main" && "${{ github.ref_type }}" != "tag" ]]; then
-            echo "topicid=${{ vars.MESSAGE_DEVELOPING_MANAGER_THREAD_ID }}" >> $GITHUB_OUTPUT
-          fi
-        
       - name: Download Debug artifact
         if: ${{ matrix.manager_type != 'spoofed' }}
         uses: actions/download-artifact@v8
@@ -387,23 +384,24 @@ jobs:
           name: ${{ steps.determine.outputs.title }}-release
           path: ./apk/release
 
-      - name: Upload to Telegram
+      - name: Upload to telegram
         if: steps.need_upload.outputs.UPLOAD == 'true'
         env:
-          CHAT_ID: ${{ vars.CHAT_ID }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ vars.TG_CHANNEL_ID }}
+          BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           MESSAGE_THREAD_ID: ${{ steps.determine.outputs.topicid }}
-          DEVELOPING_THREAD_ID: ${{ vars.MESSAGE_DEVELOPING_MANAGER_THREAD_ID }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           TITLE: ${{ steps.determine.outputs.title }}
           BRANCH: ${{ github.ref_name }}
         run: |
-          pip3 install python-telegram-bot
+          pip3 install telethon
           export VERSION=$(git rev-list --count HEAD)
           if [ ! "${{ matrix.manager_type }}" == "spoofed" ]; then
-            APK_DEBUG=apk/debug/*.apk
+            APK_DEBUG=$(find ./apk/debug -name "*.apk")
           else
             APK_DEBUG=""
           fi
-          APK_RELEASE=apk/release/*.apk
+          APK_RELEASE=$(find ./apk/release -name "*.apk")
           python3 $GITHUB_WORKSPACE/scripts/ksubot.py $APK_DEBUG $APK_RELEASE

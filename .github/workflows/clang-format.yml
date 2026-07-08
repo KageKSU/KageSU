@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'rework'
     paths:
       - '.github/workflows/clang-format.yml'
       - 'kernel/**/*.c'
