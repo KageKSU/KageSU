@@ -1471,3 +1471,8 @@ fun isInDarkTheme(themeMode: Boolean?): Boolean {
         null -> isSystemInDarkTheme() // 跟随系统
     }
 }
+
+// No-arg overload used by the ported tiann Miuix UI; follows the app's theme-mode setting.
+@Composable
+@ReadOnlyComposable
+fun isInDarkTheme(): Boolean = isInDarkTheme(ThemeConfig.forceDarkMode)

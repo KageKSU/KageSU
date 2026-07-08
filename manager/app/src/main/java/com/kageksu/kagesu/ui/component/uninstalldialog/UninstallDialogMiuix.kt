@@ -51,9 +51,9 @@ fun UninstallDialogMiuix(
 
     val run = { type: UninstallType ->
         when (type) {
-            PERMANENT -> navigator.push(Route.Flash(FlashIt.FlashUninstall))
+            PERMANENT -> navigator.push(Route.Flash(FlashIt.FlashUninstall as FlashIt))
 
-            RESTORE_STOCK_IMAGE -> navigator.push(Route.Flash(FlashIt.FlashRestore))
+            RESTORE_STOCK_IMAGE -> navigator.push(Route.Flash(FlashIt.FlashRestore as FlashIt))
 
             TEMPORARY -> showTodo()
             NONE -> Unit
