@@ -1,7 +1,7 @@
 name: Build SU
 on:
   push:
-    branches: [ "main", "ci", "rework" ]
+    branches: [ "main", "ci" ]
     paths:
       - '.github/workflows/build-su.yml'
       - 'userspace/su/**'
@@ -21,7 +21,7 @@ jobs:
     - name: Setup need_upload
       id: need_upload
       run: |
-        if [ -n "${{ secrets.TG_BOT_TOKEN }}" ] && [ -n "${{ vars.TG_CHANNEL_ID }}" ]; then
+        if [ ! -z "${{ secrets.BOT_TOKEN }}" ]; then
           echo "UPLOAD=true" >> $GITHUB_OUTPUT
         else
           echo "UPLOAD=false" >> $GITHUB_OUTPUT

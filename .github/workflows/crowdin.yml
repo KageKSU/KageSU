@@ -2,7 +2,7 @@ name: Crowdin Action
 
 on:
   push:
-    branches: [ main, rework ]
+    branches: [ main ]
     paths:
       - 'manager/app/src/main/res/values/strings.xml'
       - 'manager/app/src/main/res/values-*/strings.xml'

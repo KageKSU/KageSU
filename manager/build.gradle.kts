@@ -11,7 +11,7 @@ val androidBuildToolsVersion by extra("36.1.0")
 val androidCompileNdkVersion by extra(libs.versions.ndk.get())
 val androidSourceCompatibility by extra(JavaVersion.VERSION_21)
 val androidTargetCompatibility by extra(JavaVersion.VERSION_21)
-val managerVersionCode by extra(getVersionCode())
+val managerVersionCode by extra(30000 + getGitCommitCount() + 700)
 val managerVersionName by extra(getGitDescribe())
 
 fun getGitCommitCount(): Int {
@@ -24,14 +24,4 @@ fun getGitDescribe(): String {
     return providers.exec {
         commandLine("git", "describe", "--tags", "--always", "--abbrev=0")
     }.standardOutput.asText.get().trim()
-}
-
-// KageSU version scheme, continuing the ReSukiSU (v4.x) lineage this branch is
-// based on. major*10000 keeps the code in the 4_xxxx range (above ReSukiSU's
-// ~35000 so upgrades apply); BASELINE is tuned so the v4.1.1 tag lands at 4_1000
-// and the code grows by one per commit thereafter.
-fun getVersionCode(): Int {
-    val major = 4
-    val baseline = 3310
-    return major * 10000 + getGitCommitCount() - baseline
 }

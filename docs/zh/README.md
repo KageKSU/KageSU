@@ -1,15 +1,15 @@
-# KageSU
-<img align='right' src='KageSU-mini.svg' width='220px' alt="KageSU logo">
+# ReSukiSU
+<img align='right' src='ReSukiSU_blue.svg' width='220px' alt="ReSukiSU Icon">
 
 
 [English](../README.md) | **简体中文** | [日本語](../ja/README.md) | [Türkçe](../tr/README.md) | [Русский](../ru/README.md)
 
-一个基于 [`ReSukiSU/ReSukiSU`](https://github.com/ReSukiSU/ReSukiSU)（其本身基于 [KernelSU](https://github.com/tiann/KernelSU)）的分支，添加了一些有趣的变更，且更加稳定。
+一个 [`SukiSU-Ultra/SukiSU-Ultra`](https://github.com/SukiSU-Ultra/SukiSU-Ultra) 的下游分支,添加了一些有趣的变更，且更加稳定。
 
-[![最新发行](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/KageKSU/KageSU/releases/latest)
-[![频道](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/KageKSU)
+[![最新发行](https://img.shields.io/github/v/release/ReSukiSU/ReSukiSU?label=Release&logo=github)](https://github.com/ReSukiSU/ReSukiSU/releases/latest)
+[![频道](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/ReSukiSU)
 [![Kernel License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-orange.svg?logo=gnu)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![其他部分 License：GPL v3](https://img.shields.io/github/license/KageKSU/KageSU?logo=gnu)](/LICENSE)
+[![其他部分 License：GPL v3](https://img.shields.io/github/license/ReSukiSU/ReSukiSU?logo=gnu)](/LICENSE)
 
 ## 特性
 
@@ -18,11 +18,11 @@
 3. [App Profile](https://kernelsu.org/zh_CN/guide/app-profile.html): 把 Root 权限关进笼子里。
 4. 支持 non-GKI 与 GKI 1.0。
 5. 可调整管理器外观，可自定义 susfs 配置。
-6. 多管理器支持，默认支持使用 [官方KernelSU](https://github.com/tiann/KernelSU)/[RKSU](https://github.com/rsuntk/KernelSU)/[MKSU](https://github.com/5ec1cff/KernelSU)/[SukiSU](https://github.com/SukiSU-Ultra/SukiSU-Ultra) 作为管理器与 KageSU 内核共同工作
+6. 多管理器支持，默认支持使用 [官方KernelSU](https://github.com/tiann/KernelSU)/[RKSU](https://github.com/rsuntk/KernelSU)/[MKSU](https://github.com/5ec1cff/KernelSU)/[SukiSU](https://github.com/SukiSU-Ultra/SukiSU-Ultra) 作为管理器与 ReSukiSU 内核共同工作
 
 ## 兼容状态
 
-- KageSU 官方支持 GKI 2.0 的设备（内核版本 5.10 以上）。
+- ReSukiSU 官方支持 GKI 2.0 的设备（内核版本 5.10 以上）。
 
 - 旧内核也是兼容的（3.4+），不过需要自己编译内核。
 
@@ -37,11 +37,11 @@
 
 ## 集成
 
-请参考[文档](https://kagesu.palaz.uk)
+请参考[文档](https://ReSukiSU.github.io)
 
 ## 参与翻译
 
-要将 KageSU 翻译成您的语言，或完善现有的翻译，请使用 [Crowdin](https://crowdin.com/project/KageSU).
+要将 ReSukiSU 翻译成您的语言，或完善现有的翻译，请使用 [Crowdin](https://crowdin.com/project/ReSukiSU).
 
 ## 许可证
 
@@ -68,14 +68,9 @@
 
 ## 鸣谢
 
-- **Miuix 界面** 合并自 [tiann/KernelSU](https://github.com/tiann/KernelSU)（GPL-3.0），最初由 [YuKongA](https://github.com/YuKongA) 及其他 KernelSU 贡献者编写，原作者保留版权，KageSU 仅将其适配为与 Material 界面并存。完整对照见 [docs/ATTRIBUTION.md](../ATTRIBUTION.md)。
-- [ReSukiSU/ReSukiSU](https://github.com/ReSukiSU/ReSukiSU)：上游（本分支基于 ReSukiSU）
-
-<details>
-<summary>ReSukiSU 的鸣谢</summary>
+- **Miuix 界面** 合并自 [tiann/KernelSU](https://github.com/tiann/KernelSU)（GPL-3.0），最初由 [YuKongA](https://github.com/YuKongA) 及其他 KernelSU 贡献者编写，原作者保留版权。完整对照见 [docs/ATTRIBUTION.md](../ATTRIBUTION.md)。
 
 - [SukiSU-Ultra/SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)：上游
-</details>
 
 <details>
 <summary>SukiSU 的鸣谢</summary>

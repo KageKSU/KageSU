@@ -1,15 +1,15 @@
-# KageSU
-<img align='right' src='KageSU-mini.svg' width='220px' alt="KageSU logo">
+# ReSukiSU
+<img align='right' src='ReSukiSU_blue.svg' width='220px' alt="ReSukiSU Icon">
 
 
 **English** | [简体中文](./zh/README.md)
 
-A fork based on [`ReSukiSU/ReSukiSU`](https://github.com/ReSukiSU/ReSukiSU) (itself based on [KernelSU](https://github.com/tiann/KernelSU)), added some interesting changes, also make it more stable and build easily.
+A based-on [`SukiSU-Ultra/SukiSU-Ultra`](https://github.com/SukiSU-Ultra/SukiSU-Ultra) fork, added some interesting changes, also make it more stable and build easily.
 
-[![Latest release](https://img.shields.io/github/v/release/KageKSU/KageSU?label=Release&logo=github)](https://github.com/KageKSU/KageSU/releases/latest)
-[![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/KageKSU)
+[![Latest release](https://img.shields.io/github/v/release/ReSukiSU/ReSukiSU?label=Release&logo=github)](https://github.com/ReSukiSU/ReSukiSU/releases/latest)
+[![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/ReSukisu)
 [![Kernel License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-orange.svg?logo=gnu)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![Other part License：GPL v3](https://img.shields.io/github/license/KageKSU/KageSU?logo=gnu)](/LICENSE)
+[![Other part License：GPL v3](https://img.shields.io/github/license/ReSukiSU/ReSukiSU?logo=gnu)](/LICENSE)
 
 ## Features
 
@@ -18,11 +18,11 @@ A fork based on [`ReSukiSU/ReSukiSU`](https://github.com/ReSukiSU/ReSukiSU) (its
 3. [App Profile](https://kernelsu.org/guide/app-profile.html): Lock up the root power in a cage
 4. Support non-GKI and GKI 1.0
 5. Tweaks to the manager theme and the built-in susfs management tool.
-6. Multi manager support, for default [Official KernelSU](https://github.com/tiann/KernelSU)/[RKSU](https://github.com/rsuntk/KernelSU)/[MKSU](https://github.com/5ec1cff/KernelSU)/[SukiSU](https://github.com/SukiSU-Ultra/SukiSU-Ultra) is supported work as manager with KageSU's kernel
+6. Multi manager support, for default [Official KernelSU](https://github.com/tiann/KernelSU)/[RKSU](https://github.com/rsuntk/KernelSU)/[MKSU](https://github.com/5ec1cff/KernelSU)/[SukiSU](https://github.com/SukiSU-Ultra/SukiSU-Ultra) is supported work as manager with ReSukiSU's kernel
 
 ## Compatibility Status
 
-- KageSU officially supports Android GKI 2.0 devices (kernel 5.10+).
+- ReSukiSU officially supports Android GKI 2.0 devices (kernel 5.10+).
 
 - Older kernels (3.4+) are also compatible, but the kernel will have to be built manually.
 
@@ -39,11 +39,11 @@ A fork based on [`ReSukiSU/ReSukiSU`](https://github.com/ReSukiSU/ReSukiSU) (its
 
 ## Integration
 
-See the [documentation](https://kagesu.palaz.uk).
+See the [documentation](https://ReSukiSU.github.io).
 
 ## Translation
 
-If you need to submit a translation for the manager, please go to [Crowdin](https://crowdin.com/project/KageSU).
+If you need to submit a translation for the manager, please go to [Crowdin](https://crowdin.com/project/ReSukiSU).
 
 ## Sponsor
 
@@ -70,14 +70,9 @@ If you need to submit a translation for the manager, please go to [Crowdin](http
 
 ## Credit
 
-- The **Miuix UI** was merged from [tiann/KernelSU](https://github.com/tiann/KernelSU) (GPL-3.0), originally authored by [YuKongA](https://github.com/YuKongA) with other KernelSU contributors; the original authors retain copyright, KageSU only adapted it to run alongside its Material UI. Full mapping in [docs/ATTRIBUTION.md](./ATTRIBUTION.md).
-- [ReSukiSU/ReSukiSU](https://github.com/ReSukiSU/ReSukiSU): upstream (this branch is based on ReSukiSU)
+- The **Miuix UI** was merged from [tiann/KernelSU](https://github.com/tiann/KernelSU) (GPL-3.0), originally authored by [YuKongA](https://github.com/YuKongA) with other KernelSU contributors; the original authors retain copyright. Full mapping in [docs/ATTRIBUTION.md](./ATTRIBUTION.md).
 
-<details>
-<summary>ReSukiSU's credit</summary>
-
-- [SukiSU-Ultra/SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra): upstream
-</details>
+- [SukiSU-Ultra/SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)： upstream
 
 <details>
 <summary>SukiSU's credit</summary>

@@ -2,7 +2,7 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "main", "rework" ]
+    branches: [ "main" ]
     paths:
       - 'manager/**'
       - '.github/workflows/codeql.yml'
