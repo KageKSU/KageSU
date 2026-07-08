@@ -1,3 +1,6 @@
+// Miuix About screen. Adapted from SukiSU-Ultra (https://github.com/SukiSU-Ultra/SukiSU-Ultra),
+// GPL-3.0; the original authors retain copyright. Wired to KageSU/ReSukiSU's navigation + data.
+
 package com.kageksu.kagesu.ui.screen.about
 
 import android.os.Build
