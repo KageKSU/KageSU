@@ -18,7 +18,7 @@ import com.kageksu.kagesu.R
 import com.kageksu.kagesu.ui.component.dialog.rememberConfirmDialog
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
 import com.kageksu.kagesu.ui.navigation.Route
-import com.kageksu.kagesu.ui.screen.flash.FlashIt
+import com.kageksu.kagesu.ui.screen.FlashIt
 import com.kageksu.kagesu.ui.screen.flash.UninstallType
 import com.kageksu.kagesu.ui.screen.flash.UninstallType.NONE
 import com.kageksu.kagesu.ui.screen.flash.UninstallType.PERMANENT
@@ -51,9 +51,9 @@ fun UninstallDialogMiuix(
 
     val run = { type: UninstallType ->
         when (type) {
-            PERMANENT -> navigator.push(Route.Flash(FlashIt.FlashUninstall as FlashIt))
+            PERMANENT -> navigator.push(Route.Flash(FlashIt.FlashUninstall))
 
-            RESTORE_STOCK_IMAGE -> navigator.push(Route.Flash(FlashIt.FlashRestore as FlashIt))
+            RESTORE_STOCK_IMAGE -> navigator.push(Route.Flash(FlashIt.FlashRestore))
 
             TEMPORARY -> showTodo()
             NONE -> Unit

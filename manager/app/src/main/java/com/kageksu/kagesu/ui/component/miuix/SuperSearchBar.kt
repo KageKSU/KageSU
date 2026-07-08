@@ -187,19 +187,12 @@ fun SearchStatus.SearchPager(
                             )
                         }
                 )
-                run {
-                    val navEventState = rememberNavigationEventState(NavigationEventInfo.None)
-                    NavigationBackHandler(
-                        state = navEventState,
-                        isBackEnabled = true,
-                        onBackCompleted = {
-                            onSearchStatusChange(
-                                searchStatus.copy(
-                                    searchText = "",
-                                    current = SearchStatus.Status.COLLAPSING
-                                )
-                            )
-                        }
+                androidx.activity.compose.BackHandler(enabled = true) {
+                    onSearchStatusChange(
+                        searchStatus.copy(
+                            searchText = "",
+                            current = SearchStatus.Status.COLLAPSING
+                        )
                     )
                 }
             }

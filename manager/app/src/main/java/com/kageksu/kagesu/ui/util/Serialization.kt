@@ -6,7 +6,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ByteArraySerializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import com.kageksu.kagesu.ui.screen.flash.FlashIt
+import com.kageksu.kagesu.ui.screen.FlashIt
 import com.kageksu.kagesu.ui.screen.modulerepo.RepoModuleArg
 import com.kageksu.kagesu.ui.viewmodel.TemplateViewModel
 
