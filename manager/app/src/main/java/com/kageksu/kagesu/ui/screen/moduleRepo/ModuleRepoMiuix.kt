@@ -1,3 +1,6 @@
+// Miuix UI adapted from SukiSU-Ultra (https://github.com/SukiSU-Ultra/SukiSU-Ultra),
+// GPL-3.0; the original authors retain copyright. Adapted for KageSU on the ReSukiSU base.
+
 package com.kageksu.kagesu.ui.screen.moduleRepo
 
 import androidx.compose.foundation.layout.Arrangement
