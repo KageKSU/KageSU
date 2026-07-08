@@ -3,7 +3,7 @@ name: Build Manager
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "dev", "ci", "sync-upstream", "rework" ]
+    branches: [ "main", "dev", "ci", "sync-upstream", "rework", "upstream", "rework-miuix" ]
     paths:
       - '.github/workflows/build-manager.yml'
       - '.github/workflows/build-lkm.yml'

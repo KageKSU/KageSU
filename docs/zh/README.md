@@ -68,6 +68,7 @@
 
 ## 鸣谢
 
+- **Miuix 界面** 合并自 [tiann/KernelSU](https://github.com/tiann/KernelSU)（GPL-3.0），最初由 [YuKongA](https://github.com/YuKongA) 及其他 KernelSU 贡献者编写，原作者保留版权，KageSU 仅将其适配为与 Material 界面并存。完整对照见 [docs/ATTRIBUTION.md](../ATTRIBUTION.md)。
 - [ReSukiSU/ReSukiSU](https://github.com/ReSukiSU/ReSukiSU)：上游（本分支基于 ReSukiSU）
 
 <details>

@@ -100,6 +100,8 @@ import com.kageksu.kagesu.ui.component.ksuIsValid
 import com.kageksu.kagesu.ui.component.rememberConfirmDialog
 import com.kageksu.kagesu.ui.component.rememberLoadingDialog
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
+import com.kageksu.kagesu.ui.LocalUiMode
+import com.kageksu.kagesu.ui.UiMode
 import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.screen.LabelText
 import com.kageksu.kagesu.ui.theme.CardConfig
@@ -140,6 +142,11 @@ fun HomePage(
     }
 
     if (!uiState.isInitialDataLoaded) return
+
+    if (LocalUiMode.current == UiMode.Miuix) {
+        HomeMiuixContent(uiState = uiState, bottomPadding = bottomPadding)
+        return
+    }
 
     val pullRefreshState = rememberPullToRefreshState()
     val topAppBarState = rememberTopAppBarState()

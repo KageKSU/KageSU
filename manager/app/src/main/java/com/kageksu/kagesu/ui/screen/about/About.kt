@@ -54,6 +54,8 @@ import com.kageksu.kagesu.ui.component.settings.AppBackButton
 import com.kageksu.kagesu.ui.component.settings.SegmentedColumn
 import com.kageksu.kagesu.ui.component.settings.SettingsJumpPageWidget
 import com.kageksu.kagesu.ui.navigation.LocalNavigator
+import com.kageksu.kagesu.ui.LocalUiMode
+import com.kageksu.kagesu.ui.UiMode
 import com.kageksu.kagesu.ui.navigation.Navigator
 import com.kageksu.kagesu.ui.navigation.Route
 import com.kageksu.kagesu.ui.theme.CardConfig
@@ -65,6 +67,10 @@ import com.kageksu.kagesu.ui.theme.renderBackgroundBlur
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AboutScreen() {
+    if (LocalUiMode.current == UiMode.Miuix) {
+        AboutMiuixContent()
+        return
+    }
     val navigator = LocalNavigator.current
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 

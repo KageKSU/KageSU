@@ -70,6 +70,7 @@ If you need to submit a translation for the manager, please go to [Crowdin](http
 
 ## Credit
 
+- The **Miuix UI** was merged from [tiann/KernelSU](https://github.com/tiann/KernelSU) (GPL-3.0), originally authored by [YuKongA](https://github.com/YuKongA) with other KernelSU contributors; the original authors retain copyright, KageSU only adapted it to run alongside its Material UI. Full mapping in [docs/ATTRIBUTION.md](./ATTRIBUTION.md).
 - [ReSukiSU/ReSukiSU](https://github.com/ReSukiSU/ReSukiSU): upstream (this branch is based on ReSukiSU)
 
 <details>
