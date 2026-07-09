@@ -749,4 +749,8 @@ Enabled: Увімкнути підміну sus tcontext \'su\' на \'u:r:priv_a
     <string name="settings_ui_mode_summary">Виберіть між ReSukiSU та Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Плаваюча нижня панель</string>
+    <string name="settings_floating_bottom_bar_summary">Показувати навігацію Miuix як плаваючу панель.</string>
+    <string name="settings_floating_bottom_bar_blur">Рідке скло</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Застосувати розмиття «рідке скло» до плаваючої панелі.</string>
 </resources>

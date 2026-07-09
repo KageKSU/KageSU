@@ -630,6 +630,33 @@ private fun AppearanceSettings(
                 }
             )
         }
+
+        // Miuix floating bottom bar + its liquid-glass (blur) variant.
+        item(visible = isMiuix, topPadding = 1.dp) {
+            val context = LocalContext.current
+            SettingsSwitchWidget(
+                icon = Icons.Filled.Style,
+                title = stringResource(id = R.string.settings_floating_bottom_bar),
+                description = stringResource(id = R.string.settings_floating_bottom_bar_summary),
+                checked = ThemeConfig.enableFloatingBottomBar,
+                onCheckedChange = { isChecked ->
+                    BackgroundManager.saveEnableFloatingBottomBar(context, isChecked)
+                    if (!isChecked) BackgroundManager.saveEnableFloatingBottomBarBlur(context, false)
+                }
+            )
+        }
+        item(visible = isMiuix && ThemeConfig.enableFloatingBottomBar, topPadding = 1.dp) {
+            val context = LocalContext.current
+            SettingsSwitchWidget(
+                icon = Icons.Filled.Opacity,
+                title = stringResource(id = R.string.settings_floating_bottom_bar_blur),
+                description = stringResource(id = R.string.settings_floating_bottom_bar_blur_summary),
+                checked = ThemeConfig.enableFloatingBottomBarBlur,
+                onCheckedChange = { isChecked ->
+                    BackgroundManager.saveEnableFloatingBottomBarBlur(context, isChecked)
+                }
+            )
+        }
     }
 }
 

@@ -79,4 +79,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU और Miuix में से चुनें।</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">फ़्लोटिंग बॉटम बार</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix नेविगेशन को फ़्लोटिंग बार के रूप में दिखाएँ।</string>
+    <string name="settings_floating_bottom_bar_blur">लिक्विड ग्लास</string>
+    <string name="settings_floating_bottom_bar_blur_summary">फ़्लोटिंग बार पर लिक्विड-ग्लास ब्लर लागू करें।</string>
 </resources>

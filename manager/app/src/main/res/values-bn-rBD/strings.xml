@@ -51,4 +51,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU এবং Miuix-এর মধ্যে বেছে নিন।</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">ভাসমান নিচের বার</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix নেভিগেশনকে ভাসমান বার হিসেবে দেখান।</string>
+    <string name="settings_floating_bottom_bar_blur">লিকুইড গ্লাস</string>
+    <string name="settings_floating_bottom_bar_blur_summary">ভাসমান বারে লিকুইড-গ্লাস ব্লার প্রয়োগ করুন।</string>
 </resources>

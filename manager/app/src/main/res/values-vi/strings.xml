@@ -570,4 +570,8 @@ Bật: Kích hoạt tính năng giả mạo sus tcontext của \'su\' thành \'u
     <string name="settings_ui_mode_summary">Chọn giữa ReSukiSU và Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Thanh dưới nổi</string>
+    <string name="settings_floating_bottom_bar_summary">Hiển thị thanh điều hướng Miuix dưới dạng thanh nổi.</string>
+    <string name="settings_floating_bottom_bar_blur">Kính lỏng</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Áp dụng hiệu ứng làm mờ kính lỏng cho thanh nổi.</string>
 </resources>

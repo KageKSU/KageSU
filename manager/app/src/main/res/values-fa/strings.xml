@@ -61,4 +61,8 @@
     <string name="settings_ui_mode_summary">بین ReSukiSU و Miuix یکی را انتخاب کنید.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">نوار پایین شناور</string>
+    <string name="settings_floating_bottom_bar_summary">نمایش نوار ناوبری Miuix به‌صورت نوار شناور.</string>
+    <string name="settings_floating_bottom_bar_blur">شیشه مایع</string>
+    <string name="settings_floating_bottom_bar_blur_summary">اعمال محو شیشه مایع روی نوار شناور.</string>
 </resources>

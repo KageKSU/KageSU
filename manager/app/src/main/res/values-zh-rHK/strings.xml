@@ -670,4 +670,8 @@
     <string name="settings_ui_mode_summary">喺 ReSukiSU 同 Miuix 之間揀選。</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">懸浮底欄</string>
+    <string name="settings_floating_bottom_bar_summary">將 Miuix 導覽顯示為懸浮欄。</string>
+    <string name="settings_floating_bottom_bar_blur">液態玻璃</string>
+    <string name="settings_floating_bottom_bar_blur_summary">為懸浮欄套用液態玻璃模糊。</string>
 </resources>

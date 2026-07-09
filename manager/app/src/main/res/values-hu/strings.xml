@@ -118,4 +118,8 @@
     <string name="settings_ui_mode_summary">Válassz a ReSukiSU és a Miuix között.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Lebegő alsó sáv</string>
+    <string name="settings_floating_bottom_bar_summary">A Miuix navigáció megjelenítése lebegő sávként.</string>
+    <string name="settings_floating_bottom_bar_blur">Folyékony üveg</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Folyékony üveg elmosás alkalmazása a lebegő sávra.</string>
 </resources>

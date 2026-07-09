@@ -11,4 +11,8 @@
     <string name="settings_ui_mode_summary">Escolle entre ReSukiSU e Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Barra inferior flotante</string>
+    <string name="settings_floating_bottom_bar_summary">Mostrar a navegación de Miuix como unha barra flotante.</string>
+    <string name="settings_floating_bottom_bar_blur">Vidro líquido</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Aplica un desenfoque de vidro líquido á barra flotante.</string>
 </resources>

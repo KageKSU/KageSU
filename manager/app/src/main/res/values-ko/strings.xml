@@ -606,4 +606,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU와 Miuix 중에서 선택하세요.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">플로팅 하단 바</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix 내비게이션을 플로팅 바로 표시합니다.</string>
+    <string name="settings_floating_bottom_bar_blur">리퀴드 글래스</string>
+    <string name="settings_floating_bottom_bar_blur_summary">플로팅 바에 리퀴드 글래스 블러를 적용합니다.</string>
 </resources>

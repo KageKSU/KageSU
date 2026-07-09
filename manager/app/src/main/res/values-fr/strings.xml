@@ -263,4 +263,8 @@
     <string name="settings_ui_mode_summary">Choisissez entre ReSukiSU et Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Barre inférieure flottante</string>
+    <string name="settings_floating_bottom_bar_summary">Afficher la navigation Miuix sous forme de barre flottante.</string>
+    <string name="settings_floating_bottom_bar_blur">Verre liquide</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Appliquer un flou verre liquide à la barre flottante.</string>
 </resources>

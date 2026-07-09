@@ -26,4 +26,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU మరియు Miuix మధ్య ఎంచుకోండి.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">తేలియాడే దిగువ బార్</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix నావిగేషన్‌ను తేలియాడే బార్‌గా చూపించు.</string>
+    <string name="settings_floating_bottom_bar_blur">లిక్విడ్ గ్లాస్</string>
+    <string name="settings_floating_bottom_bar_blur_summary">తేలియాడే బార్‌కు లిక్విడ్-గ్లాస్ బ్లర్‌ను వర్తించు.</string>
 </resources>

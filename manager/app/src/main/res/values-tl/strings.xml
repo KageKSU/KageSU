@@ -7,4 +7,8 @@
     <string name="settings_ui_mode_summary">Pumili sa pagitan ng ReSukiSU at Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Lumulutang na bottom bar</string>
+    <string name="settings_floating_bottom_bar_summary">Ipakita ang Miuix navigation bilang lumulutang na bar.</string>
+    <string name="settings_floating_bottom_bar_blur">Liquid glass</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Maglagay ng liquid-glass na blur sa lumulutang na bar.</string>
 </resources>

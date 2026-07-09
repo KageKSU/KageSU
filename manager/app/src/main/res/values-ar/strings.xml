@@ -292,4 +292,8 @@
     <string name="settings_ui_mode_summary">اختر بين ReSukiSU و Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">شريط سفلي عائم</string>
+    <string name="settings_floating_bottom_bar_summary">عرض شريط تنقل Miuix كشريط عائم.</string>
+    <string name="settings_floating_bottom_bar_blur">زجاج سائل</string>
+    <string name="settings_floating_bottom_bar_blur_summary">طبّق تأثير الزجاج السائل الضبابي على الشريط العائم.</string>
 </resources>

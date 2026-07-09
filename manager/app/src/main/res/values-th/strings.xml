@@ -127,4 +127,8 @@
     <string name="settings_ui_mode_summary">เลือกระหว่าง ReSukiSU และ Miuix</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">แถบล่างแบบลอย</string>
+    <string name="settings_floating_bottom_bar_summary">แสดงแถบนำทาง Miuix เป็นแถบลอย</string>
+    <string name="settings_floating_bottom_bar_blur">กระจกเหลว</string>
+    <string name="settings_floating_bottom_bar_blur_summary">ใช้เอฟเฟกต์เบลอกระจกเหลวกับแถบลอย</string>
 </resources>

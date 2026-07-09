@@ -82,4 +82,8 @@
     <string name="settings_ui_mode_summary">Pasirinkite tarp ReSukiSU ir Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Slankioji apatinė juosta</string>
+    <string name="settings_floating_bottom_bar_summary">Rodyti Miuix naršymą kaip slankiąją juostą.</string>
+    <string name="settings_floating_bottom_bar_blur">Skystas stiklas</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Slankiajai juostai pritaikyti skysto stiklo suliejimą.</string>
 </resources>

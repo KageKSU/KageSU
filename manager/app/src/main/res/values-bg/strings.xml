@@ -178,4 +178,8 @@
     <string name="settings_ui_mode_summary">Изберете между ReSukiSU и Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Плаваща долна лента</string>
+    <string name="settings_floating_bottom_bar_summary">Показвай навигацията на Miuix като плаваща лента.</string>
+    <string name="settings_floating_bottom_bar_blur">Течно стъкло</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Приложи размазване тип течно стъкло към плаващата лента.</string>
 </resources>

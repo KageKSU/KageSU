@@ -570,4 +570,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU と Miuix のどちらかを選択します。</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">フローティングボトムバー</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix のナビゲーションをフローティングバーとして表示します。</string>
+    <string name="settings_floating_bottom_bar_blur">リキッドグラス</string>
+    <string name="settings_floating_bottom_bar_blur_summary">フローティングバーにリキッドグラスのぼかしを適用します。</string>
 </resources>

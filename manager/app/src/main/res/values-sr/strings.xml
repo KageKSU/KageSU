@@ -16,4 +16,8 @@
     <string name="settings_ui_mode_summary">Изаберите између ReSukiSU и Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Плутајућа доња трака</string>
+    <string name="settings_floating_bottom_bar_summary">Прикажи Miuix навигацију као плутајућу траку.</string>
+    <string name="settings_floating_bottom_bar_blur">Течно стакло</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Примени замућење течног стакла на плутајућу траку.</string>
 </resources>

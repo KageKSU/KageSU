@@ -97,4 +97,8 @@
     <string name="settings_ui_mode_summary">Izberite med ReSukiSU in Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Lebdeča spodnja vrstica</string>
+    <string name="settings_floating_bottom_bar_summary">Prikaži navigacijo Miuix kot lebdečo vrstico.</string>
+    <string name="settings_floating_bottom_bar_blur">Tekoče steklo</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Uporabi zabris tekočega stekla na lebdeči vrstici.</string>
 </resources>

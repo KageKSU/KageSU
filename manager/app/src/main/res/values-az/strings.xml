@@ -78,4 +78,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU və Miuix arasında seçim edin.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Üzən alt panel</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix naviqasiyasını üzən panel kimi göstər.</string>
+    <string name="settings_floating_bottom_bar_blur">Maye şüşə</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Üzən panelə maye şüşə bulanıqlığı tətbiq et.</string>
 </resources>

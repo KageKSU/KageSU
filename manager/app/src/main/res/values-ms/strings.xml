@@ -41,4 +41,8 @@
     <string name="settings_ui_mode_summary">Pilih antara ReSukiSU dan Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Bar bawah terapung</string>
+    <string name="settings_floating_bottom_bar_summary">Tunjukkan navigasi Miuix sebagai bar terapung.</string>
+    <string name="settings_floating_bottom_bar_blur">Kaca cair</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Gunakan kabur kaca cair pada bar terapung.</string>
 </resources>

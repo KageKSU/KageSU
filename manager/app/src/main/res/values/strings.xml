@@ -795,6 +795,10 @@ Important Note:\n
     <string name="settings_ui_mode_summary">Choose between ReSukiSU and Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
+    <string name="settings_floating_bottom_bar_summary">Show the Miuix navigation as a floating bar.</string>
+    <string name="settings_floating_bottom_bar_blur">Liquid glass</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Apply a liquid-glass blur to the floating bar.</string>
     <string name="show_only_primary_user_apps">Show only primary user apps</string>
     <string name="sort_by_install_time">Install time</string>
     <string name="sort_by_name">Application name</string>

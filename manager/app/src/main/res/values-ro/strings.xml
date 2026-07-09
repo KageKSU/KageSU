@@ -118,4 +118,8 @@
     <string name="settings_ui_mode_summary">Alege între ReSukiSU și Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Bară inferioară flotantă</string>
+    <string name="settings_floating_bottom_bar_summary">Afișează navigarea Miuix ca o bară flotantă.</string>
+    <string name="settings_floating_bottom_bar_blur">Sticlă lichidă</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Aplică un blur de sticlă lichidă pe bara flotantă.</string>
 </resources>

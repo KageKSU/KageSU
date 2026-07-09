@@ -118,4 +118,8 @@
     <string name="settings_ui_mode_summary">Kies tussen ReSukiSU en Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Zwevende onderbalk</string>
+    <string name="settings_floating_bottom_bar_summary">Toon de Miuix-navigatie als een zwevende balk.</string>
+    <string name="settings_floating_bottom_bar_blur">Vloeibaar glas</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Pas een vloeibaar-glas vervaging toe op de zwevende balk.</string>
 </resources>

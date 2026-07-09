@@ -78,4 +78,8 @@
     <string name="settings_ui_mode_summary">בחר בין ReSukiSU ל-Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">סרגל תחתון צף</string>
+    <string name="settings_floating_bottom_bar_summary">הצג את ניווט Miuix כסרגל צף.</string>
+    <string name="settings_floating_bottom_bar_blur">זכוכית נוזלית</string>
+    <string name="settings_floating_bottom_bar_blur_summary">החל טשטוש זכוכית נוזלית על הסרגל הצף.</string>
 </resources>

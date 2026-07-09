@@ -14,4 +14,8 @@
     <string name="settings_ui_mode_summary">ជ្រើសរើសរវាង ReSukiSU និង Miuix។</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">របារខាងក្រោមអណ្ដែត</string>
+    <string name="settings_floating_bottom_bar_summary">បង្ហាញការរុករក Miuix ជារបារអណ្ដែត។</string>
+    <string name="settings_floating_bottom_bar_blur">កញ្ចក់រាវ</string>
+    <string name="settings_floating_bottom_bar_blur_summary">អនុវត្តភាពព្រិលកញ្ចក់រាវទៅរបារអណ្ដែត។</string>
 </resources>

@@ -121,4 +121,8 @@
     <string name="settings_ui_mode_summary">Vali ReSukiSU ja Miuix vahel.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Hõljuv alumine riba</string>
+    <string name="settings_floating_bottom_bar_summary">Kuva Miuixi navigeerimine hõljuva ribana.</string>
+    <string name="settings_floating_bottom_bar_blur">Vedel klaas</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Rakenda hõljuvale ribale vedela klaasi hägustus.</string>
 </resources>

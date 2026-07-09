@@ -126,6 +126,10 @@ object ThemeConfig {
     // UI 设计：ReSukiSU (material) 或 Miuix。驱动 LocalUiMode。
     var uiMode by mutableStateOf("material")
 
+    // Miuix floating bottom bar (+ liquid-glass blur variant). Only used by the Miuix UI.
+    var enableFloatingBottomBar by mutableStateOf(false)
+    var enableFloatingBottomBarBlur by mutableStateOf(false)
+
     // 主题变化检测
     private var lastDarkModeState: Boolean? = null
 
@@ -282,6 +286,16 @@ object BackgroundManager {
         context.appPreferences.putBoolean("enable_blur_exp", enable)
     }
 
+    fun saveEnableFloatingBottomBar(context: Context, enable: Boolean) {
+        ThemeConfig.enableFloatingBottomBar = enable
+        context.appPreferences.putBoolean("enable_floating_bottom_bar", enable)
+    }
+
+    fun saveEnableFloatingBottomBarBlur(context: Context, enable: Boolean) {
+        ThemeConfig.enableFloatingBottomBarBlur = enable
+        context.appPreferences.putBoolean("enable_floating_bottom_bar_blur", enable)
+    }
+
     fun saveUseBackgroundSeedColor(context: Context, enable: Boolean) {
         ThemeConfig.isUseBackgroundSeedColor = enable
         context.appPreferences.putBoolean("use_background_seed_color", enable)
@@ -337,6 +351,8 @@ object BackgroundManager {
         ThemeConfig.backgroundDim = prefs.getFloat("background_dim", 0f).coerceIn(0f, 1f)
         ThemeConfig.isEnableBlur = prefs.getBoolean("enable_blur", false)
         ThemeConfig.isEnableBlurExp = prefs.getBoolean("enable_blur_exp", false)
+        ThemeConfig.enableFloatingBottomBar = prefs.getBoolean("enable_floating_bottom_bar", false)
+        ThemeConfig.enableFloatingBottomBarBlur = prefs.getBoolean("enable_floating_bottom_bar_blur", false)
         ThemeConfig.isUseBackgroundSeedColor = prefs.getBoolean("use_background_seed_color", false)
         ThemeConfig.isHighContrastMode = prefs.getBoolean("high_contrast_mode", false)
     }

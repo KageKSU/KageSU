@@ -860,16 +860,20 @@ fun MainScreen() {
     }
 
     val mainPagerState = com.resukisu.resukisu.ui.component.bottombar.rememberMainPagerState(pagerState)
+    // Keep the Miuix nav bar's selection in sync when the page changes programmatically
+    // (e.g. tapping the Superuser/Module cards on Home), not just via the bar itself.
+    LaunchedEffect(mainPagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { mainPagerState.syncPage() }
+    }
 
     CompositionLocalProvider(
         LocalPagerState provides pagerState,
         LocalHandlePageChange provides handlePageChange,
         LocalSelectedPage provides uiSelectedPage,
         LocalMainPagerState provides mainPagerState,
-        // Floating bottom bar is opt-in (wired to ThemeConfig in a later change); default to the
-        // plain Miuix navigation bar for now.
-        com.resukisu.resukisu.ui.theme.LocalEnableFloatingBottomBar provides false,
-        com.resukisu.resukisu.ui.theme.LocalEnableFloatingBottomBarBlur provides false,
+        // Floating bottom bar (+ liquid-glass blur) is opt-in via the Theme screen (Miuix only).
+        com.resukisu.resukisu.ui.theme.LocalEnableFloatingBottomBar provides ThemeConfig.enableFloatingBottomBar,
+        com.resukisu.resukisu.ui.theme.LocalEnableFloatingBottomBarBlur provides ThemeConfig.enableFloatingBottomBarBlur,
     ) {
         BoxWithConstraints(
             modifier = Modifier.fillMaxSize()

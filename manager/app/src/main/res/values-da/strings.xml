@@ -66,4 +66,8 @@
     <string name="settings_ui_mode_summary">Vælg mellem ReSukiSU og Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Flydende bundlinje</string>
+    <string name="settings_floating_bottom_bar_summary">Vis Miuix-navigationen som en flydende linje.</string>
+    <string name="settings_floating_bottom_bar_blur">Flydende glas</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Anvend en flydende glas-sløring på den flydende linje.</string>
 </resources>

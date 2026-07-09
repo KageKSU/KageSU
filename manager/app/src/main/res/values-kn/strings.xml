@@ -66,4 +66,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU ಮತ್ತು Miuix ನಡುವೆ ಆಯ್ಕೆಮಾಡಿ.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">ತೇಲುವ ಕೆಳಪಟ್ಟಿ</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix ನ್ಯಾವಿಗೇಶನ್ ಅನ್ನು ತೇಲುವ ಪಟ್ಟಿಯಾಗಿ ತೋರಿಸಿ.</string>
+    <string name="settings_floating_bottom_bar_blur">ದ್ರವ ಗಾಜು</string>
+    <string name="settings_floating_bottom_bar_blur_summary">ತೇಲುವ ಪಟ್ಟಿಗೆ ದ್ರವ-ಗಾಜಿನ ಮಸುಕು ಅನ್ವಯಿಸಿ.</string>
 </resources>

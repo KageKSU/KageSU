@@ -666,4 +666,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU ve Miuix arasında seçim yapın.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Yüzen alt çubuk</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix gezinmesini yüzen bir çubuk olarak göster.</string>
+    <string name="settings_floating_bottom_bar_blur">Sıvı cam</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Yüzen çubuğa sıvı cam bulanıklığı uygula.</string>
 </resources>

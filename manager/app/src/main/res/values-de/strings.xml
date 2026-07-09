@@ -249,4 +249,8 @@
     <string name="settings_ui_mode_summary">Wähle zwischen ReSukiSU und Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Schwebende untere Leiste</string>
+    <string name="settings_floating_bottom_bar_summary">Die Miuix-Navigation als schwebende Leiste anzeigen.</string>
+    <string name="settings_floating_bottom_bar_blur">Liquid Glass</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Einen Liquid-Glass-Weichzeichner auf die schwebende Leiste anwenden.</string>
 </resources>

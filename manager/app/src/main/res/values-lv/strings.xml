@@ -121,4 +121,8 @@
     <string name="settings_ui_mode_summary">Izvēlieties starp ReSukiSU un Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">Peldoša apakšējā josla</string>
+    <string name="settings_floating_bottom_bar_summary">Rādīt Miuix navigāciju kā peldošu joslu.</string>
+    <string name="settings_floating_bottom_bar_blur">Šķidrais stikls</string>
+    <string name="settings_floating_bottom_bar_blur_summary">Lietot peldošajai joslai šķidrā stikla izpludinājumu.</string>
 </resources>

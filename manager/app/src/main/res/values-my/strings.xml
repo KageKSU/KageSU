@@ -11,4 +11,8 @@
     <string name="settings_ui_mode_summary">ReSukiSU နှင့် Miuix အကြား ရွေးချယ်ပါ။</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
+    <string name="settings_floating_bottom_bar">မျောနေသော အောက်ခြေဘား</string>
+    <string name="settings_floating_bottom_bar_summary">Miuix လမ်းညွှန်ကို မျောနေသောဘားအဖြစ် ပြပါ။</string>
+    <string name="settings_floating_bottom_bar_blur">အရည်ဖန်</string>
+    <string name="settings_floating_bottom_bar_blur_summary">မျောနေသောဘားတွင် အရည်ဖန် ဝါးခြင်း သုံးပါ။</string>
 </resources>
