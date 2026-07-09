@@ -390,6 +390,8 @@ class MainActivity : ComponentActivity() {
                         LocalUiMode provides com.resukisu.resukisu.ui.UiMode.fromValue(
                             com.resukisu.resukisu.ui.theme.ThemeConfig.uiMode
                         ),
+                        com.resukisu.resukisu.ui.theme.LocalEnableBlur provides
+                            com.resukisu.resukisu.ui.theme.ThemeConfig.isEnableBlur,
                         LocalDensity provides density
                     ) {
                         HandleDeepLink(

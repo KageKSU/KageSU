@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.rounded.Adb
+import androidx.compose.material.icons.rounded.BlurOn
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.ContactPage
 import androidx.compose.material.icons.rounded.Dashboard
@@ -24,6 +25,8 @@ import androidx.compose.material.icons.rounded.DeveloperMode
 import androidx.compose.material.icons.rounded.ElectricalServices
 import androidx.compose.material.icons.rounded.Fence
 import androidx.compose.material.icons.rounded.FolderDelete
+import androidx.compose.material.icons.rounded.FolderOff
+import androidx.compose.material.icons.rounded.Security
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Policy
 import androidx.compose.material.icons.rounded.RemoveCircle
@@ -174,6 +177,21 @@ fun SettingPagerMiuix(
                                 )
                             },
                             onClick = actions.onOpenTheme
+                        )
+                        // ReSukiSU: blur toggle for the Miuix UI.
+                        SwitchPreference(
+                            title = stringResource(id = R.string.settings_config_enable_blur),
+                            summary = stringResource(id = R.string.settings_config_enable_blur_summary),
+                            startAction = {
+                                Icon(
+                                    Icons.Rounded.BlurOn,
+                                    modifier = Modifier.padding(end = 6.dp),
+                                    contentDescription = stringResource(id = R.string.settings_config_enable_blur),
+                                    tint = colorScheme.onBackground
+                                )
+                            },
+                            checked = uiState.enableBlur,
+                            onCheckedChange = actions.onSetEnableBlur
                         )
                     }
 
@@ -395,6 +413,47 @@ fun SettingPagerMiuix(
                                 show = showUninstallDialog.value,
                                 onDismissRequest = { showUninstallDialog.value = false }
                             )
+                        }
+                    }
+
+                    // ReSukiSU: its own tool screens (Dynamic Manager, Umount Path
+                    // Manager) surfaced in the Miuix settings too.
+                    KsuIsValid {
+                        Card(
+                            modifier = Modifier
+                                .padding(top = 12.dp)
+                                .fillMaxWidth(),
+                        ) {
+                            val dynamicManager = stringResource(id = R.string.dynamic_manager_title)
+                            ArrowPreference(
+                                title = dynamicManager,
+                                summary = stringResource(id = R.string.dynamic_manager_settings_summary),
+                                startAction = {
+                                    Icon(
+                                        Icons.Rounded.Security,
+                                        modifier = Modifier.padding(end = 6.dp),
+                                        contentDescription = dynamicManager,
+                                        tint = colorScheme.onBackground
+                                    )
+                                },
+                                onClick = actions.onOpenDynamicManager
+                            )
+                            if (uiState.isKernelUmountEnabled) {
+                                val umountManager = stringResource(id = R.string.umount_path_manager)
+                                ArrowPreference(
+                                    title = umountManager,
+                                    summary = stringResource(id = R.string.umount_path_manager_summary),
+                                    startAction = {
+                                        Icon(
+                                            Icons.Rounded.FolderOff,
+                                            modifier = Modifier.padding(end = 6.dp),
+                                            contentDescription = umountManager,
+                                            tint = colorScheme.onBackground
+                                        )
+                                    },
+                                    onClick = actions.onOpenUmountManager
+                                )
+                            }
                         }
                     }
 

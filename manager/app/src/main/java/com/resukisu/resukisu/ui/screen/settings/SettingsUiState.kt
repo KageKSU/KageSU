@@ -69,4 +69,8 @@ data class SettingsScreenActions(
     val onSetEnableWebDebugging: (Boolean) -> Unit,
     val onSetAutoJailbreak: (Boolean) -> Unit,
     val onOpenAbout: () -> Unit,
+    // ReSukiSU-specific: blur toggle + its own tool screens surfaced in Miuix.
+    val onSetEnableBlur: (Boolean) -> Unit = {},
+    val onOpenDynamicManager: () -> Unit = {},
+    val onOpenUmountManager: () -> Unit = {},
 )

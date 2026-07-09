@@ -175,6 +175,9 @@ fun SettingsPage(bottomPadding: Dp) {
                 onSetEnableWebDebugging = { },
                 onSetAutoJailbreak = { settingsViewModel.handleAutoJailbreakChange(context, it) },
                 onOpenAbout = { navigator.push(Route.About) },
+                onSetEnableBlur = { com.resukisu.resukisu.ui.theme.ThemeManager.saveEnableBlur(context, it) },
+                onOpenDynamicManager = { navigator.push(Route.DynamicManager) },
+                onOpenUmountManager = { navigator.push(Route.UmountManager) },
             ),
             bottomInnerPadding = bottomPadding,
         )
