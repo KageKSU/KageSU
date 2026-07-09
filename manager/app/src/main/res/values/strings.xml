@@ -792,7 +792,7 @@ Important Note:\n
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_summary">Choose the app theme mode.</string>
     <string name="settings_ui_mode">Interface design</string>
-    <string name="settings_ui_mode_summary">Choose between the ReSukiSU and Miuix interface designs.</string>
+    <string name="settings_ui_mode_summary">Choose between ReSukiSU and Miuix.</string>
     <string name="settings_ui_mode_resukisu">ReSukiSU</string>
     <string name="settings_ui_mode_miuix">Miuix</string>
     <string name="show_only_primary_user_apps">Show only primary user apps</string>

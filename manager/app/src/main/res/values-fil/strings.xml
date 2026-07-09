@@ -68,4 +68,8 @@
     <string name="save_log">I-save ang mga Log</string>
     <string name="settings_sucompat">Klasikong su command</string>
     <string name="settings_sucompat_summary">Payagan ang root access gamit ang /system/bin/su, sa mga bagong proseso.</string>
+    <string name="settings_ui_mode">Disenyo ng interface</string>
+    <string name="settings_ui_mode_summary">Pumili sa pagitan ng ReSukiSU at Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

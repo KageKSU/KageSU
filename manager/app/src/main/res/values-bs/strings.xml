@@ -75,4 +75,8 @@
     <string name="settings_sucompat_summary">Preusmjeri /system/bin/su na ksud za aplikacije kojima je dodijeljeno dopuštenje Superuser u Profilu aplikacije; učinkovito samo za nove procese.</string>
     <string name="settings_kernel_umount">Kernel umount</string>
     <string name="settings_kernel_umount_summary">Ponašanje umount na razini kernela kontrolira KernelSU</string>
+    <string name="settings_ui_mode">Dizajn interfejsa</string>
+    <string name="settings_ui_mode_summary">Odaberite između ReSukiSU i Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

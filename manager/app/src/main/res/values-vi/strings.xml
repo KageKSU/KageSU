@@ -566,4 +566,8 @@ Bật: Kích hoạt tính năng giả mạo sus tcontext của \'su\' thành \'u
     <string name="umount_path_removed">Đường dẫn đã bị xóa</string>
     <string name="operation_failed">Thao tác thất bại</string>
     <string name="group_contains_apps">Chứa %d ứng dụng</string>
+    <string name="settings_ui_mode">Thiết kế giao diện</string>
+    <string name="settings_ui_mode_summary">Chọn giữa ReSukiSU và Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

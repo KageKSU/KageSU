@@ -114,4 +114,8 @@
     <string name="settings_sucompat_summary">Lehetővé teszi az App Profile-ban Superuser engedéllyel rendelkező alkalmazások számára, hogy superuser shell-t kapjanak a /system/bin/su végrehajtásával; csak új folyamatoknál hatékony.</string>
     <string name="settings_kernel_umount">Kernel leválasztása</string>
     <string name="settings_kernel_umount_summary">KernelSU által vezérelt kernel szintű leválasztási viselkedés</string>
+    <string name="settings_ui_mode">Felület kialakítása</string>
+    <string name="settings_ui_mode_summary">Válassz a ReSukiSU és a Miuix között.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

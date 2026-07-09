@@ -745,4 +745,8 @@ Enabled: Увімкнути підміну sus tcontext \'su\' на \'u:r:priv_a
     <string name="notification_permission_denied">Помилка завантаження: потрібен дозвіл на сповіщення</string>
     <string name="storage_permission_description">Потрібен дозвіл на зовнішнє сховище для запису файлів.</string>
     <string name="storage_permission_denied">Помилка завантаження: потрібен дозвіл на зовнішнє сховище</string>
+    <string name="settings_ui_mode">Дизайн інтерфейсу</string>
+    <string name="settings_ui_mode_summary">Виберіть між ReSukiSU та Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

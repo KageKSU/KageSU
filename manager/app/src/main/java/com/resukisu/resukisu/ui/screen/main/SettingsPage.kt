@@ -177,7 +177,8 @@ fun SettingsPage(bottomPadding: Dp) {
                 },
                 onOpenTheme = { navigator.push(Route.ThemeSettings) },
                 onSetUiModeIndex = {
-                    com.resukisu.resukisu.ui.theme.ThemeManager.saveUiMode(context, if (it == 1) "miuix" else "material")
+                    // tiann dropdown order = UiMode.entries = [Miuix, Material]; map index → value.
+                    com.resukisu.resukisu.ui.theme.ThemeManager.saveUiMode(context, UiMode.entries[it].value)
                 },
                 onOpenProfileTemplate = { navigator.push(Route.AppProfileTemplate) },
                 onSetSuCompatMode = { settingsViewModel.handleSuCompatModeChange(context, it) },

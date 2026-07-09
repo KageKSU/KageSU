@@ -62,4 +62,8 @@
     <string name="settings_check_update_summary">Tjek automatisk for opdateringer til modul og manager</string>
     <string name="save_log">Gem Logfiler</string>
     <string name="settings_sucompat">Omdiriger su binary</string>
+    <string name="settings_ui_mode">Grænsefladedesign</string>
+    <string name="settings_ui_mode_summary">Vælg mellem ReSukiSU og Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

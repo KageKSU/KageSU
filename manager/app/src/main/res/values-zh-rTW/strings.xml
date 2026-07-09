@@ -720,4 +720,8 @@
     <string name="notification_permission_denied">下載失敗: 未授權通知權限</string>
     <string name="storage_permission_description">需要存取外部儲存空間以寫入檔案內容。</string>
     <string name="storage_permission_denied">下載失敗: 未授權存取外部儲存空間</string>
+    <string name="settings_ui_mode">介面設計</string>
+    <string name="settings_ui_mode_summary">在 ReSukiSU 和 Miuix 之間選擇。</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

@@ -662,4 +662,8 @@
     <string name="module_shortcut_permission_tip_xiaomi">Lütfen bu uygulama için Xiaomi ayarlarından \"Ana ekranda kısayol oluşturma\" yetkisini etkinleştirin.</string>
     <string name="module_shortcut_permission_tip_oppo">Lütfen bu uygulama için OPPO ayarlarından \"Ana ekran kısayolları\" yetkisini etkinleştirin.</string>
     <string name="module_shortcut_permission_tip_default">Eğer kısayol oluşturulamazsa sistem ayarlarından bu uygulamaya ana ekranda kısayol oluşturma yetkisi verin.</string>
+    <string name="settings_ui_mode">Arayüz tasarımı</string>
+    <string name="settings_ui_mode_summary">ReSukiSU ve Miuix arasında seçim yapın.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

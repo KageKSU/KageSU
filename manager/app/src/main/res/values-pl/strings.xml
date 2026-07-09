@@ -121,4 +121,8 @@
     <string name="settings_sucompat_summary">Pozwala aplikacjom z uprawnieniami Superużytkownika w profilu aplikacji uzyskać shell superużytkownika przez wykonanie /system/bin/su; skuteczne tylko dla nowych procesów.</string>
     <string name="settings_kernel_umount">Odmontowanie jądra</string>
     <string name="settings_kernel_umount_summary">Zachowanie odmontowania na poziomie jądra kontrolowane przez KernelSU</string>
+    <string name="settings_ui_mode">Wygląd interfejsu</string>
+    <string name="settings_ui_mode_summary">Wybierz między ReSukiSU a Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

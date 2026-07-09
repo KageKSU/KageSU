@@ -114,4 +114,8 @@
     <string name="settings_sucompat_summary">Consente alle app con autorizzazione Superuser nel profilo app di ottenere una shell superuser eseguendo /system/bin/su; efficace solo per i nuovi processi.</string>
     <string name="settings_kernel_umount">Umount del kernel</string>
     <string name="settings_kernel_umount_summary">Comportamento di umount a livello di kernel controllato da KernelSU</string>
+    <string name="settings_ui_mode">Design dell\'interfaccia</string>
+    <string name="settings_ui_mode_summary">Scegli tra ReSukiSU e Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

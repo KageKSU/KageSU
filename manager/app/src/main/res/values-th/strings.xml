@@ -123,4 +123,8 @@
     <string name="settings_sucompat_summary">อนุญาตให้แอปที่ได้รับอนุญาต Superuser ในโปรไฟล์แอปได้รับเชล superuser โดยการเรียกใช้ /system/bin/su; มีผลเฉพาะกับกระบวนการใหม่เท่านั้น</string>
     <string name="settings_kernel_umount">การเลิกเมานต์เคอร์เนล</string>
     <string name="settings_kernel_umount_summary">พฤติกรรมการเลิกเมานต์ระดับเคอร์เนลที่ควบคุมโดย KernelSU</string>
+    <string name="settings_ui_mode">การออกแบบอินเทอร์เฟซ</string>
+    <string name="settings_ui_mode_summary">เลือกระหว่าง ReSukiSU และ Miuix</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

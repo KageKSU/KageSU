@@ -438,4 +438,8 @@ Tanamkan: Secara permanen memasang ke sistem</string>
     <string name="hide_bl_script_description">Timpa properti status bootloader dalam layanan late_start</string>
     <string name="cleanup_residue">Bersihkan Sisa-sisa</string>
     <string name="cleanup_residue_description">Bersihkan file dan direktori sisa dari berbagai modul dan alat (dapat menyebabkan penghapusan yang tidak disengaja, kehilangan data, dan gagal boot, gunakan dengan hati-hati)</string>
+    <string name="settings_ui_mode">Desain antarmuka</string>
+    <string name="settings_ui_mode_summary">Pilih antara ReSukiSU dan Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

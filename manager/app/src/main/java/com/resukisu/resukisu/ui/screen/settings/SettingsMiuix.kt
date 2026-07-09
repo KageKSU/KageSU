@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.rounded.Adb
-import androidx.compose.material.icons.rounded.BlurOn
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.ContactPage
 import androidx.compose.material.icons.rounded.Dashboard
@@ -153,7 +152,11 @@ fun SettingPagerMiuix(
                         OverlayDropdownPreference(
                             title = stringResource(id = R.string.settings_ui_mode),
                             summary = stringResource(id = R.string.settings_ui_mode_summary),
-                            items = UiMode.entries.map { it.name },
+                            // UiMode.entries order = [Miuix, Material]; label Material as "ReSukiSU".
+                            items = listOf(
+                                stringResource(id = R.string.settings_ui_mode_miuix),
+                                stringResource(id = R.string.settings_ui_mode_resukisu),
+                            ),
                             startAction = {
                                 Icon(
                                     Icons.Rounded.Dashboard,
@@ -177,21 +180,6 @@ fun SettingPagerMiuix(
                                 )
                             },
                             onClick = actions.onOpenTheme
-                        )
-                        // ReSukiSU: blur toggle for the Miuix UI.
-                        SwitchPreference(
-                            title = stringResource(id = R.string.settings_config_enable_blur),
-                            summary = stringResource(id = R.string.settings_config_enable_blur_summary),
-                            startAction = {
-                                Icon(
-                                    Icons.Rounded.BlurOn,
-                                    modifier = Modifier.padding(end = 6.dp),
-                                    contentDescription = stringResource(id = R.string.settings_config_enable_blur),
-                                    tint = colorScheme.onBackground
-                                )
-                            },
-                            checked = uiState.enableBlur,
-                            onCheckedChange = actions.onSetEnableBlur
                         )
                     }
 

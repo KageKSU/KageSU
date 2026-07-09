@@ -288,4 +288,8 @@
     <string name="scroll_to_bottom">أسفل</string>
     <string name="selected">محدد</string>
     <string name="select">خيار</string>
+    <string name="settings_ui_mode">تصميم الواجهة</string>
+    <string name="settings_ui_mode_summary">اختر بين ReSukiSU و Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

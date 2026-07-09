@@ -702,4 +702,8 @@
     <string name="notification_permission_denied">Загрузка не удалась: требуется разрешение на уведомления</string>
     <string name="storage_permission_description">Необходимо разрешение на внешнее хранилище для записи файла.</string>
     <string name="storage_permission_denied">Загрузка не удалась: требуется разрешение на внешнее хранилище</string>
+    <string name="settings_ui_mode">Дизайн интерфейса</string>
+    <string name="settings_ui_mode_summary">Выберите между ReSukiSU и Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

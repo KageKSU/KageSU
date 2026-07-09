@@ -57,4 +57,8 @@
     <string name="settings_sucompat_summary">تغییر مسیر /system/bin/su به ksud برای برنامه‌هایی که مجوز Superuser در پروفایل برنامه دارند؛ فقط برای فرآیندهای جدید موثر است.</string>
     <string name="settings_kernel_umount">جداسازی هسته</string>
     <string name="settings_kernel_umount_summary">رفتار جداسازی در سطح هسته که توسط KernelSU کنترل می‌شود</string>
+    <string name="settings_ui_mode">طراحی رابط</string>
+    <string name="settings_ui_mode_summary">بین ReSukiSU و Miuix یکی را انتخاب کنید.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

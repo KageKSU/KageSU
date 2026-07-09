@@ -746,4 +746,8 @@
     <string name="notification_permission_denied">下载失败，缺失通知权限</string>
     <string name="storage_permission_description">需要外部存储权限来展示下载进度</string>
     <string name="storage_permission_denied">下载失败，缺失外部存储权限</string>
+    <string name="settings_ui_mode">界面设计</string>
+    <string name="settings_ui_mode_summary">在 ReSukiSU 和 Miuix 之间选择。</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

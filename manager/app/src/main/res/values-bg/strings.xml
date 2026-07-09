@@ -174,4 +174,8 @@
     <string name="profile_flags_desc_no_new_privs">Предотвратява по-нататъшно повишаване на привилегиите чрез KernelSU в контекста на този root профил.</string>
     <string name="install_force_backup">Архивирай като оригинален образ</string>
     <string name="install_force_backup_summary">Моля, уверете се, че избраният от вас boot образ е оригиналният образ</string>
+    <string name="settings_ui_mode">Дизайн на интерфейса</string>
+    <string name="settings_ui_mode_summary">Изберете между ReSukiSU и Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

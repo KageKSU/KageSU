@@ -74,4 +74,8 @@
     <string name="settings_sucompat_summary">Tətbiq Profilinə Superuser icazəsi verilmiş proqramları /system/bin/su vasitəsilə superuser shell əldə etməyə icazə verir; yalnız yeni proseslər üçün effektivdir.</string>
     <string name="settings_kernel_umount">Nüvə umount</string>
     <string name="settings_kernel_umount_summary">KernelSU tərəfindən idarə olunan nüvə səviyyəsində umount davranışı</string>
+    <string name="settings_ui_mode">İnterfeys dizaynı</string>
+    <string name="settings_ui_mode_summary">ReSukiSU və Miuix arasında seçim edin.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

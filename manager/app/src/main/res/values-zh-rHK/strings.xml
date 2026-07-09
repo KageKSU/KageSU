@@ -666,4 +666,8 @@
     <string name="module_shortcut_permission_tip_xiaomi">請喺 Xiaomi 設定中為本應用程式啟用「建立桌面捷徑」權限。</string>
     <string name="module_shortcut_permission_tip_oppo">請喺 OPPO 設定中為本應用程式啟用「桌面捷徑」權限。</string>
     <string name="module_shortcut_permission_tip_default">若建立捷徑失敗，請喺系統設定中為本應用程式啟用桌面捷徑權限。</string>
+    <string name="settings_ui_mode">介面設計</string>
+    <string name="settings_ui_mode_summary">喺 ReSukiSU 同 Miuix 之間揀選。</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

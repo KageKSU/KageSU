@@ -607,6 +607,27 @@ private fun AppearanceSettings(
                 backgroundAdjustmentControls(state, viewModel, coroutineScope)
             }
         )
+
+        // When no custom background is set, the blur toggle inside
+        // backgroundAdjustmentControls is hidden. Surface a standalone one here so blur
+        // (which the Miuix UI also uses for its frosted bars) is always reachable.
+        item(
+            visible = ThemeConfig.customBackgroundUri == null,
+            topPadding = 1.dp,
+        ) {
+            val context = LocalContext.current
+            SettingsSwitchWidget(
+                icon = Icons.Filled.BlurOn,
+                title = stringResource(id = R.string.settings_config_enable_blur),
+                description = stringResource(id = R.string.settings_config_enable_blur_summary),
+                checked = ThemeConfig.isEnableBlur,
+                onCheckedChange = { isChecked ->
+                    BackgroundManager.saveEnableBlur(context, isChecked)
+                    if (!isChecked)
+                        BackgroundManager.saveEnableBlurExp(context, false)
+                }
+            )
+        }
     }
 }
 

@@ -259,4 +259,8 @@
     <string name="scroll_to_bottom">En Bas</string>
     <string name="selected">Sélectionné</string>
     <string name="select">option</string>
+    <string name="settings_ui_mode">Design de l\'interface</string>
+    <string name="settings_ui_mode_summary">Choisissez entre ReSukiSU et Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

@@ -78,4 +78,8 @@
     <string name="settings_sucompat_summary">Nukreipti /system/bin/su į ksud programoms, kurioms suteiktas Superuser leidimas programos profilyje; veiksminga tik naujiems procesams.</string>
     <string name="settings_kernel_umount">Branduolio atjungimas</string>
     <string name="settings_kernel_umount_summary">Branduolio lygio atjungimo elgsena, valdoma KernelSU</string>
+    <string name="settings_ui_mode">Sąsajos dizainas</string>
+    <string name="settings_ui_mode_summary">Pasirinkite tarp ReSukiSU ir Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>

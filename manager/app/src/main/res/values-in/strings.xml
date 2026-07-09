@@ -561,4 +561,8 @@ Diaktifkan: Aktifkan pemalsuan sus tcontext dari \'su\' dengan \'u:r:priv_app:s0
     <string name="settings_sucompat_summary">Memungkinkan aplikasi yang diberi izin Superuser di Profil Aplikasi mendapatkan shell superuser dengan menjalankan /system/bin/su; efektif hanya untuk proses baru.</string>
     <string name="settings_kernel_umount">Umount kernel</string>
     <string name="settings_kernel_umount_summary">Perilaku umount tingkat kernel dikendalikan oleh KernelSU</string>
+    <string name="settings_ui_mode">Desain antarmuka</string>
+    <string name="settings_ui_mode_summary">Pilih antara ReSukiSU dan Miuix.</string>
+    <string name="settings_ui_mode_resukisu">ReSukiSU</string>
+    <string name="settings_ui_mode_miuix">Miuix</string>
 </resources>
