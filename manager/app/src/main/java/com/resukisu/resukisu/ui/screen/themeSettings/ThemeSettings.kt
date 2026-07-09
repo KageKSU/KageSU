@@ -100,6 +100,8 @@ import com.resukisu.resukisu.ui.component.settings.SettingsChooseDialog
 import com.resukisu.resukisu.ui.component.settings.SettingsChooseWidget
 import com.resukisu.resukisu.ui.component.settings.SettingsJumpPageWidget
 import com.resukisu.resukisu.ui.component.settings.SettingsSwitchWidget
+import com.resukisu.resukisu.ui.LocalUiMode
+import com.resukisu.resukisu.ui.UiMode
 import com.resukisu.resukisu.ui.navigation.LocalNavigator
 import com.resukisu.resukisu.ui.screen.themeSettings.component.LanguageSelectionDialog
 import com.resukisu.resukisu.ui.screen.themeSettings.component.ThemeSettingsDialogs
@@ -487,6 +489,8 @@ private fun AppearanceSettings(
     coroutineScope: CoroutineScope
 ) {
     val context = LocalContext.current
+    // The custom-background feature only works in the Material (ReSukiSU) UI; hide it in Miuix.
+    val isMiuix = LocalUiMode.current == UiMode.Miuix
     SegmentedColumn(title = stringResource(R.string.appearance_settings)) {
         item {
             // 语言设置
@@ -594,8 +598,11 @@ private fun AppearanceSettings(
             }
         }
 
+        // Custom background (+ its blur controls) is a Material-only feature; ReSukiSU limits
+        // blur to when a custom background is enabled. Hidden entirely in the Miuix UI.
         expandableItem(
-            expanded = ThemeConfig.customBackgroundUri != null,
+            animatedVisibility = !isMiuix,
+            expanded = !isMiuix && ThemeConfig.customBackgroundUri != null,
             topContent = {
                 CustomBackgroundSettings(
                     state = state,
@@ -607,27 +614,6 @@ private fun AppearanceSettings(
                 backgroundAdjustmentControls(state, viewModel, coroutineScope)
             }
         )
-
-        // When no custom background is set, the blur toggle inside
-        // backgroundAdjustmentControls is hidden. Surface a standalone one here so blur
-        // (which the Miuix UI also uses for its frosted bars) is always reachable.
-        item(
-            visible = ThemeConfig.customBackgroundUri == null,
-            topPadding = 1.dp,
-        ) {
-            val context = LocalContext.current
-            SettingsSwitchWidget(
-                icon = Icons.Filled.BlurOn,
-                title = stringResource(id = R.string.settings_config_enable_blur),
-                description = stringResource(id = R.string.settings_config_enable_blur_summary),
-                checked = ThemeConfig.isEnableBlur,
-                onCheckedChange = { isChecked ->
-                    BackgroundManager.saveEnableBlur(context, isChecked)
-                    if (!isChecked)
-                        BackgroundManager.saveEnableBlurExp(context, false)
-                }
-            )
-        }
     }
 }
 

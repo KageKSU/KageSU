@@ -85,6 +85,7 @@ fun AboutScreen() {
             actions = AboutScreenActions(
                 onBack = { miuixNavigator.pop() },
                 onOpenLink = { url -> uriHandler.openUri(url) },
+                onOpenLicense = { miuixNavigator.push(Route.OpenSourceLicense) },
             ),
         )
         return

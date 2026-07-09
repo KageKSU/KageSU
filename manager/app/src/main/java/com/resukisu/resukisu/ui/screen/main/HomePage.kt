@@ -165,6 +165,7 @@ fun HomePage(
                 onSuperuserClick = { handlePageChange(1) },
                 onModuleClick = { handlePageChange(2) },
                 onOpenUrl = { url -> uriHandler.openUri(url) },
+                onOpenSusfs = { miuixNavigator.push(Route.SuSFSConfig) },
             ),
             bottomInnerPadding = bottomPadding,
         )

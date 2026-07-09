@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.runtime.Composable
@@ -61,6 +62,7 @@ import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.CardDefaults
 import top.yukonga.miuix.kmp.basic.Icon
+import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.ScrollBehavior
@@ -95,6 +97,8 @@ fun HomePagerMiuix(
                 scrollBehavior = scrollBehavior,
                 backdrop = backdrop,
                 barColor = barColor,
+                showSusfs = state.systemInfo.susfsVersionSupported,
+                onOpenSusfs = actions.onOpenSusfs,
             )
         },
         popupHost = { },
@@ -219,12 +223,23 @@ private fun TopBar(
     scrollBehavior: ScrollBehavior,
     backdrop: LayerBackdrop?,
     barColor: Color,
+    showSusfs: Boolean = false,
+    onOpenSusfs: () -> Unit = {},
 ) {
     BlurredBar(backdrop) {
         TopAppBar(
             color = barColor,
             title = stringResource(R.string.app_name),
             actions = {
+                if (showSusfs) {
+                    IconButton(onClick = onOpenSusfs) {
+                        Icon(
+                            imageVector = Icons.Filled.Tune,
+                            tint = colorScheme.onSurface,
+                            contentDescription = stringResource(R.string.susfs_config_setting_title),
+                        )
+                    }
+                }
                 RebootListPopupMiuix()
             },
             scrollBehavior = scrollBehavior

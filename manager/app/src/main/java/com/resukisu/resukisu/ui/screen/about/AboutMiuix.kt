@@ -54,6 +54,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.onEach
 import com.resukisu.resukisu.R
@@ -436,7 +437,23 @@ private fun AboutContent(
                                 }
                             )
                         }
+                        ArrowPreference(
+                            title = stringResource(R.string.open_source_license),
+                            onClick = actions.onOpenLicense,
+                        )
                     }
+                    // Logo / sticker copyright notice (matches the Material about page).
+                    Text(
+                        text = stringResource(
+                            R.string.about_anime_character_sticker,
+                            "怡子曰曰",
+                            "明风 OuO",
+                            "CC BY-NC-SA 4.0",
+                        ),
+                        fontSize = 13.sp,
+                        color = colorScheme.onSurfaceVariantSummary,
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                    )
                     Spacer(
                         Modifier.height(
                             WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() +

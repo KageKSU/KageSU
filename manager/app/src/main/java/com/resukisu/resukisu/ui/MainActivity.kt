@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -80,6 +81,9 @@ import com.resukisu.resukisu.KernelSUApplication
 import com.resukisu.resukisu.Natives
 import com.resukisu.resukisu.ui.activity.PermissionRequestInterface
 import com.resukisu.resukisu.ui.activity.component.NavigationBar
+import com.resukisu.resukisu.ui.component.bottombar.BottomBar
+import com.resukisu.resukisu.ui.component.bottombar.SideRail
+import com.resukisu.resukisu.ui.component.bottombar.rememberMainPagerState
 import com.resukisu.resukisu.ui.activity.util.ThemeChangeContentObserver
 import com.resukisu.resukisu.ui.activity.util.ThemeUtils
 import com.resukisu.resukisu.ui.animation.predictiveback.AOSPCrossActivityAnimation
@@ -854,10 +858,17 @@ fun MainScreen() {
         handlePageChange(0)
     }
 
+    val mainPagerState = com.resukisu.resukisu.ui.component.bottombar.rememberMainPagerState(pagerState)
+
     CompositionLocalProvider(
         LocalPagerState provides pagerState,
         LocalHandlePageChange provides handlePageChange,
-        LocalSelectedPage provides uiSelectedPage
+        LocalSelectedPage provides uiSelectedPage,
+        LocalMainPagerState provides mainPagerState,
+        // Floating bottom bar is opt-in (wired to ThemeConfig in a later change); default to the
+        // plain Miuix navigation bar for now.
+        com.resukisu.resukisu.ui.theme.LocalEnableFloatingBottomBar provides false,
+        com.resukisu.resukisu.ui.theme.LocalEnableFloatingBottomBarBlur provides false,
     ) {
         BoxWithConstraints(
             modifier = Modifier.fillMaxSize()
@@ -885,14 +896,27 @@ fun MainScreen() {
                 }
             }
 
+            val isMiuixUi = LocalUiMode.current == UiMode.Miuix
+            val miuixBlurBackdrop = rememberMaterial3BlurBackdrop(ThemeConfig.isEnableBlur)
+            val miuixBackdrop = rememberLayerBackdrop { drawContent() }
             if (isPortrait) {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        NavigationBar(
-                            destinations = pages,
-                            isBottomBar = true,
-                        )
+                        if (isMiuixUi) {
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                BottomBar(
+                                    blurBackdrop = miuixBlurBackdrop,
+                                    backdrop = miuixBackdrop,
+                                    modifier = Modifier.align(Alignment.BottomCenter),
+                                )
+                            }
+                        } else {
+                            NavigationBar(
+                                destinations = pages,
+                                isBottomBar = true,
+                            )
+                        }
                     },
                     containerColor = Color.Transparent,
                 ) { innerPadding ->
@@ -900,10 +924,14 @@ fun MainScreen() {
                 }
             } else {
                 Row(modifier = Modifier.fillMaxSize()) {
-                    NavigationBar(
-                        destinations = pages,
-                        isBottomBar = false,
-                    )
+                    if (isMiuixUi) {
+                        SideRail(blurBackdrop = miuixBlurBackdrop)
+                    } else {
+                        NavigationBar(
+                            destinations = pages,
+                            isBottomBar = false,
+                        )
+                    }
                     content(0.dp)
                 }
             }

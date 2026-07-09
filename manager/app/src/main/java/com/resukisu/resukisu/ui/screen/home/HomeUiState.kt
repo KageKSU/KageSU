@@ -52,4 +52,5 @@ data class HomeActions(
     val onModuleClick: () -> Unit,
     val onOpenUrl: (String) -> Unit,
     val onJailbreakClick: () -> Unit = {},
+    val onOpenSusfs: () -> Unit = {},
 )
