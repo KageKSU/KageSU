@@ -733,15 +733,12 @@ private fun SuperUserViewModel.AppGroup.toTiannGroupedApps(): com.resukisu.resuk
     )
 }
 
-private fun SortType.toTiannSortConfig(): com.resukisu.resukisu.ui.viewmodel.AppSortConfig {
-    val vm = com.resukisu.resukisu.ui.viewmodel.AppSortType
-    return when (this) {
-        SortType.NAME_ASC -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.NAME, false)
-        SortType.NAME_DESC -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.NAME, true)
-        SortType.INSTALL_TIME_OLD -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.INSTALL_TIME, false)
-        SortType.INSTALL_TIME_NEW -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.INSTALL_TIME, true)
-        else -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.NAME, false)
-    }
+private fun SortType.toTiannSortConfig(): com.resukisu.resukisu.ui.viewmodel.AppSortConfig = when (this) {
+    SortType.NAME_ASC -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(com.resukisu.resukisu.ui.viewmodel.AppSortType.NAME, false)
+    SortType.NAME_DESC -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(com.resukisu.resukisu.ui.viewmodel.AppSortType.NAME, true)
+    SortType.INSTALL_TIME_OLD -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(com.resukisu.resukisu.ui.viewmodel.AppSortType.INSTALL_TIME, false)
+    SortType.INSTALL_TIME_NEW -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(com.resukisu.resukisu.ui.viewmodel.AppSortType.INSTALL_TIME, true)
+    else -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(com.resukisu.resukisu.ui.viewmodel.AppSortType.NAME, false)
 }
 
 private fun com.resukisu.resukisu.ui.viewmodel.AppSortConfig.toResukiSortType(): SortType = when {

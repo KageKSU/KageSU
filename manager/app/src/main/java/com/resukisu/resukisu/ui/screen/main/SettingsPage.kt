@@ -104,6 +104,8 @@ import com.resukisu.resukisu.ui.navigation.Route
 import com.resukisu.resukisu.ui.screen.FlashIt
 import com.resukisu.resukisu.ui.theme.CardConfig
 import com.resukisu.resukisu.ui.theme.ThemeConfig
+import com.resukisu.resukisu.ui.LocalUiMode
+import com.resukisu.resukisu.ui.UiMode
 import com.resukisu.resukisu.ui.theme.blurEffect
 import com.resukisu.resukisu.ui.theme.blurSource
 import com.resukisu.resukisu.ui.util.LocalSnackbarHost
@@ -134,6 +136,49 @@ fun SettingsPage(bottomPadding: Dp) {
 
     LaunchedEffect(Unit) {
         settingsViewModel.loadFeatureSettings(context)
+    }
+
+    if (LocalUiMode.current == UiMode.Miuix) {
+        com.resukisu.resukisu.ui.screen.settings.SettingPagerMiuix(
+            uiState = com.resukisu.resukisu.ui.screen.settings.SettingsUiState(
+                uiMode = ThemeConfig.uiMode,
+                checkUpdate = uiState.checkUpdate,
+                themeMode = uiState.themeMode,
+                enableBlur = ThemeConfig.isEnableBlur,
+                suCompatStatus = uiState.suStatus,
+                suCompatMode = uiState.suCompatMode,
+                kernelUmountStatus = uiState.kernelUmountStatus,
+                isKernelUmountEnabled = uiState.isKernelUmountEnabled,
+                selinuxHideStatus = uiState.selinuxHideStatus,
+                isSelinuxHideEnabled = uiState.isSelinuxHideEnabled,
+                sulogStatus = uiState.sulogStatus,
+                isSulogEnabled = uiState.isSuLogEnabled,
+                isDefaultUmountModules = uiState.defaultUmountModules,
+                adbRootStatus = uiState.adbRootStatus,
+                isAdbRootEnabled = uiState.isAdbRootEnabled,
+                autoJailbreak = uiState.autoJailbreakEnabled,
+            ),
+            actions = com.resukisu.resukisu.ui.screen.settings.SettingsScreenActions(
+                onSetCheckUpdate = { settingsViewModel.handleCheckUpdateChange(context, it) },
+                onSetCheckModuleUpdate = { },
+                onOpenTheme = { navigator.push(Route.ThemeSettings) },
+                onSetUiModeIndex = {
+                    com.resukisu.resukisu.ui.theme.ThemeManager.saveUiMode(context, if (it == 1) "miuix" else "material")
+                },
+                onOpenProfileTemplate = { navigator.push(Route.AppProfileTemplate) },
+                onSetSuCompatMode = { settingsViewModel.handleSuCompatModeChange(context, it) },
+                onSetKernelUmountEnabled = { settingsViewModel.handleKernelUmountChange(it) },
+                onSetSelinuxHideEnabled = { settingsViewModel.handleSelinuxHideChange(context, it) },
+                onSetSulogEnabled = { settingsViewModel.handleSuLogChange(it) },
+                onSetAdbRootEnabled = { settingsViewModel.handleAdbRootChange(it) },
+                onSetDefaultUmountModules = { settingsViewModel.handleDefaultUmountModulesChange(it) },
+                onSetEnableWebDebugging = { },
+                onSetAutoJailbreak = { settingsViewModel.handleAutoJailbreakChange(context, it) },
+                onOpenAbout = { navigator.push(Route.About) },
+            ),
+            bottomInnerPadding = bottomPadding,
+        )
+        return
     }
 
     Scaffold(
