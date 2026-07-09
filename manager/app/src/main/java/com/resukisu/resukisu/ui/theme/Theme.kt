@@ -339,6 +339,9 @@ object BackgroundManager {
         CardConfig.updateBackground(false)
         clearBackgroundBlurCache(context)
         resetBackgroundState(context)
+        // Material blur only applies with a custom background; turn it off when one is removed.
+        saveEnableBlur(context, false)
+        saveEnableBlurExp(context, false)
     }
 
     fun loadCustomBackground(context: Context) {
@@ -358,8 +361,13 @@ object BackgroundManager {
         }
 
         ThemeConfig.backgroundDim = prefs.getFloat("background_dim", 0f).coerceIn(0f, 1f)
-        ThemeConfig.isEnableBlur = prefs.getBoolean("enable_blur", false)
-        ThemeConfig.isEnableBlurExp = prefs.getBoolean("enable_blur_exp", false)
+        // Material blur only applies with a custom background. Gate it on one so a stale
+        // enable_blur pref (e.g. left over from an older build's Miuix blur toggle, which used
+        // to share this flag) can't leave Material blurred with no background and no way to
+        // turn it off (the Material toggle only appears once a background is set).
+        val hasCustomBackground = uriString != null
+        ThemeConfig.isEnableBlur = hasCustomBackground && prefs.getBoolean("enable_blur", false)
+        ThemeConfig.isEnableBlurExp = hasCustomBackground && prefs.getBoolean("enable_blur_exp", false)
         ThemeConfig.miuixEnableBlur = prefs.getBoolean("miuix_enable_blur", false)
         ThemeConfig.enableFloatingBottomBar = prefs.getBoolean("enable_floating_bottom_bar", false)
         ThemeConfig.enableFloatingBottomBarBlur = prefs.getBoolean("enable_floating_bottom_bar_blur", false)
