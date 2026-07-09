@@ -426,7 +426,12 @@ fun KernelSUTheme(
             MonetColorsProvider.UpdateCss()
             Box(modifier = Modifier.fillMaxSize()) {
                 BackgroundLayer()
-                content()
+                // Also apply the Miuix theme (seeded from the same ThemeConfig) so Miuix
+                // screens follow ReSukiSU's custom colors + dark mode. Material screens read
+                // MaterialExpressiveTheme above; Miuix screens read MiuixTheme here.
+                MiuixKernelSUTheme(darkTheme = darkTheme, dynamicColor = dynamicColor) {
+                    content()
+                }
             }
         }
     }

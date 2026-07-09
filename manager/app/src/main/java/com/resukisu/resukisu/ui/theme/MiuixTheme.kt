@@ -30,10 +30,6 @@ fun MiuixKernelSUTheme(
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    val systemIsDark = isSystemInDarkTheme()
-
-    // Persist seed / dynamic / dark-mode config on cold start, same as KernelSUTheme.
-    ThemeInitializer(context = context, systemIsDark = systemIsDark)
 
     val miuixPaletteStyle = try {
         ThemePaletteStyle.valueOf(ThemeConfig.dynamicPaletteStyle.name)
