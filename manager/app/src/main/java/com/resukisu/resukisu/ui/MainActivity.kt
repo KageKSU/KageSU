@@ -148,6 +148,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import top.yukonga.miuix.kmp.blur.LayerBackdrop
+import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.blur.rememberLayerBackdrop
 import top.yukonga.miuix.kmp.shader.isRenderEffectSupported
 import kotlin.coroutines.resume
@@ -874,11 +875,21 @@ fun MainScreen() {
             modifier = Modifier.fillMaxSize()
         ) {
             val isPortrait = maxWidth < maxHeight || (maxHeight / maxWidth > 1.4f)
+            val isMiuixUi = LocalUiMode.current == UiMode.Miuix
+            // Backdrop the Miuix nav bar blurs. The pager content must be captured into it
+            // (layerBackdrop) or the bar renders transparent instead of frosted.
+            val miuixBlurBackdrop = rememberMaterial3BlurBackdrop(ThemeConfig.isEnableBlur)
+            val miuixBackdrop = rememberLayerBackdrop { drawContent() }
             val content = @Composable { paddingBottom: Dp ->
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
-                        .blurSource(),
+                        .blurSource()
+                        .then(
+                            if (isMiuixUi && miuixBlurBackdrop != null)
+                                Modifier.layerBackdrop(miuixBlurBackdrop)
+                            else Modifier
+                        ),
                     state = pagerState,
                     userScrollEnabled = userScrollEnabled,
                     beyondViewportPageCount = 1,
@@ -896,9 +907,6 @@ fun MainScreen() {
                 }
             }
 
-            val isMiuixUi = LocalUiMode.current == UiMode.Miuix
-            val miuixBlurBackdrop = rememberMaterial3BlurBackdrop(ThemeConfig.isEnableBlur)
-            val miuixBackdrop = rememberLayerBackdrop { drawContent() }
             if (isPortrait) {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),

@@ -614,6 +614,22 @@ private fun AppearanceSettings(
                 backgroundAdjustmentControls(state, viewModel, coroutineScope)
             }
         )
+
+        // The Material blur toggle lives inside the (custom-background) controls above, which
+        // are hidden in Miuix. Miuix uses blur for its frosted bars independently of a custom
+        // background, so surface a standalone blur toggle there.
+        item(visible = isMiuix, topPadding = 1.dp) {
+            val context = LocalContext.current
+            SettingsSwitchWidget(
+                icon = Icons.Filled.BlurOn,
+                title = stringResource(id = R.string.settings_config_enable_blur),
+                description = stringResource(id = R.string.settings_config_enable_blur_summary),
+                checked = ThemeConfig.isEnableBlur,
+                onCheckedChange = { isChecked ->
+                    BackgroundManager.saveEnableBlur(context, isChecked)
+                }
+            )
+        }
     }
 }
 
