@@ -360,6 +360,14 @@ fun ModulePage(bottomPadding: Dp) {
                     it.author.contains(moduleQuery, true)
             }
         }
+        // The SearchPager only renders results when resultStatus == SHOW; drive it from the query.
+        val effectiveModuleSearchStatus = moduleSearchStatus.copy(
+            resultStatus = when {
+                moduleQuery.isEmpty() -> SearchStatus.ResultStatus.DEFAULT
+                moduleSearchResults.isEmpty() -> SearchStatus.ResultStatus.EMPTY
+                else -> SearchStatus.ResultStatus.SHOW
+            }
+        )
 
         ModulePagerMiuix(
             uiState = com.resukisu.resukisu.ui.screen.module.ModuleUiState(
@@ -368,7 +376,7 @@ fun ModulePage(bottomPadding: Dp) {
                 modules = tiannModules,
                 moduleList = tiannModules,
                 updateInfo = updateInfoMap,
-                searchStatus = moduleSearchStatus,
+                searchStatus = effectiveModuleSearchStatus,
                 searchResults = moduleSearchResults,
                 sortEnabledFirst = uiState.sortEnabledFirst,
                 sortActionFirst = uiState.sortActionFirst,

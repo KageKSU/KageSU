@@ -184,6 +184,14 @@ fun SuperUserPage(bottomPadding: Dp) {
         val recentlyInstalled = remember(base) {
             base.filter { it.isRecentlyInstalled }.map { it.toTiannGroupedApps() }
         }
+        // The SearchPager only renders results when resultStatus == SHOW; drive it from the query.
+        val effectiveSearchStatus = searchStatus.copy(
+            resultStatus = when {
+                query.isEmpty() -> com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.DEFAULT
+                searchResults.isEmpty() -> com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.EMPTY
+                else -> com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.SHOW
+            }
+        )
 
         com.resukisu.resukisu.ui.screen.superuser.SuperUserPagerMiuix(
             uiState = com.resukisu.resukisu.ui.screen.superuser.SuperUserUiState(
@@ -192,7 +200,7 @@ fun SuperUserPage(bottomPadding: Dp) {
                 groupedApps = sorted.map { it.toTiannGroupedApps() },
                 recentlyInstalledResults = recentlyInstalled,
                 userIds = base.map { it.uid / 100000 }.distinct().sorted(),
-                searchStatus = searchStatus,
+                searchStatus = effectiveSearchStatus,
                 searchResults = searchResults,
                 showSystemApps = uiState.showSystemApps,
                 showOnlyPrimaryUserApps = showOnlyPrimary,
