@@ -880,19 +880,30 @@ fun MainScreen() {
         ) {
             val isPortrait = maxWidth < maxHeight || (maxHeight / maxWidth > 1.4f)
             val isMiuixUi = LocalUiMode.current == UiMode.Miuix
-            // Backdrop the Miuix nav bar blurs. The pager content must be captured into it
-            // (layerBackdrop) or the bar renders transparent instead of frosted.
+            // The Miuix bars sample the pager content via a backdrop; without capturing the
+            // pager into it, the plain nav bar renders transparent and the floating liquid-glass
+            // bar renders as a solid surface colour. `miuixBlurBackdrop` frosts the plain nav bar;
+            // `miuixBackdrop` (surface base + content, like tiann) feeds the liquid-glass bar.
+            val miuixSurfaceColor = MaterialTheme.colorScheme.surface
             val miuixBlurBackdrop = rememberMaterial3BlurBackdrop(ThemeConfig.isEnableBlur)
-            val miuixBackdrop = rememberLayerBackdrop { drawContent() }
+            val miuixBackdrop = rememberLayerBackdrop {
+                drawRect(miuixSurfaceColor)
+                drawContent()
+            }
+            val floatingLiquid = ThemeConfig.enableFloatingBottomBar && ThemeConfig.enableFloatingBottomBarBlur
             val content = @Composable { paddingBottom: Dp ->
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
                         .blurSource()
                         .then(
-                            if (isMiuixUi && miuixBlurBackdrop != null)
-                                Modifier.layerBackdrop(miuixBlurBackdrop)
-                            else Modifier
+                            when {
+                                !isMiuixUi -> Modifier
+                                floatingLiquid -> Modifier.layerBackdrop(miuixBackdrop)
+                                !ThemeConfig.enableFloatingBottomBar && miuixBlurBackdrop != null ->
+                                    Modifier.layerBackdrop(miuixBlurBackdrop)
+                                else -> Modifier
+                            }
                         ),
                     state = pagerState,
                     userScrollEnabled = userScrollEnabled,
