@@ -86,6 +86,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.resukisu.resukisu.BuildConfig
 import com.resukisu.resukisu.Natives
 import com.resukisu.resukisu.R
+import com.resukisu.resukisu.data.appPreferences
 import com.resukisu.resukisu.ksuApp
 import com.resukisu.resukisu.ui.component.ConfirmResult
 import com.resukisu.resukisu.ui.component.DialogHandle
@@ -139,10 +140,20 @@ fun SettingsPage(bottomPadding: Dp) {
     }
 
     if (LocalUiMode.current == UiMode.Miuix) {
+        // ReSukiSU keeps these two as plain prefs (no viewmodel field): the module-update
+        // pref gates ModuleViewModel.checkUpdate; the web-debug pref is read by WebViewHelper.
+        var checkModuleUpdate by remember {
+            mutableStateOf(context.appPreferences.getBoolean("check_module_update", true))
+        }
+        var enableWebDebugging by remember {
+            mutableStateOf(context.appPreferences.getBoolean("enable_web_debugging", false))
+        }
         com.resukisu.resukisu.ui.screen.settings.SettingPagerMiuix(
             uiState = com.resukisu.resukisu.ui.screen.settings.SettingsUiState(
                 uiMode = ThemeConfig.uiMode,
                 checkUpdate = uiState.checkUpdate,
+                checkModuleUpdate = checkModuleUpdate,
+                enableWebDebugging = enableWebDebugging,
                 themeMode = uiState.themeMode,
                 enableBlur = ThemeConfig.isEnableBlur,
                 suCompatStatus = uiState.suStatus,
@@ -160,7 +171,10 @@ fun SettingsPage(bottomPadding: Dp) {
             ),
             actions = com.resukisu.resukisu.ui.screen.settings.SettingsScreenActions(
                 onSetCheckUpdate = { settingsViewModel.handleCheckUpdateChange(context, it) },
-                onSetCheckModuleUpdate = { },
+                onSetCheckModuleUpdate = {
+                    checkModuleUpdate = it
+                    context.appPreferences.putBoolean("check_module_update", it)
+                },
                 onOpenTheme = { navigator.push(Route.ThemeSettings) },
                 onSetUiModeIndex = {
                     com.resukisu.resukisu.ui.theme.ThemeManager.saveUiMode(context, if (it == 1) "miuix" else "material")
@@ -172,7 +186,10 @@ fun SettingsPage(bottomPadding: Dp) {
                 onSetSulogEnabled = { settingsViewModel.handleSuLogChange(it) },
                 onSetAdbRootEnabled = { settingsViewModel.handleAdbRootChange(it) },
                 onSetDefaultUmountModules = { settingsViewModel.handleDefaultUmountModulesChange(it) },
-                onSetEnableWebDebugging = { },
+                onSetEnableWebDebugging = {
+                    enableWebDebugging = it
+                    context.appPreferences.putBoolean("enable_web_debugging", it)
+                },
                 onSetAutoJailbreak = { settingsViewModel.handleAutoJailbreakChange(context, it) },
                 onOpenAbout = { navigator.push(Route.About) },
                 onSetEnableBlur = { com.resukisu.resukisu.ui.theme.ThemeManager.saveEnableBlur(context, it) },

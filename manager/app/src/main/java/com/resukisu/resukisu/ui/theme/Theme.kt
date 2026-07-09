@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -432,7 +433,18 @@ fun KernelSUTheme(
                 // behaviour leaks into the Material screens.
                 if (ThemeConfig.uiMode == "miuix") {
                     MiuixKernelSUTheme(darkTheme = darkTheme, dynamicColor = dynamicColor) {
-                        content()
+                        // Root Miuix Scaffold — like tiann's `UiMode.Miuix -> Scaffold { .. }`.
+                        // It sets up the (library-internal) LocalRootPopupStates + default
+                        // MiuixPopupHost that ALL Miuix floating menus / dropdowns / overlay
+                        // dialogs render into. Per-screen Scaffolds override their popupHost, so
+                        // without this root host those popups have nowhere to draw. Transparent
+                        // container + zero insets so it doesn't alter layout or the wallpaper.
+                        top.yukonga.miuix.kmp.basic.Scaffold(
+                            containerColor = Color.Transparent,
+                            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+                        ) {
+                            content()
+                        }
                     }
                 } else {
                     content()
