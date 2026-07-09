@@ -96,6 +96,8 @@ import com.resukisu.resukisu.ui.component.SwipeableSnackbarHost
 import com.resukisu.resukisu.ui.component.settings.SettingsBaseWidget
 import com.resukisu.resukisu.ui.component.settings.lazySegmentColumn
 import com.resukisu.resukisu.ui.navigation.LocalNavigator
+import com.resukisu.resukisu.ui.LocalUiMode
+import com.resukisu.resukisu.ui.UiMode
 import com.resukisu.resukisu.ui.navigation.Route
 import com.resukisu.resukisu.ui.screen.LabelText
 import com.resukisu.resukisu.ui.theme.blurSource
@@ -135,6 +137,37 @@ fun SuperUserPage(bottomPadding: Dp) {
     val restoreLauncher = ModuleModify.rememberAllowlistRestoreLauncher(context, snackBarHostState)
 
     val navigator = LocalNavigator.current
+
+    if (LocalUiMode.current == UiMode.Miuix) {
+        val handlePageChange = com.resukisu.resukisu.ui.util.LocalHandlePageChange.current
+        val groupByUid = remember(uiState.appGroupList) { uiState.appGroupList.associateBy { it.uid } }
+        com.resukisu.resukisu.ui.screen.superuser.SuperUserPagerMiuix(
+            uiState = com.resukisu.resukisu.ui.screen.superuser.SuperUserUiState(
+                isRefreshing = uiState.isRefreshing,
+                hasLoaded = true,
+                groupedApps = uiState.appGroupList.map { it.toTiannGroupedApps() },
+                userIds = uiState.appGroupList.map { it.uid / 100000 }.distinct().sorted(),
+                searchStatus = com.resukisu.resukisu.ui.component.SearchStatus(uiState.search),
+                showSystemApps = uiState.showSystemApps,
+                sortConfig = uiState.currentSortType.toTiannSortConfig(),
+            ),
+            actions = com.resukisu.resukisu.ui.screen.superuser.SuperUserActions(
+                onRefresh = { scope.launch { viewModel.fetchAppList() } },
+                onOpenSulog = { navigator.push(Route.Sulog) },
+                onSearchTextChange = viewModel::updateSearch,
+                onSearchStatusChange = { viewModel.updateSearch(it.searchText) },
+                onClearSearch = { viewModel.updateSearch("") },
+                onToggleShowSystemApps = { viewModel.updateShowSystemApps(!uiState.showSystemApps) },
+                onToggleShowOnlyPrimaryUserApps = { },
+                onUpdateSortConfig = { viewModel.updateCurrentSortType(it.toResukiSortType()) },
+                onOpenProfile = { grouped ->
+                    groupByUid[grouped.uid]?.let { navigator.push(Route.AppProfile(it)) }
+                },
+            ),
+            bottomInnerPadding = bottomPadding,
+        )
+        return
+    }
 
     LaunchedEffect(Unit) {
         viewModel.updateSearch("")
@@ -677,4 +710,44 @@ private fun AppGroupItem(
             modifier = Modifier.size(24.dp)
         )
     }
+}
+
+// --- ReSukiSU <-> tiann Miuix data mappers (adapt tiann's SuperUser Miuix screen) ---
+private fun SuperUserViewModel.AppGroup.toTiannGroupedApps(): com.resukisu.resukisu.ui.screen.superuser.GroupedApps {
+    val tiannApps = apps.map {
+        com.resukisu.resukisu.data.model.AppInfo(
+            label = it.label,
+            packageInfo = it.packageInfo,
+            profile = it.profile,
+        )
+    }
+    return com.resukisu.resukisu.ui.screen.superuser.GroupedApps(
+        uid = uid,
+        apps = tiannApps,
+        primary = tiannApps.first(),
+        anyAllowSu = allowSu,
+        anyCustom = hasCustomProfile,
+        shouldUmount = profile?.umountModules == true,
+        ownerName = userName,
+        matchedPackageNames = emptySet(),
+    )
+}
+
+private fun SortType.toTiannSortConfig(): com.resukisu.resukisu.ui.viewmodel.AppSortConfig {
+    val vm = com.resukisu.resukisu.ui.viewmodel.AppSortType
+    return when (this) {
+        SortType.NAME_ASC -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.NAME, false)
+        SortType.NAME_DESC -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.NAME, true)
+        SortType.INSTALL_TIME_OLD -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.INSTALL_TIME, false)
+        SortType.INSTALL_TIME_NEW -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.INSTALL_TIME, true)
+        else -> com.resukisu.resukisu.ui.viewmodel.AppSortConfig(vm.NAME, false)
+    }
+}
+
+private fun com.resukisu.resukisu.ui.viewmodel.AppSortConfig.toResukiSortType(): SortType = when {
+    sortType == com.resukisu.resukisu.ui.viewmodel.AppSortType.NAME && !reversed -> SortType.NAME_ASC
+    sortType == com.resukisu.resukisu.ui.viewmodel.AppSortType.NAME && reversed -> SortType.NAME_DESC
+    sortType == com.resukisu.resukisu.ui.viewmodel.AppSortType.INSTALL_TIME && !reversed -> SortType.INSTALL_TIME_OLD
+    sortType == com.resukisu.resukisu.ui.viewmodel.AppSortType.INSTALL_TIME && reversed -> SortType.INSTALL_TIME_NEW
+    else -> SortType.NAME_ASC
 }
