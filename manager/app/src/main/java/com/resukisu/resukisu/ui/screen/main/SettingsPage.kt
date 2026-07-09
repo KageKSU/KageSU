@@ -390,15 +390,19 @@ fun SettingsPage(bottomPadding: Dp) {
                         }
 
                         item {
-                            // UI 设计切换：ReSukiSU / Miuix
-                            SettingsSwitchWidget(
+                            // UI 设计选择：ReSukiSU / Miuix
+                            SettingsChooseWidget(
                                 icon = Icons.Filled.Style,
                                 title = stringResource(R.string.settings_ui_mode),
                                 description = stringResource(R.string.settings_ui_mode_summary),
-                                checked = ThemeConfig.uiMode == "miuix",
-                                onCheckedChange = { useMiuix ->
+                                items = listOf(
+                                    stringResource(R.string.settings_ui_mode_resukisu),
+                                    stringResource(R.string.settings_ui_mode_miuix),
+                                ),
+                                selectedIndex = if (ThemeConfig.uiMode == "miuix") 1 else 0,
+                                onSelectedIndexChange = { index ->
                                     com.resukisu.resukisu.ui.theme.ThemeManager.saveUiMode(
-                                        context, if (useMiuix) "miuix" else "material"
+                                        context, if (index == 1) "miuix" else "material"
                                     )
                                 }
                             )
