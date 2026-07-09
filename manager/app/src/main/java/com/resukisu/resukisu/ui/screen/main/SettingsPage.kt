@@ -192,7 +192,7 @@ fun SettingsPage(bottomPadding: Dp) {
                 },
                 onSetAutoJailbreak = { settingsViewModel.handleAutoJailbreakChange(context, it) },
                 onOpenAbout = { navigator.push(Route.About) },
-                onSetEnableBlur = { com.resukisu.resukisu.ui.theme.ThemeManager.saveEnableBlur(context, it) },
+                onSetEnableBlur = { com.resukisu.resukisu.ui.theme.BackgroundManager.saveEnableBlur(context, it) },
                 onOpenDynamicManager = { navigator.push(Route.DynamicManager) },
                 onOpenUmountManager = { navigator.push(Route.UmountManager) },
             ),
