@@ -1,5 +1,8 @@
 package com.resukisu.resukisu.ui.screen.home
 
+import com.resukisu.resukisu.ui.viewmodel.HomeViewModel
+import com.resukisu.resukisu.ui.component.ksuIsValid
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -117,23 +120,6 @@ fun HomePagerMiuix(
                         if (state.checkUpdateEnabled) {
                             UpdateCard(state = state, actions = actions)
                         }
-                        if (state.showManagerPrBuildWarning) {
-                            WarningCard(stringResource(id = R.string.home_pr_build_warning))
-                        } else if (state.showKernelPrBuildWarning) {
-                            WarningCard(stringResource(id = R.string.home_pr_kernel_warning))
-                        }
-                        if (state.showVersionMismatchWarning) {
-                            WarningCard(
-                                stringResource(
-                                    id = R.string.home_version_mismatch,
-                                    state.currentManagerVersionCode,
-                                    state.ksuVersion ?: 0
-                                )
-                            )
-                        }
-                        if (state.showGkiWarning) {
-                            WarningCard(stringResource(id = R.string.home_gki_warning))
-                        }
                         if (state.showUAPIMisMatchWarning) {
                             WarningCard(
                                 stringResource(
@@ -169,7 +155,13 @@ fun HomePagerMiuix(
                             state = state,
                             actions = actions,
                         )
-                        InfoCard(systemInfo = state.systemInfo)
+                        InfoCard(
+                            systemInfo = state.systemInfo,
+                            isSimpleMode = state.isSimpleMode,
+                            isHideSusfsStatus = state.isHideSusfsStatus,
+                            isHideZygiskImplement = state.isHideZygiskImplement,
+                            isHideMetaModuleImplement = state.isHideMetaModuleImplement,
+                        )
                         DonateCard(onOpenUrl = actions.onOpenUrl)
                         LearnMoreCard(onOpenUrl = actions.onOpenUrl)
                     }
@@ -240,14 +232,7 @@ private fun StatusCard(
     Column {
         when {
             state.ksuVersion != null -> {
-                val workingState = buildString {
-                    if (state.isSafeMode) {
-                        append(" [${stringResource(id = R.string.safe_mode)}]")
-                    }
-                    if (state.isLateLoadMode) {
-                        append(" [${stringResource(id = R.string.jailbreak_mode)}]")
-                    }
-                }
+                val workingState = ""
                 val workingMode = when (state.lkmMode) {
                     null -> ""
                     true -> " <LKM>"
@@ -488,7 +473,13 @@ private fun DonateCard(onOpenUrl: (String) -> Unit) {
 }
 
 @Composable
-private fun InfoCard(systemInfo: SystemInfo) {
+private fun InfoCard(
+    systemInfo: HomeViewModel.SystemInfo,
+    isSimpleMode: Boolean,
+    isHideSusfsStatus: Boolean,
+    isHideZygiskImplement: Boolean,
+    isHideMetaModuleImplement: Boolean,
+) {
     @Composable
     fun InfoText(
         title: String,
@@ -515,20 +506,25 @@ private fun InfoCard(systemInfo: SystemInfo) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            InfoText(title = stringResource(R.string.home_manager_version), content = systemInfo.managerVersion)
-            InfoText(title = stringResource(R.string.home_kernel), content = systemInfo.kernelVersion)
+            InfoText(
+                title = stringResource(R.string.home_manager_version),
+                content = "${systemInfo.managerVersion.first} (${systemInfo.managerVersion.second}/${systemInfo.managerVersion.third})"
+            )
+            InfoText(title = stringResource(R.string.home_kernel), content = systemInfo.kernelRelease)
+            if (!isSimpleMode) {
+                InfoText(title = stringResource(R.string.home_android_version), content = systemInfo.androidVersion)
+            }
             InfoText(title = stringResource(R.string.home_device_model), content = systemInfo.deviceModel)
-            InfoText(title = stringResource(R.string.home_fingerprint), content = systemInfo.fingerprint)
+            if (!isSimpleMode && ksuIsValid()) {
+                InfoText(title = stringResource(R.string.home_hook_type), content = com.resukisu.resukisu.Natives.getHookType())
+            }
             val selinuxDisplay = when (systemInfo.selinuxStatus) {
                 "Enforcing" -> stringResource(R.string.selinux_status_enforcing)
                 "Permissive" -> stringResource(R.string.selinux_status_permissive)
                 "Disabled" -> stringResource(R.string.selinux_status_disabled)
                 else -> stringResource(R.string.selinux_status_unknown)
             }
-            InfoText(
-                title = stringResource(R.string.home_selinux_status),
-                content = selinuxDisplay,
-            )
+            InfoText(title = stringResource(R.string.home_selinux_status), content = selinuxDisplay)
             val seccompDisplay = when (systemInfo.seccompStatus) {
                 -1 -> stringResource(R.string.seccomp_status_not_supported)
                 0 -> stringResource(R.string.seccomp_status_disabled)
@@ -536,147 +532,18 @@ private fun InfoCard(systemInfo: SystemInfo) {
                 2 -> stringResource(R.string.seccomp_status_filter)
                 else -> stringResource(R.string.seccomp_status_unknown)
             }
-            InfoText(
-                title = stringResource(R.string.home_seccomp_status),
-                content = seccompDisplay,
-                bottomPadding = 0.dp
-            )
+            InfoText(title = stringResource(R.string.home_seccomp_status), content = seccompDisplay)
+            if (!isHideZygiskImplement && !isSimpleMode &&
+                systemInfo.zygiskImplement.isNotEmpty() && systemInfo.zygiskImplement != "None") {
+                InfoText(title = stringResource(R.string.home_zygisk_implement), content = systemInfo.zygiskImplement)
+            }
+            if (!isHideMetaModuleImplement && !isSimpleMode &&
+                systemInfo.metaModuleImplement.isNotEmpty() && systemInfo.metaModuleImplement != "None") {
+                InfoText(title = stringResource(R.string.home_meta_module_implement), content = systemInfo.metaModuleImplement)
+            }
+            if (!isSimpleMode && !isHideSusfsStatus && systemInfo.susfsEnabled && systemInfo.susfsVersion.isNotEmpty()) {
+                InfoText(title = stringResource(R.string.home_susfs_version), content = systemInfo.susfsVersion, bottomPadding = 0.dp)
+            }
         }
     }
 }
-
-@Preview(name = "Activated")
-@Composable
-private fun StatusCardActivatedPreview() {
-    StatusCard(
-        state = previewHomeScreenState(ksuVersion = 12345, lkmMode = true, superuserCount = 5, moduleCount = 10),
-        actions = HomeActions({}, {}, {}, {})
-    )
-}
-
-@Preview(name = "Not Activated")
-@Composable
-private fun StatusCardNotActivatedPreview() {
-    StatusCard(state = previewHomeScreenState(ksuVersion = null, lkmMode = null), actions = HomeActions({}, {}, {}, {}))
-}
-
-@Preview(name = "Permissive")
-@Composable
-private fun StatusCardPermissivePreview() {
-    StatusCard(
-        state = previewHomeScreenState(ksuVersion = null, lkmMode = null, selinuxStatus = "Permissive"),
-        actions = HomeActions({}, {}, {}, {})
-    )
-}
-
-@Preview(name = "Jailbreak")
-@Composable
-private fun StatusCardJailbreakPreview() {
-    StatusCard(
-        state = previewHomeScreenState(ksuVersion = 12345, lkmMode = true, isLateLoadMode = true, superuserCount = 5, moduleCount = 10),
-        actions = HomeActions({}, {}, {}, {})
-    )
-}
-
-private val previewSystemInfo = SystemInfo(
-    kernelVersion = "6.12.23-android16-5-g123456789000-abogki123456789-4k",
-    managerVersion = "3.0.0 (30000)",
-    deviceModel = "Xiaomi 17 Pro Max",
-    fingerprint = "Xiaomi/popsicle/popsicle:16/BQ2A.250705.001-BP2A.250605.031.A3/OS3.0.313.0.WPBCNXM:user/release-keys",
-    selinuxStatus = "Enforcing",
-    seccompStatus = 2
-)
-
-private val previewUriHandler = object : UriHandler {
-    override fun openUri(uri: String) {}
-}
-
-@Composable
-private fun HomeScreenPreviewContent(
-    ksuVersion: Int?,
-    lkmMode: Boolean?,
-    isSafeMode: Boolean = false,
-    isLateLoadMode: Boolean = false,
-    superuserCount: Int = 0,
-    moduleCount: Int = 0,
-    selinuxStatus: String = "Enforcing",
-) {
-    CompositionLocalProvider(LocalUriHandler provides previewUriHandler) {
-        Column(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            val actions = HomeActions({}, {}, {}, {})
-            StatusCard(
-                state = previewHomeScreenState(
-                    ksuVersion = ksuVersion,
-                    lkmMode = lkmMode,
-                    isSafeMode = isSafeMode,
-                    isLateLoadMode = isLateLoadMode,
-                    superuserCount = superuserCount,
-                    moduleCount = moduleCount,
-                    selinuxStatus = selinuxStatus,
-                ),
-                actions = actions
-            )
-            InfoCard(previewSystemInfo.copy(selinuxStatus = selinuxStatus))
-            DonateCard(onOpenUrl = {})
-            LearnMoreCard(onOpenUrl = {})
-        }
-    }
-}
-
-@Preview(name = "Home Activated", showBackground = true)
-@Composable
-private fun HomeScreenActivatedPreview() {
-    HomeScreenPreviewContent(ksuVersion = 12345, lkmMode = true, superuserCount = 5, moduleCount = 10)
-}
-
-@Preview(name = "Home Not Activated", showBackground = true)
-@Composable
-private fun HomeScreenNotActivatedPreview() {
-    HomeScreenPreviewContent(ksuVersion = null, lkmMode = null)
-}
-
-@Preview(name = "Home Permissive", showBackground = true)
-@Composable
-private fun HomeScreenPermissivePreview() {
-    HomeScreenPreviewContent(ksuVersion = null, lkmMode = null, selinuxStatus = "Permissive")
-}
-
-@Preview(name = "Home Jailbreak", showBackground = true)
-@Composable
-private fun HomeScreenJailbreakPreview() {
-    HomeScreenPreviewContent(ksuVersion = 12345, lkmMode = true, isLateLoadMode = true, superuserCount = 5, moduleCount = 10)
-}
-
-private fun previewHomeScreenState(
-    ksuVersion: Int?,
-    lkmMode: Boolean?,
-    isSafeMode: Boolean = false,
-    isLateLoadMode: Boolean = false,
-    superuserCount: Int = 0,
-    moduleCount: Int = 0,
-    selinuxStatus: String = "Enforcing",
-) = HomeUiState(
-    kernelVersion = KernelVersion(6, 1, 0),
-    ksuVersion = ksuVersion,
-    lkmMode = lkmMode,
-    isManager = true,
-    isManagerPrBuild = false,
-    isKernelPrBuild = false,
-    requiresNewKernel = false,
-    isRootAvailable = ksuVersion != null,
-    isSafeMode = isSafeMode,
-    isLateLoadMode = isLateLoadMode,
-    checkUpdateEnabled = false,
-    latestVersionInfo = LatestVersionInfo(),
-    currentManagerVersionCode = 10000,
-    superuserCount = superuserCount,
-    moduleCount = moduleCount,
-    systemInfo = previewSystemInfo.copy(selinuxStatus = selinuxStatus),
-    kernelUAPIVersion = 1,
-    managerUAPIVersion = 1,
-    uapiMismatch = false,
-)

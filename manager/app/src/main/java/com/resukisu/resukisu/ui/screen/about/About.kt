@@ -68,7 +68,25 @@ import com.resukisu.resukisu.ui.theme.renderBackgroundBlur
 @Composable
 fun AboutScreen() {
     if (LocalUiMode.current == UiMode.Miuix) {
-        AboutMiuixContent()
+        val miuixNavigator = LocalNavigator.current
+        val uriHandler = androidx.compose.ui.platform.LocalUriHandler.current
+        val sourceLabel = stringResource(R.string.get_source_code)
+        val telegramLabel = stringResource(R.string.join_telegram_group)
+        AboutScreenMiuix(
+            state = AboutUiState(
+                title = stringResource(R.string.about),
+                appName = stringResource(R.string.app_name),
+                versionName = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+                links = extractLinks(
+                    "<a href=\"https://github.com/ReSukiSU/ReSukiSU\">$sourceLabel</a><br/>" +
+                        "<a href=\"https://t.me/ReSukiSU\">$telegramLabel</a>"
+                ),
+            ),
+            actions = AboutScreenActions(
+                onBack = { miuixNavigator.pop() },
+                onOpenLink = { url -> uriHandler.openUri(url) },
+            ),
+        )
         return
     }
     val navigator = LocalNavigator.current

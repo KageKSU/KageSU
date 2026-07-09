@@ -144,7 +144,30 @@ fun HomePage(
     if (!uiState.isInitialDataLoaded) return
 
     if (LocalUiMode.current == UiMode.Miuix) {
-        HomeMiuixContent(uiState = uiState, bottomPadding = bottomPadding)
+        val miuixNavigator = LocalNavigator.current
+        val handlePageChange = com.resukisu.resukisu.ui.util.LocalHandlePageChange.current
+        val uriHandler = androidx.compose.ui.platform.LocalUriHandler.current
+        com.resukisu.resukisu.ui.screen.home.HomePagerMiuix(
+            state = com.resukisu.resukisu.ui.screen.home.HomeUiState(
+                systemStatus = uiState.systemStatus,
+                systemInfo = uiState.systemInfo,
+                latestVersionInfo = uiState.latestVersionInfo,
+                checkUpdateEnabled = true,
+                isSimpleMode = uiState.isSimpleMode,
+                isHideVersion = uiState.isHideVersion,
+                isHideSusfsStatus = uiState.isHideSusfsStatus,
+                isHideZygiskImplement = uiState.isHideZygiskImplement,
+                isHideMetaModuleImplement = uiState.isHideMetaModuleImplement,
+                isHideLinkCard = uiState.isHideLinkCard,
+            ),
+            actions = com.resukisu.resukisu.ui.screen.home.HomeActions(
+                onInstallClick = { miuixNavigator.push(Route.Install(preselectedKernelUri = null)) },
+                onSuperuserClick = { handlePageChange(1) },
+                onModuleClick = { handlePageChange(2) },
+                onOpenUrl = { url -> uriHandler.openUri(url) },
+            ),
+            bottomInnerPadding = bottomPadding,
+        )
         return
     }
 

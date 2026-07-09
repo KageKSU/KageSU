@@ -122,6 +122,9 @@ object ThemeConfig {
     var isEnableBlurExp by mutableStateOf(false)
     var isUseBackgroundSeedColor by mutableStateOf(false)
 
+    // UI 设计：ReSukiSU (material) 或 Miuix。驱动 LocalUiMode。
+    var uiMode by mutableStateOf("material")
+
     // 主题变化检测
     private var lastDarkModeState: Boolean? = null
 
@@ -164,6 +167,15 @@ object ThemeConfig {
 }
 
 object ThemeManager {
+    fun saveUiMode(context: Context, mode: String) {
+        context.appPreferences.putString("ui_mode", mode)
+        ThemeConfig.uiMode = mode
+    }
+
+    fun loadUiMode(context: Context) {
+        ThemeConfig.uiMode = context.appPreferences.getString("ui_mode", "material") ?: "material"
+    }
+
     fun saveThemeMode(context: Context, forceDark: Boolean?) {
         context.appPreferences.putString(
             "theme_mode", when (forceDark) {
@@ -446,6 +458,7 @@ internal fun ThemeInitializer(context: Context, systemIsDark: Boolean) {
     // 初始加载配置
     LaunchedEffect(Unit) {
         scope.launch {
+            ThemeManager.loadUiMode(context)
             ThemeManager.loadThemeMode(context)
             ThemeManager.loadSeedColor(context)
             ThemeManager.loadDynamicColorState(context)

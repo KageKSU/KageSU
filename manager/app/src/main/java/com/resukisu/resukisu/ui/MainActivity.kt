@@ -92,6 +92,7 @@ import com.resukisu.resukisu.ui.component.ZipFileDetector
 import com.resukisu.resukisu.ui.component.ZipFileInfo
 import com.resukisu.resukisu.ui.component.ZipType
 import com.resukisu.resukisu.ui.navigation.HandleDeepLink
+import com.resukisu.resukisu.ui.LocalUiMode
 import com.resukisu.resukisu.ui.navigation.LocalNavigator
 import com.resukisu.resukisu.ui.navigation.Route
 import com.resukisu.resukisu.ui.navigation.rememberNavigator
@@ -386,6 +387,9 @@ class MainActivity : ComponentActivity() {
                     CompositionLocalProvider(
                         LocalPermissionRequestInterface provides permissionRequestInterface,
                         LocalNavigator provides navigator,
+                        LocalUiMode provides com.resukisu.resukisu.ui.UiMode.fromValue(
+                            com.resukisu.resukisu.ui.theme.ThemeConfig.uiMode
+                        ),
                         LocalDensity provides density
                     ) {
                         HandleDeepLink(

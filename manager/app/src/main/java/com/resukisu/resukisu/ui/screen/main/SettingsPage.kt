@@ -43,6 +43,7 @@ import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Style
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material.icons.rounded.ElectricalServices
 import androidx.compose.material.icons.rounded.FolderDelete
@@ -339,6 +340,21 @@ fun SettingsPage(bottomPadding: Dp) {
                                 checked = uiState.checkUpdate,
                                 onCheckedChange = { enabled ->
                                     settingsViewModel.handleCheckUpdateChange(context, enabled)
+                                }
+                            )
+                        }
+
+                        item {
+                            // UI 设计切换：ReSukiSU / Miuix
+                            SettingsSwitchWidget(
+                                icon = Icons.Filled.Style,
+                                title = stringResource(R.string.settings_ui_mode),
+                                description = stringResource(R.string.settings_ui_mode_summary),
+                                checked = ThemeConfig.uiMode == "miuix",
+                                onCheckedChange = { useMiuix ->
+                                    com.resukisu.resukisu.ui.theme.ThemeManager.saveUiMode(
+                                        context, if (useMiuix) "miuix" else "material"
+                                    )
                                 }
                             )
                         }

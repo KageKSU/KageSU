@@ -1,58 +1,44 @@
+// Miuix UI merged from tiann/KernelSU (github.com/tiann/KernelSU), originally authored
+// by YuKongA (github.com/YuKongA); GPL-3.0. Adapted in place to ReSukiSU's HomeViewModel
+// data and choosable cards. See docs/ATTRIBUTION.md.
 package com.resukisu.resukisu.ui.screen.home
 
 import androidx.compose.runtime.Immutable
 import com.resukisu.resukisu.KernelVersion
 import com.resukisu.resukisu.ui.util.module.LatestVersionInfo
+import com.resukisu.resukisu.ui.viewmodel.HomeViewModel
 
 @Immutable
 data class HomeUiState(
-    val kernelVersion: KernelVersion,
-    val ksuVersion: Int?,
-    val managerUAPIVersion: Int,
-    val kernelUAPIVersion: Int?,
-    val lkmMode: Boolean?,
-    val isManager: Boolean,
-    val isManagerPrBuild: Boolean,
-    val isKernelPrBuild: Boolean,
-    val requiresNewKernel: Boolean,
-    val uapiMismatch: Boolean,
-    val isRootAvailable: Boolean,
-    val isSafeMode: Boolean,
-    val isLateLoadMode: Boolean,
-    val checkUpdateEnabled: Boolean,
+    val systemStatus: HomeViewModel.SystemStatus,
+    val systemInfo: HomeViewModel.SystemInfo,
     val latestVersionInfo: LatestVersionInfo,
-    val currentManagerVersionCode: Long,
-    val superuserCount: Int,
-    val moduleCount: Int,
-    val systemInfo: SystemInfo,
+    val checkUpdateEnabled: Boolean,
+    val isSimpleMode: Boolean,
+    val isHideVersion: Boolean,
+    val isHideSusfsStatus: Boolean,
+    val isHideZygiskImplement: Boolean,
+    val isHideMetaModuleImplement: Boolean,
+    val isHideLinkCard: Boolean,
 ) {
-    val isSELinuxPermissive: Boolean
-        get() = systemInfo.selinuxStatus == "Permissive"
+    val kernelVersion: KernelVersion get() = systemStatus.kernelVersion
+    val ksuVersion: Int? get() = systemStatus.ksuVersion
+    val managerUAPIVersion: Int get() = systemStatus.managerUAPIVersion
+    val kernelUAPIVersion: Int? get() = systemStatus.kernelUAPIVersion
+    val lkmMode: Boolean? get() = systemStatus.lkmMode
+    val superuserCount: Int get() = systemInfo.superuserCount
+    val moduleCount: Int get() = systemInfo.moduleCount
+    val currentManagerVersionCode: Long get() = systemInfo.managerVersion.third.toLong()
 
-    val isFullFeatured: Boolean
-        get() = isManager && !requiresNewKernel && isRootAvailable
-
-    val showGkiWarning: Boolean
-        get() = ksuVersion != null && lkmMode == false
+    val isSELinuxPermissive: Boolean get() = systemStatus.isSELinuxPermissive
+    val isLateLoadMode: Boolean get() = false
 
     val showRequireKernelWarning: Boolean
-        get() = isManager && requiresNewKernel
-
+        get() = systemStatus.isManager && systemStatus.requireNewKernel
     val showUAPIMisMatchWarning: Boolean
-        get() = isManager && showRequireKernelWarning && uapiMismatch
-
+        get() = showRequireKernelWarning && systemStatus.uapiMismatch
     val showRootWarning: Boolean
-        get() = ksuVersion != null && !isRootAvailable
-
-    val showManagerPrBuildWarning: Boolean
-        get() = isManager && isManagerPrBuild
-
-    val showKernelPrBuildWarning: Boolean
-        get() = isManager && !isManagerPrBuild && isKernelPrBuild
-
-    val showVersionMismatchWarning: Boolean
-        get() = ksuVersion != null && ksuVersion.toLong() != currentManagerVersionCode
-
+        get() = systemStatus.ksuVersion != null && !systemStatus.isRootAvailable
     val hasUpdate: Boolean
         get() = latestVersionInfo.versionCode > currentManagerVersionCode
 }
