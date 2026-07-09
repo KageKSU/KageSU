@@ -135,8 +135,6 @@ fun TemplateEditorScreenMiuix(
                         )
 
                         RootProfileConfig(
-                            fixedName = true,
-                            enabled = !state.readOnly,
                             profile = toNativeProfile(state.template),
                             onProfileChange = actions.onProfileChange,
                         )
