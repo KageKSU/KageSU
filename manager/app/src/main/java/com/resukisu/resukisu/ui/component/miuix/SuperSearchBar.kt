@@ -188,12 +188,15 @@ fun SearchStatus.SearchPager(
                         }
                 )
                 androidx.activity.compose.BackHandler(enabled = true) {
-                    onSearchStatusChange(
-                        searchStatus.copy(
-                            searchText = "",
-                            current = SearchStatus.Status.COLLAPSING
+                    // Two-stage back: if there's a query, the first back clears it (revealing the
+                    // full list); a second back (or a back with no query) collapses the search.
+                    if (searchStatus.searchText.isNotEmpty()) {
+                        onSearchStatusChange(searchStatus.copy(searchText = ""))
+                    } else {
+                        onSearchStatusChange(
+                            searchStatus.copy(current = SearchStatus.Status.COLLAPSING)
                         )
-                    )
+                    }
                 }
             }
         }
