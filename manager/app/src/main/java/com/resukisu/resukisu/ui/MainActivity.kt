@@ -396,7 +396,7 @@ class MainActivity : ComponentActivity() {
                             com.resukisu.resukisu.ui.theme.ThemeConfig.uiMode
                         ),
                         com.resukisu.resukisu.ui.theme.LocalEnableBlur provides
-                            com.resukisu.resukisu.ui.theme.ThemeConfig.isEnableBlur,
+                            com.resukisu.resukisu.ui.theme.ThemeConfig.miuixEnableBlur,
                         LocalDensity provides density
                     ) {
                         HandleDeepLink(
@@ -885,7 +885,7 @@ fun MainScreen() {
             // bar renders as a solid surface colour. `miuixBlurBackdrop` frosts the plain nav bar;
             // `miuixBackdrop` (surface base + content, like tiann) feeds the liquid-glass bar.
             val miuixSurfaceColor = MaterialTheme.colorScheme.surface
-            val miuixBlurBackdrop = rememberMaterial3BlurBackdrop(ThemeConfig.isEnableBlur)
+            val miuixBlurBackdrop = rememberMaterial3BlurBackdrop(ThemeConfig.miuixEnableBlur)
             val miuixBackdrop = rememberLayerBackdrop {
                 drawRect(miuixSurfaceColor)
                 drawContent()

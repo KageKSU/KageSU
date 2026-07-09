@@ -126,6 +126,10 @@ object ThemeConfig {
     // UI 设计：ReSukiSU (material) 或 Miuix。驱动 LocalUiMode。
     var uiMode by mutableStateOf("material")
 
+    // Miuix blur is a separate flag from Material's [isEnableBlur] (which ReSukiSU gates on a
+    // custom background). Decoupled so enabling blur in Miuix doesn't leak into Material.
+    var miuixEnableBlur by mutableStateOf(false)
+
     // Miuix floating bottom bar (+ liquid-glass blur variant). Only used by the Miuix UI.
     var enableFloatingBottomBar by mutableStateOf(false)
     var enableFloatingBottomBarBlur by mutableStateOf(false)
@@ -286,6 +290,11 @@ object BackgroundManager {
         context.appPreferences.putBoolean("enable_blur_exp", enable)
     }
 
+    fun saveMiuixEnableBlur(context: Context, enable: Boolean) {
+        ThemeConfig.miuixEnableBlur = enable
+        context.appPreferences.putBoolean("miuix_enable_blur", enable)
+    }
+
     fun saveEnableFloatingBottomBar(context: Context, enable: Boolean) {
         ThemeConfig.enableFloatingBottomBar = enable
         context.appPreferences.putBoolean("enable_floating_bottom_bar", enable)
@@ -351,6 +360,7 @@ object BackgroundManager {
         ThemeConfig.backgroundDim = prefs.getFloat("background_dim", 0f).coerceIn(0f, 1f)
         ThemeConfig.isEnableBlur = prefs.getBoolean("enable_blur", false)
         ThemeConfig.isEnableBlurExp = prefs.getBoolean("enable_blur_exp", false)
+        ThemeConfig.miuixEnableBlur = prefs.getBoolean("miuix_enable_blur", false)
         ThemeConfig.enableFloatingBottomBar = prefs.getBoolean("enable_floating_bottom_bar", false)
         ThemeConfig.enableFloatingBottomBarBlur = prefs.getBoolean("enable_floating_bottom_bar_blur", false)
         ThemeConfig.isUseBackgroundSeedColor = prefs.getBoolean("use_background_seed_color", false)

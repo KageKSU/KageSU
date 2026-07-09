@@ -624,9 +624,9 @@ private fun AppearanceSettings(
                 icon = Icons.Filled.BlurOn,
                 title = stringResource(id = R.string.settings_config_enable_blur),
                 description = stringResource(id = R.string.settings_config_enable_blur_summary),
-                checked = ThemeConfig.isEnableBlur,
+                checked = ThemeConfig.miuixEnableBlur,
                 onCheckedChange = { isChecked ->
-                    BackgroundManager.saveEnableBlur(context, isChecked)
+                    BackgroundManager.saveMiuixEnableBlur(context, isChecked)
                 }
             )
         }
