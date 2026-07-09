@@ -172,8 +172,7 @@ fun SuperUserPage(bottomPadding: Dp) {
         }
         val query = searchStatus.searchText.trim()
         val searchResults = remember(sorted, query) {
-            // Empty query shows the full list (like the Material search); a query filters it.
-            if (query.isEmpty()) sorted.map { it.toTiannGroupedApps() }
+            if (query.isEmpty()) emptyList()
             else sorted.mapNotNull { group ->
                 val matched = group.apps.filter {
                     it.label.contains(query, true) || it.packageName.contains(query, true)
@@ -186,10 +185,14 @@ fun SuperUserPage(bottomPadding: Dp) {
             base.filter { it.isRecentlyInstalled }.map { it.toTiannGroupedApps() }
         }
         // The SearchPager only renders results when resultStatus == SHOW; drive it from the query.
+        // Match kernelsu's flow: empty query -> DEFAULT (recently-installed default view),
+        // a query with no matches -> EMPTY, matches -> SHOW.
         val effectiveSearchStatus = searchStatus.copy(
-            resultStatus = if (searchResults.isEmpty())
-                com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.EMPTY
-            else com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.SHOW
+            resultStatus = when {
+                query.isEmpty() -> com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.DEFAULT
+                searchResults.isEmpty() -> com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.EMPTY
+                else -> com.resukisu.resukisu.ui.component.SearchStatus.ResultStatus.SHOW
+            }
         )
 
         com.resukisu.resukisu.ui.screen.superuser.SuperUserPagerMiuix(

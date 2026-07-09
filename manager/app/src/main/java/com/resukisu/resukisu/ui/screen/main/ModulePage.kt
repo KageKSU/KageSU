@@ -353,19 +353,20 @@ fun ModulePage(bottomPadding: Dp) {
         var moduleSearchStatus by remember { mutableStateOf(SearchStatus(searchModulesLabel)) }
         val moduleQuery = moduleSearchStatus.searchText.trim()
         val moduleSearchResults = remember(tiannModules, moduleQuery) {
-            // Empty query shows the full list (like the Material search); a query filters it.
-            if (moduleQuery.isEmpty()) tiannModules
+            if (moduleQuery.isEmpty()) emptyList()
             else tiannModules.filter {
                 it.name.contains(moduleQuery, true) ||
                     it.id.contains(moduleQuery, true) ||
                     it.author.contains(moduleQuery, true)
             }
         }
-        // The SearchPager only renders results when resultStatus == SHOW.
+        // Match kernelsu's flow: empty query -> DEFAULT, no matches -> EMPTY, matches -> SHOW.
         val effectiveModuleSearchStatus = moduleSearchStatus.copy(
-            resultStatus = if (moduleSearchResults.isEmpty())
-                SearchStatus.ResultStatus.EMPTY
-            else SearchStatus.ResultStatus.SHOW
+            resultStatus = when {
+                moduleQuery.isEmpty() -> SearchStatus.ResultStatus.DEFAULT
+                moduleSearchResults.isEmpty() -> SearchStatus.ResultStatus.EMPTY
+                else -> SearchStatus.ResultStatus.SHOW
+            }
         )
 
         ModulePagerMiuix(
