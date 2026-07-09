@@ -39,6 +39,8 @@ data class HomeUiState(
         get() = showRequireKernelWarning && systemStatus.uapiMismatch
     val showRootWarning: Boolean
         get() = systemStatus.ksuVersion != null && !systemStatus.isRootAvailable
+    val showUnofficialWarning: Boolean
+        get() = !systemStatus.isOfficialSignature
     val hasUpdate: Boolean
         get() = latestVersionInfo.versionCode > currentManagerVersionCode
 }

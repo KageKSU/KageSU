@@ -348,6 +348,18 @@ fun ModulePage(bottomPadding: Dp) {
         val rebootToApply = stringResource(R.string.reboot_to_apply)
         val startDownloading = stringResource(R.string.module_start_downloading)
         val searchModulesLabel = stringResource(R.string.search_modules)
+        // Hold the search state locally (like SuperUser) so the search bar can expand and the
+        // pager shows query-filtered results while the main list stays full.
+        var moduleSearchStatus by remember { mutableStateOf(SearchStatus(searchModulesLabel)) }
+        val moduleQuery = moduleSearchStatus.searchText.trim()
+        val moduleSearchResults = remember(tiannModules, moduleQuery) {
+            if (moduleQuery.isEmpty()) emptyList()
+            else tiannModules.filter {
+                it.name.contains(moduleQuery, true) ||
+                    it.id.contains(moduleQuery, true) ||
+                    it.author.contains(moduleQuery, true)
+            }
+        }
 
         ModulePagerMiuix(
             uiState = com.resukisu.resukisu.ui.screen.module.ModuleUiState(
@@ -356,11 +368,8 @@ fun ModulePage(bottomPadding: Dp) {
                 modules = tiannModules,
                 moduleList = tiannModules,
                 updateInfo = updateInfoMap,
-                searchStatus = SearchStatus(
-                    label = searchModulesLabel,
-                    searchText = uiState.search,
-                ),
-                searchResults = tiannModules,
+                searchStatus = moduleSearchStatus,
+                searchResults = moduleSearchResults,
                 sortEnabledFirst = uiState.sortEnabledFirst,
                 sortActionFirst = uiState.sortActionFirst,
                 checkModuleUpdate = true,
@@ -372,9 +381,9 @@ fun ModulePage(bottomPadding: Dp) {
             moduleEvent = moduleEventFlow,
             actions = ModuleActions(
                 onRefresh = { viewModel.fetchModuleList(true) },
-                onSearchStatusChange = { viewModel.updateSearch(it.searchText) },
-                onSearchTextChange = { viewModel.updateSearch(it) },
-                onClearSearch = { viewModel.updateSearch("") },
+                onSearchStatusChange = { moduleSearchStatus = it },
+                onSearchTextChange = { moduleSearchStatus = moduleSearchStatus.copy(searchText = it) },
+                onClearSearch = { moduleSearchStatus = moduleSearchStatus.copy(searchText = "") },
                 onRequestUpdateConfirmation = { module, info ->
                     scope.launch {
                         val changelog = withContext(Dispatchers.IO) {
