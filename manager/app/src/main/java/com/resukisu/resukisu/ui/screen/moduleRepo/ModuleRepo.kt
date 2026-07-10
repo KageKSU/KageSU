@@ -162,6 +162,11 @@ fun ModuleRepoScreen() {
     }
 
     if (LocalUiMode.current == UiMode.Miuix) {
+        // The Material path triggers the initial fetch during composition; do it here too or the
+        // Miuix repo list would spin forever with no modules.
+        LaunchedEffect(Unit) {
+            if (uiState.modules.isEmpty()) viewModel.refresh()
+        }
         val searchLabel = stringResource(R.string.search_modules)
         var sortOrder by remember { mutableStateOf(RepoSort.UPDATED) }
         var repoSearchStatus by remember { mutableStateOf(SearchStatus(searchLabel)) }
