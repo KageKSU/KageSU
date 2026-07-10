@@ -713,6 +713,15 @@ Important Note:\n
     <string name="group_contains_apps">Contains %d apps</string>
     <string name="profile_name">Profile name</string>
     <string name="app_profile_affects_following_apps">Affects the following apps</string>
+    <string name="module_repos">Repos</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Name</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Source code</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Releases</string>
+    <string name="tab_info">Info</string>
     <string name="meta_module_disabled">module not mounted, because metamodule disabled</string>
     <string name="meta_module_removed">module not mounted, because metamodule being delete</string>
     <string name="no_meta_module_installed">module not mounted, because metamodule not installed</string>

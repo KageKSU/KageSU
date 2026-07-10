@@ -122,4 +122,15 @@
     <string name="settings_floating_bottom_bar_summary">Toon de Miuix-navigatie als een zwevende balk.</string>
     <string name="settings_floating_bottom_bar_blur">Vloeibaar glas</string>
     <string name="settings_floating_bottom_bar_blur_summary">Pas een vloeibaar-glas vervaging toe op de zwevende balk.</string>
+    <string name="profile_name">Profiel naam</string>
+    <string name="app_profile_affects_following_apps">Dit heeft gevolgen voor de volgende apps</string>
+    <string name="module_repos">Rest</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Naam (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Broncode</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Releases</string>
+    <string name="tab_info">Info</string>
 </resources>

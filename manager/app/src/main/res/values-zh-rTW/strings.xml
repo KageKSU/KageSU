@@ -728,4 +728,15 @@
     <string name="settings_floating_bottom_bar_summary">將 Miuix 導覽顯示為懸浮欄。</string>
     <string name="settings_floating_bottom_bar_blur">液態玻璃</string>
     <string name="settings_floating_bottom_bar_blur_summary">為懸浮欄套用液態玻璃模糊。</string>
+    <string name="profile_name">Profile 名稱</string>
+    <string name="app_profile_affects_following_apps">Affects the following apps</string>
+    <string name="module_repos">模組倉庫</string>
+    <string name="module_repos_sort_updated">更新時間</string>
+    <string name="module_repos_sort_created">建立時間</string>
+    <string name="module_repos_sort_name">名稱</string>
+    <string name="module_repos_sort_stars">星標數</string>
+    <string name="module_repos_source_code">源碼</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Releases</string>
+    <string name="tab_info">Info</string>
 </resources>

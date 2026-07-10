@@ -610,4 +610,15 @@
     <string name="settings_floating_bottom_bar_summary">Miuix 내비게이션을 플로팅 바로 표시합니다.</string>
     <string name="settings_floating_bottom_bar_blur">리퀴드 글래스</string>
     <string name="settings_floating_bottom_bar_blur_summary">플로팅 바에 리퀴드 글래스 블러를 적용합니다.</string>
+    <string name="profile_name">프로필 이름</string>
+    <string name="app_profile_affects_following_apps">다음 앱에 영향</string>
+    <string name="module_repos">리포지토리</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">이름 (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">소스 코드</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">릴리즈</string>
+    <string name="tab_info">정보</string>
 </resources>

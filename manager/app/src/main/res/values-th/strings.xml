@@ -131,4 +131,15 @@
     <string name="settings_floating_bottom_bar_summary">แสดงแถบนำทาง Miuix เป็นแถบลอย</string>
     <string name="settings_floating_bottom_bar_blur">กระจกเหลว</string>
     <string name="settings_floating_bottom_bar_blur_summary">ใช้เอฟเฟกต์เบลอกระจกเหลวกับแถบลอย</string>
+    <string name="profile_name">ชื่อโปรไฟล์</string>
+    <string name="app_profile_affects_following_apps">ส่งผลต่อแอปดังต่อไปนี้</string>
+    <string name="module_repos">พื้นที่จัดเก็บโมดูล</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">เรียงตามชื่อ (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">ซอร์สโค้ด</string>
+    <string name="tab_readme">โปรดอ่าน</string>
+    <string name="tab_releases">รายการที่เผยแพร่</string>
+    <string name="tab_info">ข้อมูล</string>
 </resources>

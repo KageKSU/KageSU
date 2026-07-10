@@ -574,4 +574,15 @@
     <string name="settings_floating_bottom_bar_summary">Miuix のナビゲーションをフローティングバーとして表示します。</string>
     <string name="settings_floating_bottom_bar_blur">リキッドグラス</string>
     <string name="settings_floating_bottom_bar_blur_summary">フローティングバーにリキッドグラスのぼかしを適用します。</string>
+    <string name="profile_name">プロファイル名</string>
+    <string name="app_profile_affects_following_apps">以下のアプリに影響します</string>
+    <string name="module_repos">リポジトリ</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">名前（A→Z）</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">ソースコード</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">リリース</string>
+    <string name="tab_info">情報</string>
 </resources>

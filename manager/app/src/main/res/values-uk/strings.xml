@@ -753,4 +753,15 @@ Enabled: Увімкнути підміну sus tcontext \'su\' на \'u:r:priv_a
     <string name="settings_floating_bottom_bar_summary">Показувати навігацію Miuix як плаваючу панель.</string>
     <string name="settings_floating_bottom_bar_blur">Рідке скло</string>
     <string name="settings_floating_bottom_bar_blur_summary">Застосувати розмиття «рідке скло» до плаваючої панелі.</string>
+    <string name="profile_name">Назва профілю</string>
+    <string name="app_profile_affects_following_apps">Впливає на такі програми</string>
+    <string name="module_repos">Репозиторій модулів</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Ім\'я (А → Я)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Вихідний код</string>
+    <string name="tab_readme">Файл README</string>
+    <string name="tab_releases">Релізи</string>
+    <string name="tab_info">Інформація</string>
 </resources>

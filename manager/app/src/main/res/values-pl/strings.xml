@@ -129,4 +129,15 @@
     <string name="settings_floating_bottom_bar_summary">Pokaż nawigację Miuix jako pływający pasek.</string>
     <string name="settings_floating_bottom_bar_blur">Płynne szkło</string>
     <string name="settings_floating_bottom_bar_blur_summary">Zastosuj rozmycie płynnego szkła do pływającego paska.</string>
+    <string name="profile_name">Nazwa profilu</string>
+    <string name="app_profile_affects_following_apps">Wpływa na następujące aplikacje</string>
+    <string name="module_repos">Repozytoria</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Nazwa (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Kod źródłowy</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Wydania</string>
+    <string name="tab_info">Informacje</string>
 </resources>

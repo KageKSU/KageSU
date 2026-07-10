@@ -630,6 +630,7 @@ fun ReleasesPage(
     setPendingDownload: ((() -> Unit)) -> Unit,
 ) {
     val layoutDirection = LocalLayoutDirection.current
+    val permissionRequestInterface = com.resukisu.resukisu.ui.util.LocalPermissionRequestInterface.current
     Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
         LazyColumn(
             modifier = Modifier
@@ -772,6 +773,8 @@ fun ReleasesPage(
                                                     isDownloading = true
                                                     scope.launch(Dispatchers.IO) {
                                                         download(
+                                                            context,
+                                                            permissionRequestInterface,
                                                             asset.downloadUrl,
                                                             fileName,
                                                             onDownloaded = { uri ->

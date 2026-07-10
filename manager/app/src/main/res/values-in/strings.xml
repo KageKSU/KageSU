@@ -569,4 +569,15 @@ Diaktifkan: Aktifkan pemalsuan sus tcontext dari \'su\' dengan \'u:r:priv_app:s0
     <string name="settings_floating_bottom_bar_summary">Tampilkan navigasi Miuix sebagai bilah mengambang.</string>
     <string name="settings_floating_bottom_bar_blur">Kaca cair</string>
     <string name="settings_floating_bottom_bar_blur_summary">Terapkan buram kaca cair pada bilah mengambang.</string>
+    <string name="profile_name">Nama profil</string>
+    <string name="app_profile_affects_following_apps">Mempengaruhi apl berikut</string>
+    <string name="module_repos">Repositori</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Nama (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Kode sumber</string>
+    <string name="tab_readme">Baca Aku</string>
+    <string name="tab_releases">Rilis</string>
+    <string name="tab_info">Informasi</string>
 </resources>

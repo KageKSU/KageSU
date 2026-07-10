@@ -182,4 +182,7 @@
     <string name="settings_floating_bottom_bar_summary">Показвай навигацията на Miuix като плаваща лента.</string>
     <string name="settings_floating_bottom_bar_blur">Течно стъкло</string>
     <string name="settings_floating_bottom_bar_blur_summary">Приложи размазване тип течно стъкло към плаващата лента.</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_stars">Stars</string>
 </resources>

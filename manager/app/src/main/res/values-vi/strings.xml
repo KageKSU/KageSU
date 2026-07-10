@@ -574,4 +574,15 @@ Bật: Kích hoạt tính năng giả mạo sus tcontext của \'su\' thành \'u
     <string name="settings_floating_bottom_bar_summary">Hiển thị thanh điều hướng Miuix dưới dạng thanh nổi.</string>
     <string name="settings_floating_bottom_bar_blur">Kính lỏng</string>
     <string name="settings_floating_bottom_bar_blur_summary">Áp dụng hiệu ứng làm mờ kính lỏng cho thanh nổi.</string>
+    <string name="profile_name">Tên hồ sơ</string>
+    <string name="app_profile_affects_following_apps">Ảnh hưởng đến các ứng dụng sau</string>
+    <string name="module_repos">Thư viện Module</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Tên (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Mã nguồn</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Releases</string>
+    <string name="tab_info">Info</string>
 </resources>

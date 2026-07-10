@@ -267,4 +267,15 @@
     <string name="settings_floating_bottom_bar_summary">Afficher la navigation Miuix sous forme de barre flottante.</string>
     <string name="settings_floating_bottom_bar_blur">Verre liquide</string>
     <string name="settings_floating_bottom_bar_blur_summary">Appliquer un flou verre liquide à la barre flottante.</string>
+    <string name="profile_name">Nom du profil</string>
+    <string name="app_profile_affects_following_apps">Affecte les applis suivantes</string>
+    <string name="module_repos">Dépôts</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Nom (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Code source</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Versions</string>
+    <string name="tab_info">Infos</string>
 </resources>

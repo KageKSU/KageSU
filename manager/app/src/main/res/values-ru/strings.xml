@@ -710,4 +710,15 @@
     <string name="settings_floating_bottom_bar_summary">Показывать навигацию Miuix как плавающую панель.</string>
     <string name="settings_floating_bottom_bar_blur">Жидкое стекло</string>
     <string name="settings_floating_bottom_bar_blur_summary">Применить размытие «жидкое стекло» к плавающей панели.</string>
+    <string name="profile_name">Название профиля</string>
+    <string name="app_profile_affects_following_apps">Влияет на следующие приложения</string>
+    <string name="module_repos">Репозиторий</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Имя (А → Я)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Исходный код</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Релизы</string>
+    <string name="tab_info">Инфо</string>
 </resources>

@@ -670,4 +670,15 @@
     <string name="settings_floating_bottom_bar_summary">Miuix gezinmesini yüzen bir çubuk olarak göster.</string>
     <string name="settings_floating_bottom_bar_blur">Sıvı cam</string>
     <string name="settings_floating_bottom_bar_blur_summary">Yüzen çubuğa sıvı cam bulanıklığı uygula.</string>
+    <string name="profile_name">Profil adı</string>
+    <string name="app_profile_affects_following_apps">Aşağıdaki uygulamaları etkiler</string>
+    <string name="module_repos">Depolar</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Ad (A → Z)</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Kaynak kodu</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Releases</string>
+    <string name="tab_info">Bilgi</string>
 </resources>

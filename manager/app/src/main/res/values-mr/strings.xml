@@ -84,4 +84,15 @@
     <string name="settings_floating_bottom_bar_summary">Miuix नेव्हिगेशन फ्लोटिंग बार म्हणून दाखवा.</string>
     <string name="settings_floating_bottom_bar_blur">लिक्विड ग्लास</string>
     <string name="settings_floating_bottom_bar_blur_summary">फ्लोटिंग बारवर लिक्विड-ग्लास ब्लर लागू करा.</string>
+    <string name="profile_name">प्रोफाइल नाव</string>
+    <string name="app_profile_affects_following_apps">Affects the following apps</string>
+    <string name="module_repos">Repos</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Name</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Source code</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Releases</string>
+    <string name="tab_info">Info</string>
 </resources>

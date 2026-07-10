@@ -285,4 +285,15 @@
     <string name="settings_floating_bottom_bar_summary">Mostrar a navegação do Miuix como uma barra flutuante.</string>
     <string name="settings_floating_bottom_bar_blur">Vidro líquido</string>
     <string name="settings_floating_bottom_bar_blur_summary">Aplica um desfoque de vidro líquido à barra flutuante.</string>
+    <string name="profile_name">Nome do perfil</string>
+    <string name="app_profile_affects_following_apps">Affects the following apps</string>
+    <string name="module_repos">Repos</string>
+    <string name="module_repos_sort_updated">Updated time</string>
+    <string name="module_repos_sort_created">Created time</string>
+    <string name="module_repos_sort_name">Name</string>
+    <string name="module_repos_sort_stars">Stars</string>
+    <string name="module_repos_source_code">Source code</string>
+    <string name="tab_readme">README</string>
+    <string name="tab_releases">Releases</string>
+    <string name="tab_info">Info</string>
 </resources>
