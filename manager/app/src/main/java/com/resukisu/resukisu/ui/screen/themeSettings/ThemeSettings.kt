@@ -417,7 +417,7 @@ fun ThemeSettingsScreen() {
     }
 }
 
-private fun PaletteStyle.displayName(): String = when (this) {
+internal fun PaletteStyle.displayName(): String = when (this) {
     PaletteStyle.TonalSpot -> "Tonal Spot"
     PaletteStyle.Neutral -> "Neutral"
     PaletteStyle.Vibrant -> "Vibrant"
@@ -429,7 +429,7 @@ private fun PaletteStyle.displayName(): String = when (this) {
     PaletteStyle.Content -> "Content"
 }
 
-private fun ColorSpec.SpecVersion.displayName(): String = when (this) {
+internal fun ColorSpec.SpecVersion.displayName(): String = when (this) {
     ColorSpec.SpecVersion.SPEC_2021 -> "Spec 2021"
     ColorSpec.SpecVersion.SPEC_2025 -> "Spec 2025"
 }
@@ -808,7 +808,7 @@ private fun SegmentedColumnScope.hideOptionsSettings(
 }
 
 @Composable
-private fun ThemeColorSelection(viewModel: SettingsViewModel) {
+internal fun ThemeColorSelection(viewModel: SettingsViewModel) {
     SettingsBaseWidget(
         icon = Icons.Default.Palette,
         title = stringResource(R.string.theme_color),
@@ -827,7 +827,7 @@ private fun ThemeColorSelection(viewModel: SettingsViewModel) {
 private fun Int.toSeedColorHex(): String = "#%06X".format(this and 0x00FFFFFF)
 
 @Composable
-private fun DpiSliderControls(
+internal fun DpiSliderControls(
     state: SettingsUiState,
     viewModel: SettingsViewModel,
     coroutineScope: CoroutineScope
@@ -1148,7 +1148,7 @@ private fun DimSlider(
 }
 
 @Composable
-private fun LanguageSetting(state: SettingsUiState, viewModel: SettingsViewModel) {
+internal fun LanguageSetting(state: SettingsUiState, viewModel: SettingsViewModel) {
     val context = LocalContext.current
     val language = stringResource(id = R.string.settings_language)
     val languageSystemDefault = stringResource(R.string.language_system_default)
