@@ -5,7 +5,10 @@ import android.graphics.Color as AndroidColor
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,12 +58,17 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
 import com.resukisu.resukisu.R
+import com.resukisu.resukisu.ui.component.ConfirmResult
+import com.resukisu.resukisu.ui.component.KeyPointSlider
+import com.resukisu.resukisu.ui.component.rememberConfirmDialog
 import com.resukisu.resukisu.ui.screen.themeSettings.component.LanguageSelectionDialog
 import com.resukisu.resukisu.ui.screen.themeSettings.util.restartActivity
 import com.resukisu.resukisu.ui.theme.BackgroundManager
@@ -77,6 +85,7 @@ import com.resukisu.resukisu.ui.viewmodel.PredictiveBackExitDirection
 import com.resukisu.resukisu.ui.viewmodel.SettingsUiState
 import com.resukisu.resukisu.ui.viewmodel.SettingsViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import top.yukonga.miuix.kmp.basic.BasicComponent
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
@@ -409,7 +418,7 @@ private fun AppearanceSettingsMiuix(
     Card(modifier = Modifier.fillMaxWidth().padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
         Column(modifier = Modifier.padding(16.dp)) {
             SmallTitle(text = stringResource(R.string.app_dpi_title))
-            DpiSliderControls(state = state, viewModel = viewModel, coroutineScope = coroutineScope)
+            DpiSliderControlsMiuix(state = state, viewModel = viewModel, coroutineScope = coroutineScope)
         }
     }
 
@@ -431,7 +440,7 @@ private fun AppearanceSettingsMiuix(
                 if (!isChecked) BackgroundManager.saveEnableFloatingBottomBarBlur(context, false)
             }
         )
-        if (ThemeConfig.enableFloatingBottomBar) {
+        AnimatedVisibility(visible = ThemeConfig.enableFloatingBottomBar) {
             SwitchPreference(
                 title = stringResource(R.string.settings_floating_bottom_bar_blur),
                 summary = stringResource(R.string.settings_floating_bottom_bar_blur_summary),
@@ -502,6 +511,80 @@ private fun HideSwitch(
         startAction = { PrefIcon(Icons.Filled.VisibilityOff) },
         checked = checked,
         onCheckedChange = onCheckedChange
+    )
+}
+
+@Composable
+private fun DpiSliderControlsMiuix(
+    state: SettingsUiState,
+    viewModel: SettingsViewModel,
+    coroutineScope: CoroutineScope,
+) {
+    val context = LocalContext.current
+    val confirmDialog = rememberConfirmDialog()
+    val dpiConfirmTitle = stringResource(R.string.dpi_confirm_title)
+    val dpiConfirmMessage = stringResource(R.string.dpi_confirm_message, state.currentDpi, state.tempDpi)
+    val confirmText = stringResource(R.string.confirm)
+    val cancelText = stringResource(R.string.cancel)
+    val sliderValue by animateFloatAsState(targetValue = state.tempDpi.toFloat(), label = "DPI Slider")
+
+    KeyPointSlider(
+        value = sliderValue,
+        onValueChange = { newValue -> viewModel.updateTempDpi(newValue.toInt()) },
+        modifier = Modifier.fillMaxWidth(),
+        valueRange = 160f..600f,
+        keyPoints = state.dpiPresets.map { (_, dpi) -> dpi.toFloat() },
+    )
+
+    Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+        state.dpiPresets.forEach { (name, dpi) ->
+            val isSelected = state.tempDpi == dpi
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 2.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(if (isSelected) colorScheme.primary else colorScheme.surfaceContainerHigh)
+                    .clickable { viewModel.updateTempDpi(dpi) }
+                    .padding(vertical = 8.dp, horizontal = 4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = name,
+                    color = if (isSelected) colorScheme.onPrimary else colorScheme.onSurface,
+                    fontSize = 12.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+    }
+
+    Text(
+        text = if (state.isDpiCustom)
+            "${stringResource(R.string.dpi_size_custom)}: ${state.tempDpi}"
+        else
+            "${viewModel.getDpiFriendlyName(context, state.tempDpi)}: ${state.tempDpi}",
+        modifier = Modifier.padding(top = 8.dp),
+    )
+
+    TextButton(
+        text = stringResource(R.string.dpi_apply_settings),
+        onClick = {
+            coroutineScope.launch {
+                val result = confirmDialog.awaitConfirm(
+                    title = dpiConfirmTitle,
+                    content = dpiConfirmMessage,
+                    confirm = confirmText,
+                    dismiss = cancelText,
+                )
+                if (result != ConfirmResult.Confirmed) return@launch
+                viewModel.handleDpiApply(context)
+            }
+        },
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+        enabled = state.tempDpi != state.currentDpi,
+        colors = ButtonDefaults.textButtonColorsPrimary(),
     )
 }
 
