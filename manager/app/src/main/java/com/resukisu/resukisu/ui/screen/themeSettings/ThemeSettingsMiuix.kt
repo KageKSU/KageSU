@@ -42,7 +42,6 @@ import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.rounded.Animation
 import androidx.compose.material.icons.rounded.SwapHoriz
-import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -67,7 +66,6 @@ import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
 import com.resukisu.resukisu.R
 import com.resukisu.resukisu.ui.component.ConfirmResult
-import com.resukisu.resukisu.ui.component.KeyPointSlider
 import com.resukisu.resukisu.ui.component.rememberConfirmDialog
 import com.resukisu.resukisu.ui.screen.themeSettings.component.LanguageSelectionDialog
 import com.resukisu.resukisu.ui.screen.themeSettings.util.restartActivity
@@ -94,6 +92,7 @@ import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.ScrollBehavior
+import top.yukonga.miuix.kmp.basic.Slider
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
@@ -528,11 +527,12 @@ private fun DpiSliderControlsMiuix(
     val cancelText = stringResource(R.string.cancel)
     val sliderValue by animateFloatAsState(targetValue = state.tempDpi.toFloat(), label = "DPI Slider")
 
-    KeyPointSlider(
+    Slider(
         value = sliderValue,
         onValueChange = { newValue -> viewModel.updateTempDpi(newValue.toInt()) },
         modifier = Modifier.fillMaxWidth(),
         valueRange = 160f..600f,
+        showKeyPoints = true,
         keyPoints = state.dpiPresets.map { (_, dpi) -> dpi.toFloat() },
     )
 
