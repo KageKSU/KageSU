@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,63 +24,41 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoMode
-import androidx.compose.material.icons.filled.Backup
-import androidx.compose.material.icons.filled.CleaningServices
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.RestoreFromTrash
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuAnchorType
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.PrimaryScrollableTabRow
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.resukisu.resukisu.R
-import com.resukisu.resukisu.ui.LocalUiMode
-import com.resukisu.resukisu.ui.UiMode
-import com.resukisu.resukisu.ui.component.settings.AppBackButton
 import com.resukisu.resukisu.ui.navigation.LocalNavigator
 import com.resukisu.resukisu.ui.susfs.component.AddAppPathDialog
 import com.resukisu.resukisu.ui.susfs.component.AddKstatStaticallyDialog
@@ -88,57 +69,41 @@ import com.resukisu.resukisu.ui.susfs.component.KstatConfigContent
 import com.resukisu.resukisu.ui.susfs.component.PathSettingsContent
 import com.resukisu.resukisu.ui.susfs.component.SusLoopPathsContent
 import com.resukisu.resukisu.ui.susfs.component.SusMapsContent
-import com.resukisu.resukisu.ui.susfs.component.SusMountHidingControlCard
 import com.resukisu.resukisu.ui.susfs.component.SusPathsContent
 import com.resukisu.resukisu.ui.susfs.util.SuSFSManager
 import com.resukisu.resukisu.ui.susfs.util.SuSFSManager.isSusVersion1512
 import com.resukisu.resukisu.ui.susfs.util.SuSFSManager.isSusVersion158
 import com.resukisu.resukisu.ui.susfs.util.SuSFSManager.isSusVersion159
-import com.resukisu.resukisu.ui.theme.CardConfig
+import com.resukisu.resukisu.ui.theme.LocalEnableBlur
+import com.resukisu.resukisu.ui.util.BlurredBar
 import com.resukisu.resukisu.ui.util.getSuSFSVersion
-import com.resukisu.resukisu.ui.util.isAbDevice
+import com.resukisu.resukisu.ui.util.rememberBlurBackdrop
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-// TODO REFACTOR!!! there are fully shit, we should refactor them after susfs-ksud branch merge
-/**
- * 标签页枚举类
- */
-enum class SuSFSTab(val displayNameRes: Int) {
-    BASIC_SETTINGS(R.string.susfs_tab_basic_settings),
-    SUS_PATHS(R.string.susfs_tab_sus_paths),
-    SUS_LOOP_PATHS(R.string.susfs_tab_sus_loop_paths),
-    SUS_MAPS(R.string.susfs_tab_sus_maps),
-    KSTAT_CONFIG(R.string.susfs_tab_kstat_config),
-    PATH_SETTINGS(R.string.susfs_tab_path_settings),
-    ENABLED_FEATURES(R.string.susfs_tab_enabled_features);
-
-    companion object {
-        fun getAllTabs(isSusVersion158: Boolean, isSusVersion159: Boolean, isSusVersion1512: Boolean): List<SuSFSTab> {
-            return when {
-                isSusVersion1512 -> entries.toList()
-                isSusVersion159 -> entries.filter { it != SUS_MAPS}
-                isSusVersion158 -> entries.filter { it != SUS_LOOP_PATHS && it != SUS_MAPS }
-                else -> entries.filter { it != PATH_SETTINGS && it != SUS_LOOP_PATHS && it != SUS_MAPS }
-            }
-        }
-    }
-}
+import top.yukonga.miuix.kmp.basic.Icon as MiuixIcon
+import top.yukonga.miuix.kmp.basic.IconButton as MiuixIconButton
+import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
+import top.yukonga.miuix.kmp.basic.Scaffold as MiuixScaffold
+import top.yukonga.miuix.kmp.basic.TopAppBar as MiuixTopAppBar
+import top.yukonga.miuix.kmp.blur.layerBackdrop
+import top.yukonga.miuix.kmp.icon.MiuixIcons
+import top.yukonga.miuix.kmp.icon.extended.Back
+import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme as MiuixColorScheme
 
 /**
- * SuSFS配置界面
+ * Miuix rendering of ReSukiSU's SuSFS config. SCAFFOLDING STEP: miuix chrome
+ * (Scaffold + collapsing TopAppBar + blur + a scrollable miuix-styled tab row +
+ * per-tab bottom bar) wrapping ReSukiSU's own state + SuSFSManager backend and,
+ * for now, the existing content composables. Per-tab content is being converted
+ * to native miuix widgets in follow-up commits. Material path is untouched.
  */
-@SuppressLint("SdCardPath", "AutoboxingStateCreation")
 @OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("SdCardPath", "AutoboxingStateCreation")
 @Composable
-fun SuSFSConfigScreen() {
-    if (LocalUiMode.current == UiMode.Miuix) {
-        SuSFSConfigScreenMiuix()
-        return
-    }
+fun SuSFSConfigScreenMiuix() {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -879,58 +844,37 @@ fun SuSFSConfigScreen() {
         isLoading = isLoading,
         isDestructive = true
     )
+    val enableBlur = LocalEnableBlur.current
+    val scrollBehavior = MiuixScrollBehavior()
+    val backdrop = rememberBlurBackdrop(enableBlur)
+    val barColor = if (backdrop != null) Color.Transparent else MiuixColorScheme.surface
+    val navigator = LocalNavigator.current
 
-    // 主界面布局
-    Scaffold(
+    MiuixScaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(20.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.susfs_config_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                },
-                navigationIcon = {
-                    val navigator = LocalNavigator.current
-                    AppBackButton(
-                        onClick = {
-                            if (!isNavigating) {
-                                isNavigating = true
-                                navigator.pop()
-                            }
+            BlurredBar(backdrop) {
+                MiuixTopAppBar(
+                    color = barColor,
+                    title = stringResource(R.string.susfs_config_title),
+                    navigationIcon = {
+                        MiuixIconButton(onClick = { if (!isNavigating) { isNavigating = true; navigator.pop() } }) {
+                            val ld = LocalLayoutDirection.current
+                            MiuixIcon(
+                                modifier = Modifier.graphicsLayer { if (ld == LayoutDirection.Rtl) scaleX = -1f },
+                                imageVector = MiuixIcons.Back,
+                                tint = MiuixColorScheme.onSurface,
+                                contentDescription = null,
+                            )
                         }
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = CardConfig.cardAlpha),
-                    scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = CardConfig.cardAlpha)
-                ),
-                windowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
-            )
+                    },
+                    scrollBehavior = scrollBehavior,
+                )
+            }
         },
         bottomBar = {
-            // 统一的底部按钮栏
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                color = Color.Transparent,
-                shadowElevation = 0.dp
-            ) {
+            Surface(color = Color.Transparent) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
+                    modifier = Modifier.fillMaxWidth().padding(12.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     when (selectedTab) {
@@ -1132,46 +1076,44 @@ fun SuSFSConfigScreen() {
                 }
             }
         },
+        popupHost = { },
         contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 12.dp)
-        ) {
-            // 标签页
-            PrimaryScrollableTabRow(
-                selectedTabIndex = allTabs.indexOf(selectedTab),
-                modifier = Modifier.fillMaxWidth(),
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.onSurface,
-                edgePadding = 0.dp
+        Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .padding(innerPadding)
+                    .padding(horizontal = 12.dp)
             ) {
-                allTabs.forEach { tab ->
-                    Tab(
-                        selected = selectedTab == tab,
-                        onClick = { selectedTab = tab },
-                        text = {
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+                ) {
+                    allTabs.forEach { tab ->
+                        val selected = selectedTab == tab
+                        Surface(
+                            onClick = { selectedTab = tab },
+                            color = if (selected) MiuixColorScheme.primary else MiuixColorScheme.surfaceContainerHigh,
+                            shape = RoundedCornerShape(20.dp),
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
                             Text(
                                 text = stringResource(tab.displayNameRes),
+                                color = if (selected) MiuixColorScheme.onPrimary else MiuixColorScheme.onSurface,
+                                fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+                                fontSize = 13.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                fontSize = 13.sp,
-                                fontWeight = if (selectedTab == tab) FontWeight.Bold else FontWeight.Normal
+                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
                             )
-                        },
-                        modifier = Modifier.padding(horizontal = 2.dp)
-                    )
+                        }
+                    }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-            // 标签页内容
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
                 when (selectedTab) {
                     SuSFSTab.BASIC_SETTINGS -> {
                         BasicSettingsContent(
@@ -1388,684 +1330,8 @@ fun SuSFSConfigScreen() {
                         )
                     }
                 }
-            }
-        }
-    }
-}
-
-/**
- * 基本设置内容组件
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun BasicSettingsContent(
-    unameValue: String,
-    onUnameValueChange: (String) -> Unit,
-    buildTimeValue: String,
-    onBuildTimeValueChange: (String) -> Unit,
-    executeInPostFsData: Boolean,
-    onExecuteInPostFsDataChange: (Boolean) -> Unit,
-    autoStartEnabled: Boolean,
-    canEnableAutoStart: Boolean,
-    isLoading: Boolean,
-    onAutoStartToggle: (Boolean) -> Unit,
-    onShowSlotInfo: () -> Unit,
-    context: Context,
-    onShowBackupDialog: () -> Unit,
-    onShowRestoreDialog: () -> Unit,
-    enableHideBl: Boolean,
-    onEnableHideBlChange: (Boolean) -> Unit,
-    enableCleanupResidue: Boolean,
-    onEnableCleanupResidueChange: (Boolean) -> Unit,
-    enableAvcLogSpoofing: Boolean,
-    onEnableAvcLogSpoofingChange: (Boolean) -> Unit,
-    hideSusMountsForAllProcs: Boolean,
-    onHideSusMountsForAllProcsChange: (Boolean) -> Unit,
-) {
-    var scriptLocationExpanded by remember { mutableStateOf(false) }
-    val isAbDevice = produceState(initialValue = false) {
-        value = isAbDevice()
-    }.value
-    val isSusVersion159 = isSusVersion159()
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        // 说明卡片
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
-            ),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(12.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.susfs_config_description),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-                Text(
-                    text = stringResource(R.string.susfs_config_description_text),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = 16.sp
-                )
-            }
-        }
-
-        // Uname输入框
-        OutlinedTextField(
-            value = unameValue,
-            onValueChange = onUnameValueChange,
-            label = { Text(stringResource(R.string.susfs_uname_label)) },
-            placeholder = { Text(stringResource(R.string.susfs_uname_placeholder)) },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isLoading,
-            singleLine = true,
-            shape = RoundedCornerShape(8.dp)
-        )
-
-        // 构建时间伪装输入框
-        OutlinedTextField(
-            value = buildTimeValue,
-            onValueChange = onBuildTimeValueChange,
-            label = { Text(stringResource(R.string.susfs_build_time_label)) },
-            placeholder = { Text(stringResource(R.string.susfs_build_time_placeholder)) },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isLoading,
-            singleLine = true,
-            shape = RoundedCornerShape(8.dp)
-        )
-
-        // 执行位置选择
-        ExposedDropdownMenuBox(
-            expanded = scriptLocationExpanded,
-            onExpandedChange = { scriptLocationExpanded = !scriptLocationExpanded }
-        ) {
-            OutlinedTextField(
-                value = if (executeInPostFsData)
-                    stringResource(R.string.susfs_execution_location_post_fs_data)
-                else
-                    stringResource(R.string.susfs_execution_location_service),
-                onValueChange = { },
-                readOnly = true,
-                label = { Text(stringResource(R.string.susfs_execution_location_label)) },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = scriptLocationExpanded) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable, true),
-                shape = RoundedCornerShape(8.dp),
-                enabled = !isLoading
-            )
-            ExposedDropdownMenu(
-                expanded = scriptLocationExpanded,
-                onDismissRequest = { scriptLocationExpanded = false }
-            ) {
-                DropdownMenuItem(
-                    text = {
-                        Column {
-                            Text(stringResource(R.string.susfs_execution_location_service))
-                            Text(
-                                stringResource(R.string.susfs_execution_location_service_description),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    },
-                    onClick = {
-                        onExecuteInPostFsDataChange(false)
-                        scriptLocationExpanded = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = {
-                        Column {
-                            Text(stringResource(R.string.susfs_execution_location_post_fs_data))
-                            Text(
-                                stringResource(R.string.susfs_execution_location_post_fs_data_description),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    },
-                    onClick = {
-                        onExecuteInPostFsDataChange(true)
-                        scriptLocationExpanded = false
-                    }
-                )
-            }
-        }
-
-        // 当前值显示
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.susfs_current_value, SuSFSManager.getUnameValue(context)),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-                text = stringResource(R.string.susfs_current_build_time, SuSFSManager.getBuildTimeValue(context)),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-                text = stringResource(R.string.susfs_current_execution_location, if (SuSFSManager.getExecuteInPostFsData(context)) "Post-FS-Data" else "Service"),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-
-        // 开机自启动开关
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = if (canEnableAutoStart) {
-                    MaterialTheme.colorScheme.surface
-                } else {
-                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                }
-            ),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AutoMode,
-                            contentDescription = null,
-                            tint = if (canEnableAutoStart) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                            },
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.susfs_autostart_title),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Medium,
-                            color = if (canEnableAutoStart) {
-                                MaterialTheme.colorScheme.onSurface
-                            } else {
-                                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = if (canEnableAutoStart) {
-                            stringResource(R.string.susfs_autostart_description)
-                        } else {
-                            stringResource(R.string.susfs_autostart_requirement)
-                        },
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                            alpha = if (canEnableAutoStart) 1f else 0.5f
-                        ),
-                        lineHeight = 14.sp
-                    )
-                }
-                Switch(
-                    checked = autoStartEnabled,
-                    onCheckedChange = onAutoStartToggle,
-                    enabled = !isLoading && canEnableAutoStart
-                )
-            }
-        }
-
-        // 隐藏BL脚本开关
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Security,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.hide_bl_script),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = stringResource(R.string.hide_bl_script_description),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        lineHeight = 14.sp
-                    )
-                }
-                Switch(
-                    checked = enableHideBl,
-                    onCheckedChange = onEnableHideBlChange,
-                    enabled = !isLoading
-                )
-            }
-        }
-
-        // 清理残留脚本开关
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.CleaningServices,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.cleanup_residue),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = stringResource(R.string.cleanup_residue_description),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        lineHeight = 14.sp
-                    )
-                }
-                Switch(
-                    checked = enableCleanupResidue,
-                    onCheckedChange = onEnableCleanupResidueChange,
-                    enabled = !isLoading
-                )
-            }
-        }
-
-        // AVC日志欺骗开关（仅在1.5.9+版本显示）
-        if (isSusVersion159) {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                ),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.VisibilityOff,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(18.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = stringResource(R.string.avc_log_spoofing),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Medium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(6.dp))
-                        Text(
-                            text = stringResource(R.string.avc_log_spoofing_description),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            lineHeight = 14.sp
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = stringResource(R.string.avc_log_spoofing_warning),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.secondary,
-                            lineHeight = 12.sp
-                        )
-                    }
-                    Switch(
-                        checked = enableAvcLogSpoofing,
-                        onCheckedChange = onEnableAvcLogSpoofingChange,
-                        enabled = !isLoading
-                    )
                 }
             }
         }
-
-        // 对所有进程隐藏sus挂载开关（仅在1.5.8+版本显示）
-        val isSusVersion158 = isSusVersion158()
-        if (isSusVersion158) {
-            SusMountHidingControlCard(
-                hideSusMountsForAllProcs = hideSusMountsForAllProcs,
-                isLoading = isLoading,
-                onToggleHiding = onHideSusMountsForAllProcsChange
-            )
-        }
-
-        // 槽位信息按钮
-        if (isAbDevice) {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                ),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Info,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.susfs_slot_info_title),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                    Text(
-                        text = stringResource(R.string.susfs_slot_info_description),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        lineHeight = 14.sp
-                    )
-
-                    OutlinedButton(
-                        onClick = onShowSlotInfo,
-                        enabled = !isLoading,
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Storage,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            stringResource(R.string.susfs_slot_info_title),
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                }
-            }
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            // 备份按钮
-            OutlinedButton(
-                onClick = onShowBackupDialog,
-                enabled = !isLoading,
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(40.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Backup,
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    stringResource(R.string.susfs_backup_title),
-                    fontWeight = FontWeight.Medium
-                )
-            }
-            // 还原按钮
-            OutlinedButton(
-                onClick = onShowRestoreDialog,
-                enabled = !isLoading,
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(40.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Restore,
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    stringResource(R.string.restore),
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        }
-    }
-}
-
-/**
- * 槽位信息对话框
- */
-@Composable
-internal fun SlotInfoDialog(
-    showDialog: Boolean,
-    onDismiss: () -> Unit,
-    slotInfoList: List<SuSFSManager.SlotInfo>,
-    currentActiveSlot: String,
-    isLoadingSlotInfo: Boolean,
-    onRefresh: () -> Unit,
-    onUseUname: (String) -> Unit,
-    onUseBuildTime: (String) -> Unit
-) {
-    val isAbDevice = produceState(initialValue = false) {
-        value = isAbDevice()
-    }.value
-
-    if (showDialog && isAbDevice) {
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            title = {
-                Text(
-                    text = stringResource(R.string.susfs_slot_info_title),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            text = {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.susfs_current_active_slot, currentActiveSlot),
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    if (slotInfoList.isNotEmpty()) {
-                        slotInfoList.forEach { slotInfo ->
-                            Card(
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = if (slotInfo.slotName == currentActiveSlot) {
-                                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-                                    } else {
-                                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                                    }
-                                ),
-                                shape = RoundedCornerShape(8.dp)
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(12.dp),
-                                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Storage,
-                                            contentDescription = null,
-                                            tint = if (slotInfo.slotName == currentActiveSlot) {
-                                                MaterialTheme.colorScheme.primary
-                                            } else {
-                                                MaterialTheme.colorScheme.onSurfaceVariant
-                                            },
-                                            modifier = Modifier.size(16.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(6.dp))
-                                        Text(
-                                            text = slotInfo.slotName,
-                                            style = MaterialTheme.typography.titleMedium,
-                                            fontWeight = FontWeight.Bold,
-                                            color = if (slotInfo.slotName == currentActiveSlot) {
-                                                MaterialTheme.colorScheme.primary
-                                            } else {
-                                                MaterialTheme.colorScheme.onSurface
-                                            }
-                                        )
-                                        if (slotInfo.slotName == currentActiveSlot) {
-                                            Spacer(modifier = Modifier.width(6.dp))
-                                            Surface(
-                                                shape = RoundedCornerShape(4.dp),
-                                                color = MaterialTheme.colorScheme.primary
-                                            ) {
-                                                Text(
-                                                    text = stringResource(R.string.susfs_slot_current_badge),
-                                                    style = MaterialTheme.typography.labelSmall,
-                                                    color = MaterialTheme.colorScheme.onPrimary,
-                                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                                                )
-                                            }
-                                        }
-                                    }
-                                    Text(
-                                        text = stringResource(R.string.susfs_slot_uname, slotInfo.uname),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                    Text(
-                                        text = stringResource(R.string.susfs_slot_build_time, slotInfo.buildTime),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                    ) {
-                                        Button(
-                                            onClick = { onUseUname(slotInfo.uname) },
-                                            modifier = Modifier.weight(1f),
-                                            shape = RoundedCornerShape(6.dp)
-                                        ) {
-                                            Text(stringResource(R.string.susfs_slot_use_uname), fontSize = 12.sp)
-                                        }
-                                        Button(
-                                            onClick = { onUseBuildTime(slotInfo.buildTime) },
-                                            modifier = Modifier.weight(1f),
-                                            shape = RoundedCornerShape(6.dp)
-                                        ) {
-                                            Text(stringResource(R.string.susfs_slot_use_build_time), fontSize = 12.sp)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        Text(
-                            text = stringResource(R.string.susfs_slot_info_unavailable),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
-            },
-            confirmButton = {
-                Button(
-                    onClick = onRefresh,
-                    enabled = !isLoadingSlotInfo,
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(stringResource(R.string.refresh))
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = onDismiss,
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(stringResource(R.string.close))
-                }
-            },
-            shape = RoundedCornerShape(12.dp)
-        )
     }
 }
