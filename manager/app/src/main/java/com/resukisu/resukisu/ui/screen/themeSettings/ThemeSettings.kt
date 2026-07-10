@@ -292,6 +292,21 @@ fun ThemeSettingsScreen() {
         scrollBehavior.state.heightOffset = scrollBehavior.state.heightOffsetLimit
     }
 
+    if (LocalUiMode.current == UiMode.Miuix) {
+        ThemeSettingsScreenMiuix(
+            settingsState = settingsState,
+            settingsViewModel = settingsViewModel,
+            homeUiState = homeUiState,
+            homeViewModel = homeViewModel,
+            moduleUiState = moduleUiState,
+            moduleViewModel = moduleViewModel,
+            pickImageLauncher = pickImageLauncher,
+            coroutineScope = coroutineScope,
+            onBack = { navigator.pop() },
+        )
+        return
+    }
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -482,7 +497,7 @@ fun PredictiveBackAnimationDirectionWidget(
 }
 
 @Composable
-private fun AppearanceSettings(
+internal fun AppearanceSettings(
     state: SettingsUiState,
     viewModel: SettingsViewModel,
     pickImageLauncher: ManagedActivityResultLauncher<String, Uri?>,
@@ -661,7 +676,7 @@ private fun AppearanceSettings(
 }
 
 @Composable
-private fun CustomizationSettings(
+internal fun CustomizationSettings(
     homeUiState: HomeUiState,
     moduleUiState: ModuleUiState,
     settingsUiState: SettingsUiState,
