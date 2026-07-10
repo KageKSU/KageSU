@@ -1,9 +1,7 @@
-package com.resukisu.resukisu.ui.screen.install
+package com.resukisu.resukisu.ui.screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -40,7 +38,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.resukisu.resukisu.R
-import com.resukisu.resukisu.ui.component.dialog.rememberConfirmDialog
 import com.resukisu.resukisu.ui.theme.LocalEnableBlur
 import com.resukisu.resukisu.ui.util.BlurredBar
 import com.resukisu.resukisu.ui.util.LkmSelection
@@ -53,6 +50,7 @@ import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.ScrollBehavior
+import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.blur.LayerBackdrop
@@ -62,8 +60,6 @@ import top.yukonga.miuix.kmp.icon.basic.ArrowRight
 import top.yukonga.miuix.kmp.icon.extended.Back
 import top.yukonga.miuix.kmp.icon.extended.Close
 import top.yukonga.miuix.kmp.icon.extended.ConvertFile
-import top.yukonga.miuix.kmp.icon.extended.ExpandLess
-import top.yukonga.miuix.kmp.icon.extended.ExpandMore
 import top.yukonga.miuix.kmp.icon.extended.MoveFile
 import top.yukonga.miuix.kmp.preference.CheckboxPreference
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
@@ -72,13 +68,30 @@ import top.yukonga.miuix.kmp.utils.overScrollVertical
 import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
 /**
+ * Miuix rendering of ReSukiSU's install flow. Keeps ReSukiSU's install methods
+ * (SelectFile / DirectInstall / DirectInstallToInactiveSlot / HorizonKernel) and
+ * flash logic; only the presentation is borrowed from tiann's Miuix screen.
+ *
  * @author weishu
  * @date 2024/3/12.
  */
 @Composable
 internal fun InstallScreenMiuix(
-    uiState: InstallUiState,
-    actions: InstallScreenActions,
+    isGKI: Boolean,
+    installMethod: InstallMethod?,
+    installMethodOptions: List<InstallMethod>,
+    lkmSelection: LkmSelection,
+    displayPartitions: List<String>,
+    partitionSelectionIndex: Int,
+    slotSuffix: String,
+    canSelectPartition: Boolean,
+    horizonSlot: String?,
+    onBack: () -> Unit,
+    onMethodClick: (InstallMethod) -> Unit,
+    onUploadLkm: () -> Unit,
+    onClearLkm: () -> Unit,
+    onSelectPartition: (Int) -> Unit,
+    onNext: () -> Unit,
 ) {
     val enableBlur = LocalEnableBlur.current
     val scrollBehavior = MiuixScrollBehavior()
@@ -89,7 +102,7 @@ internal fun InstallScreenMiuix(
     Scaffold(
         topBar = {
             TopBar(
-                onBack = actions.onBack,
+                onBack = onBack,
                 scrollBehavior = scrollBehavior,
                 backdrop = backdrop,
                 barColor = barColor,
@@ -115,13 +128,13 @@ internal fun InstallScreenMiuix(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         SelectInstallMethod(
-                            state = uiState,
-                            onSelected = actions.onSelectMethod,
-                            onSelectBootImage = actions.onSelectBootImage,
+                            options = installMethodOptions,
+                            selectedMethod = installMethod,
+                            onClick = onMethodClick,
                         )
                     }
                     AnimatedVisibility(
-                        visible = uiState.canSelectPartition,
+                        visible = canSelectPartition,
                         enter = expandVertically(),
                         exit = shrinkVertically()
                     ) {
@@ -131,10 +144,10 @@ internal fun InstallScreenMiuix(
                                 .padding(top = 12.dp),
                         ) {
                             OverlayDropdownPreference(
-                                items = uiState.displayPartitions,
-                                selectedIndex = uiState.partitionSelectionIndex,
-                                title = "${stringResource(R.string.install_select_partition)} (${uiState.slotSuffix})",
-                                onSelectedIndexChange = actions.onSelectPartition,
+                                items = displayPartitions,
+                                selectedIndex = partitionSelectionIndex,
+                                title = "${stringResource(R.string.install_select_partition)} (${slotSuffix})",
+                                onSelectedIndexChange = onSelectPartition,
                                 startAction = {
                                     Icon(
                                         MiuixIcons.ConvertFile,
@@ -146,106 +159,68 @@ internal fun InstallScreenMiuix(
                             )
                         }
                     }
-                    AnimatedVisibility(
-                        visible = uiState.canForceBackup,
-                        enter = expandVertically(),
-                        exit = shrinkVertically()
-                    ) {
+                    if (isGKI) {
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 12.dp),
                         ) {
-                            CheckboxPreference(
-                                title = stringResource(id = R.string.install_force_backup),
-                                checked = uiState.forceBackup,
-                                summary = stringResource(id = R.string.install_force_backup_summary),
-                                onCheckedChange = actions.onSelectForceBackup
+                            BasicComponent(
+                                title = stringResource(id = R.string.install_upload_lkm_file),
+                                summary = (lkmSelection as? LkmSelection.LkmUri)?.let {
+                                    stringResource(id = R.string.selected_lkm, it.uri.lastPathSegment ?: "(file)")
+                                },
+                                onClick = onUploadLkm,
+                                startAction = {
+                                    Icon(
+                                        MiuixIcons.MoveFile,
+                                        tint = colorScheme.onSurface,
+                                        modifier = Modifier.padding(end = 12.dp),
+                                        contentDescription = null
+                                    )
+                                },
+                                endActions = {
+                                    if (lkmSelection is LkmSelection.LkmUri) {
+                                        IconButton(onClick = onClearLkm) {
+                                            Icon(
+                                                MiuixIcons.Close,
+                                                modifier = Modifier.size(16.dp),
+                                                contentDescription = stringResource(android.R.string.cancel),
+                                                tint = colorScheme.onSurfaceVariantActions
+                                            )
+                                        }
+                                    } else {
+                                        val layoutDirection = LocalLayoutDirection.current
+                                        Icon(
+                                            modifier = Modifier
+                                                .size(width = 10.dp, height = 16.dp)
+                                                .graphicsLayer {
+                                                    scaleX = if (layoutDirection == LayoutDirection.Rtl) -1f else 1f
+                                                }
+                                                .align(Alignment.CenterVertically),
+                                            imageVector = MiuixIcons.Basic.ArrowRight,
+                                            contentDescription = null,
+                                            tint = colorScheme.onSurfaceVariantActions,
+                                        )
+                                    }
+                                }
                             )
                         }
                     }
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp),
-                    ) {
-                        BasicComponent(
-                            title = stringResource(id = R.string.install_upload_lkm_file),
-                            summary = (uiState.lkmSelection as? LkmSelection.LkmUri)?.let {
-                                stringResource(id = R.string.selected_lkm, it.uri.lastPathSegment ?: "(file)")
-                            },
-                            onClick = actions.onUploadLkm,
-                            startAction = {
-                                Icon(
-                                    MiuixIcons.MoveFile,
-                                    tint = colorScheme.onSurface,
-                                    modifier = Modifier.padding(end = 12.dp),
-                                    contentDescription = null
-                                )
-                            },
-                            endActions = {
-                                if (uiState.lkmSelection is LkmSelection.LkmUri) {
-                                    IconButton(onClick = actions.onClearLkm) {
-                                        Icon(
-                                            MiuixIcons.Close,
-                                            modifier = Modifier.size(16.dp),
-                                            contentDescription = stringResource(android.R.string.cancel),
-                                            tint = colorScheme.onSurfaceVariantActions
-                                        )
-                                    }
-                                } else {
-                                    val layoutDirection = LocalLayoutDirection.current
-                                    Icon(
-                                        modifier = Modifier
-                                            .size(width = 10.dp, height = 16.dp)
-                                            .graphicsLayer {
-                                                scaleX = if (layoutDirection == LayoutDirection.Rtl) -1f else 1f
-                                            }
-                                            .align(Alignment.CenterVertically),
-                                        imageVector = MiuixIcons.Basic.ArrowRight,
-                                        contentDescription = null,
-                                        tint = colorScheme.onSurfaceVariantActions,
-                                    )
-                                }
-                            }
-                        )
-                    }
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp),
-                    ) {
-                        BasicComponent(
-                            title = stringResource(id = R.string.advanced_options),
-                            onClick = actions.onAdvancedOptionsClicked,
-                            endActions = {
-                                Icon(
-                                    if (uiState.advancedOptionsShown) MiuixIcons.ExpandLess else MiuixIcons.ExpandMore,
-                                    modifier = Modifier.size(16.dp),
-                                    tint = colorScheme.onSurfaceVariantActions,
-                                    contentDescription = stringResource(R.string.expand),
-                                )
-                            }
-                        )
-                        AnimatedVisibility(
-                            visible = uiState.advancedOptionsShown,
-                            enter = expandVertically() + fadeIn(),
-                            exit = shrinkVertically() + fadeOut()
+                    horizonSlot?.let { slot ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp),
                         ) {
-                            Column {
-                                CheckboxPreference(
-                                    title = stringResource(id = R.string.allow_shell),
-                                    checked = uiState.allowShell,
-                                    summary = stringResource(id = R.string.allow_shell_summary),
-                                    onCheckedChange = actions.onSelectAllowShell
-                                )
-                                CheckboxPreference(
-                                    title = stringResource(id = R.string.enable_adb),
-                                    checked = uiState.enableAdb,
-                                    summary = stringResource(id = R.string.enable_adb_summary),
-                                    onCheckedChange = actions.onSelectEnableAdb
-                                )
-                            }
+                            Text(
+                                text = stringResource(
+                                    id = R.string.selected_slot,
+                                    if (slot == "a") stringResource(id = R.string.slot_a)
+                                    else stringResource(id = R.string.slot_b)
+                                ),
+                                modifier = Modifier.padding(16.dp),
+                            )
                         }
                     }
                     TextButton(
@@ -253,9 +228,9 @@ internal fun InstallScreenMiuix(
                             .fillMaxWidth()
                             .padding(top = 12.dp),
                         text = stringResource(id = R.string.install_next),
-                        enabled = uiState.installMethod != null,
+                        enabled = installMethod != null,
                         colors = ButtonDefaults.textButtonColorsPrimary(),
-                        onClick = actions.onNext
+                        onClick = onNext
                     )
                     Spacer(
                         Modifier.height(
@@ -271,35 +246,19 @@ internal fun InstallScreenMiuix(
 
 @Composable
 private fun SelectInstallMethod(
-    state: InstallUiState,
-    onSelected: (InstallMethod) -> Unit,
-    onSelectBootImage: () -> Unit,
+    options: List<InstallMethod>,
+    selectedMethod: InstallMethod?,
+    onClick: (InstallMethod) -> Unit,
 ) {
-    val confirmDialog = rememberConfirmDialog(
-        onConfirm = {
-            onSelected(InstallMethod.DirectInstallToInactiveSlot)
-        }
-    )
-    val dialogTitle = stringResource(id = android.R.string.dialog_alert_title)
-    val dialogContent = stringResource(id = R.string.install_inactive_slot_warning)
-
-    val onClick = { option: InstallMethod ->
-        when (option) {
-            is InstallMethod.SelectFile -> onSelectBootImage()
-            is InstallMethod.DirectInstall -> onSelected(option)
-            is InstallMethod.DirectInstallToInactiveSlot -> confirmDialog.showConfirm(dialogTitle, dialogContent)
-        }
-    }
-
     Column {
-        state.installMethodOptions.forEach { option ->
+        options.forEach { option ->
             val interactionSource = remember { MutableInteractionSource() }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .toggleable(
-                        value = option.javaClass == state.installMethod?.javaClass,
+                        value = option.javaClass == selectedMethod?.javaClass,
                         onValueChange = { onClick(option) },
                         role = Role.RadioButton,
                         indication = LocalIndication.current,
@@ -309,7 +268,7 @@ private fun SelectInstallMethod(
                 CheckboxPreference(
                     title = stringResource(id = option.label),
                     summary = option.summary,
-                    checked = option.javaClass == state.installMethod?.javaClass,
+                    checked = option.javaClass == selectedMethod?.javaClass,
                     onCheckedChange = { onClick(option) },
                 )
             }
