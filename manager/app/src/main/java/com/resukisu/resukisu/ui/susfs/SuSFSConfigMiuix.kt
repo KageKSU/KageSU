@@ -1116,7 +1116,7 @@ fun SuSFSConfigScreenMiuix() {
                 Box(modifier = Modifier.fillMaxSize()) {
                 when (selectedTab) {
                     SuSFSTab.BASIC_SETTINGS -> {
-                        BasicSettingsContent(
+                        BasicSettingsContentMiuix(
                             unameValue = unameValue,
                             onUnameValueChange = { unameValue = it },
                             buildTimeValue = buildTimeValue,
