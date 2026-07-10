@@ -12,23 +12,15 @@ import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.LocalPolice
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,38 +34,42 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogProperties
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.resukisu.resukisu.R
-import com.resukisu.resukisu.ui.component.WarningCard
+import com.resukisu.resukisu.ui.component.miuix.WarningCard
 import com.resukisu.resukisu.ui.navigation.LocalNavigator
 import com.resukisu.resukisu.ui.theme.LocalEnableBlur
 import com.resukisu.resukisu.ui.util.BlurredBar
 import com.resukisu.resukisu.ui.util.rememberBlurBackdrop
 import top.yukonga.miuix.kmp.basic.BasicComponent
+import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.Icon as MiuixIcon
+import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.ScrollBehavior
+import top.yukonga.miuix.kmp.basic.Text
+import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.blur.LayerBackdrop
 import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Back
+import top.yukonga.miuix.kmp.overlay.OverlayDialog
 import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
 import top.yukonga.miuix.kmp.utils.overScrollVertical
 import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
 /**
  * Miuix rendering of ReSukiSU's open-source-license screen. Renders the
- * AboutLibraries data with a native miuix LazyColumn (so it gets the scroll-end
- * haptic + overscroll like every other Miuix screen); the per-library detail
- * dialog stays a Material3 AlertDialog.
+ * AboutLibraries data with a native miuix LazyColumn (scroll-end haptic +
+ * overscroll like every other Miuix screen) and shows the per-library detail
+ * in a miuix OverlayDialog.
  */
 @Composable
 fun OpenSourceLicenseScreenMiuix() {
@@ -131,104 +127,86 @@ fun OpenSourceLicenseScreenMiuix() {
                     }
                 }
             }
-
-            if (selectedLibrary != null) {
-                val library = selectedLibrary!!
-                val uriHandler = LocalUriHandler.current
-                AlertDialog(
-                    onDismissRequest = { selectedLibrary = null },
-                    confirmButton = {
-                        Button(onClick = { selectedLibrary = null }) {
-                            Text(stringResource(R.string.close))
-                        }
-                    },
-                    dismissButton = {
-                        library.website.let { url ->
-                            OutlinedButton(onClick = {
-                                uriHandler.openUri(url!!)
-                            }) {
-                                Text(stringResource(R.string.visit_home_page))
-                            }
-                        }
-                    },
-                    title = {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = library.name,
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-                        }
-                    },
-                    text = {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            item {
-                                WarningCard(
-                                    color = MaterialTheme.colorScheme.tertiary,
-                                    renderBackground = false,
-                                    icon = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.LocalPolice,
-                                            contentDescription = null,
-                                        )
-                                    },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    message = stringResource(
-                                        R.string.license,
-                                        library.licenses.joinToString(separator = ", ") { it.name }),
-                                )
-                            }
-
-                            items(library.licenses.toList()) { license ->
-                                OutlinedCard(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(16.dp),
-                                    colors = CardDefaults.outlinedCardColors(
-                                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
-                                    )
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(16.dp)
-                                    ) {
-                                        Row {
-                                            Text(
-                                                text = license.name,
-                                                style = MaterialTheme.typography.titleMedium,
-                                                color = MaterialTheme.colorScheme.primary,
-                                                modifier = Modifier
-                                                    .clip(RoundedCornerShape(8.dp))
-                                                    .clickable {
-                                                        license.url?.let { url ->
-                                                            uriHandler.openUri(url)
-                                                        }
-                                                    }
-                                            )
-                                        }
-
-                                        Spacer(modifier = Modifier.size(8.dp))
-
-                                        Text(
-                                            text = license.licenseContent
-                                                ?: stringResource(R.string.no_license_text),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    properties = DialogProperties(usePlatformDefaultWidth = false),
-                    modifier = Modifier.padding(24.dp)
-                )
-            }
         }
     }
+
+    // Keep the last-selected library composed through the dialog's exit animation.
+    val dialogLibrary = remember { mutableStateOf<Library?>(null) }
+    if (selectedLibrary != null) dialogLibrary.value = selectedLibrary
+    val lib = dialogLibrary.value
+    OverlayDialog(
+        show = selectedLibrary != null,
+        title = lib?.name ?: "",
+        onDismissRequest = { selectedLibrary = null },
+        content = {
+            if (lib != null) {
+                val uriHandler = LocalUriHandler.current
+                WarningCard(
+                    message = stringResource(
+                        R.string.license,
+                        lib.licenses.joinToString(separator = ", ") { it.name }
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
+                    color = colorScheme.tertiaryContainer,
+                )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 360.dp)
+                        .scrollEndHaptic()
+                        .overScrollVertical(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    overscrollEffect = null,
+                ) {
+                    items(lib.licenses.toList()) { license ->
+                        Card(modifier = Modifier.fillMaxWidth()) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = license.name,
+                                    color = colorScheme.primary,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .clickable {
+                                            license.url?.let { url -> uriHandler.openUri(url) }
+                                        }
+                                )
+                                Spacer(modifier = Modifier.size(8.dp))
+                                Text(
+                                    text = license.licenseContent
+                                        ?: stringResource(R.string.no_license_text),
+                                    color = colorScheme.onSurfaceVariantSummary,
+                                )
+                            }
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    lib.website?.let { url ->
+                        TextButton(
+                            text = stringResource(R.string.visit_home_page),
+                            onClick = { uriHandler.openUri(url) },
+                            modifier = Modifier.weight(1f),
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                    }
+                    TextButton(
+                        text = stringResource(R.string.close),
+                        onClick = { selectedLibrary = null },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.textButtonColorsPrimary(),
+                    )
+                }
+            }
+        }
+    )
 }
 
 @Composable
@@ -245,7 +223,7 @@ private fun TopBar(
             navigationIcon = {
                 IconButton(onClick = onBack) {
                     val layoutDirection = LocalLayoutDirection.current
-                    MiuixIcon(
+                    Icon(
                         modifier = Modifier.graphicsLayer {
                             if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                         },
