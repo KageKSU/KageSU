@@ -280,11 +280,13 @@ fun ThemeSettingsScreen() {
         settingsViewModel.initialize(context, systemIsDark)
     }
 
-    // 各种设置对话框
-    ThemeSettingsDialogs(
-        state = settingsState,
-        viewModel = settingsViewModel
-    )
+    // 各种设置对话框 (Material only — Miuix renders its own miuix dialogs)
+    if (LocalUiMode.current != UiMode.Miuix) {
+        ThemeSettingsDialogs(
+            state = settingsState,
+            viewModel = settingsViewModel
+        )
+    }
 
     val navigator = LocalNavigator.current
 

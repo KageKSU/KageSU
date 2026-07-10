@@ -1,10 +1,16 @@
 package com.resukisu.resukisu.ui.screen.themeSettings
 
 import android.annotation.SuppressLint
+import android.graphics.Color as AndroidColor
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -27,12 +33,21 @@ import androidx.compose.material.icons.filled.DesignServices
 import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Opacity
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Style
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.rounded.Animation
 import androidx.compose.material.icons.rounded.SwapHoriz
+import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -46,6 +61,8 @@ import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
 import com.resukisu.resukisu.R
+import com.resukisu.resukisu.ui.screen.themeSettings.component.LanguageSelectionDialog
+import com.resukisu.resukisu.ui.screen.themeSettings.util.restartActivity
 import com.resukisu.resukisu.ui.theme.BackgroundManager
 import com.resukisu.resukisu.ui.theme.LocalEnableBlur
 import com.resukisu.resukisu.ui.theme.ThemeConfig
@@ -60,6 +77,8 @@ import com.resukisu.resukisu.ui.viewmodel.PredictiveBackExitDirection
 import com.resukisu.resukisu.ui.viewmodel.SettingsUiState
 import com.resukisu.resukisu.ui.viewmodel.SettingsViewModel
 import kotlinx.coroutines.CoroutineScope
+import top.yukonga.miuix.kmp.basic.BasicComponent
+import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
@@ -67,11 +86,15 @@ import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.SmallTitle
+import top.yukonga.miuix.kmp.basic.Text
+import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.blur.LayerBackdrop
 import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Back
+import top.yukonga.miuix.kmp.overlay.OverlayDialog
+import top.yukonga.miuix.kmp.preference.ArrowPreference
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
@@ -200,6 +223,104 @@ internal fun ThemeSettingsScreenMiuix(
             }
         }
     }
+
+    // Miuix dialogs (the Material ThemeSettingsDialogs is gated off in Miuix mode).
+    if (settingsState.showThemeColorDialog) {
+        ThemeColorDialogMiuix(
+            currentSeedColor = ThemeConfig.seedColor,
+            onColorSelected = { seedColor ->
+                settingsViewModel.handleThemeColorChange(context, seedColor)
+                settingsViewModel.setThemeColorDialogVisible(false)
+            },
+            onDismiss = { settingsViewModel.setThemeColorDialogVisible(false) }
+        )
+    }
+    if (settingsState.showLanguageDialog) {
+        LanguageSelectionDialog(
+            onLanguageSelected = {
+                settingsViewModel.refreshCurrentLocale(context)
+                restartActivity(context)
+            },
+            onDismiss = { settingsViewModel.setLanguageDialogVisible(false) }
+        )
+    }
+}
+
+@Composable
+private fun ThemeColorDialogMiuix(
+    currentSeedColor: Int,
+    onColorSelected: (Int) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val initialHsv = remember(currentSeedColor) {
+        FloatArray(3).also { AndroidColor.colorToHSV(currentSeedColor, it) }
+    }
+    var hue by remember(currentSeedColor) { mutableFloatStateOf(initialHsv[0]) }
+    var saturation by remember(currentSeedColor) { mutableFloatStateOf(initialHsv[1]) }
+    var value by remember(currentSeedColor) { mutableFloatStateOf(initialHsv[2]) }
+    val selectedColor = AndroidColor.HSVToColor(floatArrayOf(hue, saturation, value))
+
+    OverlayDialog(
+        show = true,
+        title = stringResource(R.string.choose_theme_color),
+        onDismissRequest = onDismiss,
+        content = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(Color(selectedColor))
+                )
+                Spacer(modifier = Modifier.size(16.dp))
+                Text(text = "#%06X".format(selectedColor and 0x00FFFFFF))
+            }
+            ColorSliderMiuix("H", hue, 0f..360f) { hue = it }
+            ColorSliderMiuix("S", saturation, 0f..1f) { saturation = it }
+            ColorSliderMiuix("V", value, 0f..1f) { value = it }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp)
+            ) {
+                TextButton(
+                    text = stringResource(R.string.cancel),
+                    onClick = onDismiss,
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(modifier = Modifier.size(12.dp))
+                TextButton(
+                    text = stringResource(R.string.confirm),
+                    onClick = { onColorSelected(selectedColor) },
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.textButtonColorsPrimary(),
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun ColorSliderMiuix(
+    label: String,
+    value: Float,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onValueChange: (Float) -> Unit,
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(text = label, modifier = Modifier.size(width = 20.dp, height = 24.dp))
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = valueRange,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }
 
 @Composable
@@ -212,8 +333,15 @@ private fun AppearanceSettingsMiuix(
     SmallTitle(text = stringResource(R.string.appearance_settings))
 
     Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
-        // Reused language row (opens its own dialog); callback unchanged.
-        LanguageSetting(state = state, viewModel = viewModel)
+        val languageSystemDefault = stringResource(R.string.language_system_default)
+        val currentLanguageDisplay = state.currentAppLocale?.let { it.getDisplayName(it) }
+            ?: languageSystemDefault
+        ArrowPreference(
+            title = stringResource(R.string.settings_language),
+            summary = currentLanguageDisplay,
+            startAction = { PrefIcon(Icons.Filled.Translate) },
+            onClick = { viewModel.setLanguageDialogVisible(true) }
+        )
     }
 
     Card(modifier = Modifier.fillMaxWidth().padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
@@ -231,11 +359,23 @@ private fun AppearanceSettingsMiuix(
             checked = state.useDynamicColor,
             onCheckedChange = { viewModel.handleDynamicColorChange(context, it) }
         )
-    }
-
-    if (!state.useDynamicColor) {
-        Card(modifier = Modifier.fillMaxWidth().padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
-            ThemeColorSelection(viewModel = viewModel)
+        // Custom seed colour lives in the same card and animates in/out with the
+        // dynamic-colour toggle (only relevant when dynamic colour is off).
+        AnimatedVisibility(visible = !state.useDynamicColor) {
+            BasicComponent(
+                title = stringResource(R.string.theme_color),
+                summary = "#%06X".format(ThemeConfig.seedColor and 0x00FFFFFF),
+                startAction = { PrefIcon(Icons.Filled.Palette) },
+                onClick = { viewModel.setThemeColorDialogVisible(true) },
+                endActions = {
+                    Box(
+                        modifier = Modifier
+                            .size(22.dp)
+                            .clip(CircleShape)
+                            .background(Color(ThemeConfig.seedColor))
+                    )
+                }
+            )
         }
     }
 
