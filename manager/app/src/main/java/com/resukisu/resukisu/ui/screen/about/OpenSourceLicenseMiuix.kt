@@ -46,17 +46,15 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.mikepenz.aboutlibraries.entity.Library
-import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
-import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
-import com.mikepenz.aboutlibraries.ui.compose.m3.chipColors
-import com.mikepenz.aboutlibraries.ui.compose.m3.libraryColors
 import com.resukisu.resukisu.R
 import com.resukisu.resukisu.ui.component.WarningCard
 import com.resukisu.resukisu.ui.navigation.LocalNavigator
 import com.resukisu.resukisu.ui.theme.LocalEnableBlur
 import com.resukisu.resukisu.ui.util.BlurredBar
 import com.resukisu.resukisu.ui.util.rememberBlurBackdrop
+import top.yukonga.miuix.kmp.basic.BasicComponent
+import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon as MiuixIcon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
@@ -68,11 +66,14 @@ import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Back
 import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
+import top.yukonga.miuix.kmp.utils.overScrollVertical
+import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
 /**
- * Miuix rendering of ReSukiSU's open-source-license screen. The library list is
- * AboutLibraries' Material3 [LibrariesContainer] (no Miuix equivalent exists); only
- * the surrounding chrome (collapsing top bar + blur) is Miuix.
+ * Miuix rendering of ReSukiSU's open-source-license screen. Renders the
+ * AboutLibraries data with a native miuix LazyColumn (so it gets the scroll-end
+ * haptic + overscroll like every other Miuix screen); the per-library detail
+ * dialog stays a Material3 AlertDialog.
  */
 @Composable
 fun OpenSourceLicenseScreenMiuix() {
@@ -99,28 +100,37 @@ fun OpenSourceLicenseScreenMiuix() {
         contentWindowInsets = WindowInsets.systemBars.add(WindowInsets.displayCutout).only(WindowInsetsSides.Horizontal)
     ) { innerPadding ->
         Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
-            LibrariesContainer(
-                libraries = libraries,
-                libraryModifier = Modifier
-                    .padding(vertical = 4.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
+                    .scrollEndHaptic()
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .overScrollVertical()
                     .padding(horizontal = 16.dp),
                 contentPadding = innerPadding,
-                colors = LibraryDefaults.libraryColors(
-                    libraryBackgroundColor = colorScheme.surfaceContainerHigh,
-                    libraryContentColor = colorScheme.onSurface,
-                    licenseChipColors = LibraryDefaults.chipColors(
-                        containerColor = colorScheme.primary,
-                        contentColor = colorScheme.onPrimary
-                    )
-                ),
-                onLibraryClick = { library ->
-                    selectedLibrary = library
+                overscrollEffect = null,
+            ) {
+                items(libraries?.libraries.orEmpty()) { library ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                    ) {
+                        BasicComponent(
+                            title = library.name,
+                            summary = buildString {
+                                library.artifactVersion?.let { append(it) }
+                                val lic = library.licenses.joinToString(", ") { it.name }
+                                if (lic.isNotEmpty()) {
+                                    if (isNotEmpty()) append("  •  ")
+                                    append(lic)
+                                }
+                            }.ifEmpty { null },
+                            onClick = { selectedLibrary = library },
+                        )
+                    }
                 }
-            )
+            }
 
             if (selectedLibrary != null) {
                 val library = selectedLibrary!!

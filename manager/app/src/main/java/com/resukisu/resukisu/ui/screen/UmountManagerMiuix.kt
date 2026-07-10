@@ -71,6 +71,7 @@ import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Back
 import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
 import top.yukonga.miuix.kmp.utils.overScrollVertical
+import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
 /**
  * Miuix rendering of ReSukiSU's umount-path-manager screen. Reuses the same
@@ -153,6 +154,7 @@ fun UmountManagerScreenMiuix() {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
+                            .scrollEndHaptic()
                             .nestedScroll(scrollBehavior.nestedScrollConnection)
                             .overScrollVertical(),
                         contentPadding = PaddingValues(
