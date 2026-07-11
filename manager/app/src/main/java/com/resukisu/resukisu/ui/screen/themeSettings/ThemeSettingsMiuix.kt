@@ -417,7 +417,8 @@ private fun AppearanceSettingsMiuix(
 
     Card(modifier = Modifier.fillMaxWidth().padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
         Column(modifier = Modifier.padding(16.dp)) {
-            SmallTitle(text = stringResource(R.string.app_dpi_title))
+            // "Applied DPI" title intentionally omitted in Miuix (looks out of place here);
+            // the Material screen keeps it.
             DpiSliderControlsMiuix(state = state, viewModel = viewModel, coroutineScope = coroutineScope)
         }
     }
