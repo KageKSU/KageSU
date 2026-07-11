@@ -75,8 +75,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.resukisu.resukisu.R
-import com.resukisu.resukisu.ui.LocalUiMode
-import com.resukisu.resukisu.ui.UiMode
 import com.resukisu.resukisu.ui.component.settings.AppBackButton
 import com.resukisu.resukisu.ui.navigation.LocalNavigator
 import com.resukisu.resukisu.ui.susfs.component.AddAppPathDialog
@@ -135,10 +133,6 @@ enum class SuSFSTab(val displayNameRes: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuSFSConfigScreen() {
-    if (LocalUiMode.current == UiMode.Miuix) {
-        SuSFSConfigScreenMiuix()
-        return
-    }
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -1398,7 +1392,7 @@ fun SuSFSConfigScreen() {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun BasicSettingsContent(
+private fun BasicSettingsContent(
     unameValue: String,
     onUnameValueChange: (String) -> Unit,
     buildTimeValue: String,
@@ -1915,7 +1909,7 @@ internal fun BasicSettingsContent(
  * 槽位信息对话框
  */
 @Composable
-internal fun SlotInfoDialog(
+private fun SlotInfoDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
     slotInfoList: List<SuSFSManager.SlotInfo>,
