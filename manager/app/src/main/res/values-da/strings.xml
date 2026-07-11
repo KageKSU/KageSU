@@ -81,4 +81,19 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="enable_web_debugging">WebView-fejlsøgning</string>
+    <string name="enable_web_debugging_summary">Kan bruges til at fejlfinde af WebUI. Aktiver kun når det er nødvendigt.</string>
+    <string name="home_fingerprint">Fingeraftryk</string>
+    <string name="install_force_backup">Sikkerhedskopiér som originalt image</string>
+    <string name="install_force_backup_summary">Sørg for, at det valgte boot-image er det originale image</string>
+    <string name="module_install">Installer</string>
+    <string name="module_install_prompt_with_name">Følgende moduler installeres: %1$s</string>
+    <string name="open">Åbn</string>
+    <string name="processing">Behandler…</string>
+    <string name="refresh_complete">Opdateret</string>
+    <string name="refresh_pulling">Træk ned for at opdatere</string>
+    <string name="refresh_refresh">Opdaterer…</string>
+    <string name="refresh_release">Slip for at opdatere</string>
+    <string name="selinux_status_unknown">Ukendt</string>
+    <string name="settings_module_check_update">Søg efter modulopdateringer</string>
 </resources>

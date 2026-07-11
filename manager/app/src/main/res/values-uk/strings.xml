@@ -764,4 +764,23 @@ Enabled: Увімкнути підміну sus tcontext \'su\' на \'u:r:priv_a
     <string name="tab_readme">Файл README</string>
     <string name="tab_releases">Релізи</string>
     <string name="tab_info">Інформація</string>
+    <string name="enable_web_debugging">Налагодження WebView</string>
+    <string name="enable_web_debugging_summary">Можна використовувати для налагодження веб-інтерфейсу. Вмикайте лише за потреби.</string>
+    <string name="home_fingerprint">Відбиток</string>
+    <string name="home_gki_warning">Починаючи з версії 3.0.0, робочий режим GKI використовуватиметься лише в тестових середовищах. Ми не рекомендуємо його для щоденного використання, а файли зображень більше не надаватимуться.</string>
+    <string name="install_force_backup">Зберегти резервну копію як оригінальний образ</string>
+    <string name="install_force_backup_summary">Будь ласка, переконайтеся, що вибраний образ boot є оригінальним образом</string>
+    <string name="module_install">Встановити</string>
+    <string name="module_install_prompt_with_name">Будуть встановлені такі модулі: %1$s</string>
+    <string name="open">Відкрити</string>
+    <string name="processing">Обробка…</string>
+    <string name="refresh_complete">Оновлено успішно</string>
+    <string name="refresh_pulling">Потягніть униз, щоб оновити</string>
+    <string name="refresh_refresh">Оновлення…</string>
+    <string name="refresh_release">Відпустіть для оновлення</string>
+    <string name="selinux_status_unknown">Невідомо</string>
+    <string name="settings_module_check_update">Перевірити наявність оновлень модулів</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_summary">Виберіть режим теми програми.</string>
+    <string name="undo">Відмінити</string>
 </resources>

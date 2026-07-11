@@ -264,4 +264,15 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="enable_web_debugging">WebView-Debugging</string>
+    <string name="enable_web_debugging_summary">Kann zum Fehlerbeheben der WebUI verwendet werden. Bitte nur im Notfall aktivieren.</string>
+    <string name="home_fingerprint">Fingerabdruck</string>
+    <string name="home_gki_warning">Ab v3.0.0 wird der GKI Arbeitsmodus nur in Testumgebungen genutzt werden. Wir empfehlen es nicht für die tägliche Nutzung und Bilddateien werden nicht mehr bereitgestellt werden.</string>
+    <string name="install_force_backup">Als Original-Image sichern</string>
+    <string name="install_force_backup_summary">Bitte stelle sicher, dass das ausgewählte Boot-Image das Original-Image ist</string>
+    <string name="module_install">Installieren</string>
+    <string name="module_install_prompt_with_name">Folgende Module werden installiert: %1$s</string>
+    <string name="open">Öffnen</string>
+    <string name="selinux_status_unknown">Unbekannt</string>
+    <string name="settings_module_check_update">Auf Modulaktualisierungen prüfen</string>
 </resources>

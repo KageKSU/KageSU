@@ -94,4 +94,9 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="home_fingerprint">Otisak prsta</string>
+    <string name="install_force_backup">Napravi sigurnosnu kopiju kao fabričku sliku</string>
+    <string name="install_force_backup_summary">Uvjerite se da je odabrana boot slika fabrička slika</string>
+    <string name="module_install">Instalirajte</string>
+    <string name="selinux_status_unknown">Nepoznato</string>
 </resources>

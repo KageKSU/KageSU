@@ -66,4 +66,9 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="home_fingerprint">ফিঙ্গারপ্রিন্ট</string>
+    <string name="install_force_backup">স্টক ইমেজ হিসেবে ব্যাকআপ করুন</string>
+    <string name="install_force_backup_summary">অনুগ্রহ করে নিশ্চিত করুন যে আপনি যে boot ইমেজটি বেছে নিয়েছেন সেটি স্টক ইমেজ</string>
+    <string name="module_install">ইন্সটল</string>
+    <string name="selinux_status_unknown">আননোন</string>
 </resources>

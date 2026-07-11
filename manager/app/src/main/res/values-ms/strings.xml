@@ -56,4 +56,9 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="home_fingerprint">Cap Jari</string>
+    <string name="install_force_backup">Sandarkan sebagai imej asal</string>
+    <string name="install_force_backup_summary">Sila pastikan imej boot yang anda pilih ialah imej asal</string>
+    <string name="module_install">Pasang</string>
+    <string name="selinux_status_unknown">Tidak Diketahui</string>
 </resources>

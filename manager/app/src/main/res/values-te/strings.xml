@@ -41,4 +41,7 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="install_force_backup">స్టాక్ ఇమేజ్‌గా బ్యాకప్ చేయి</string>
+    <string name="install_force_backup_summary">దయచేసి మీరు ఎంచుకున్న boot ఇమేజ్ స్టాక్ ఇమేజ్ అని నిర్ధారించుకోండి</string>
+    <string name="selinux_status_unknown">తెలియదు</string>
 </resources>

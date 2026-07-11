@@ -136,4 +136,12 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="enable_web_debugging">Luba WebView silumine</string>
+    <string name="enable_web_debugging_summary">Saab kasutada WebUI silumiseks, palun luba ainult vajadusel.</string>
+    <string name="home_fingerprint">Sõrmejälg</string>
+    <string name="install_force_backup">Varunda kui tehasepilt</string>
+    <string name="install_force_backup_summary">Veendu, et valitud boot-tõmmis on tehasepilt</string>
+    <string name="module_install">Paigalda</string>
+    <string name="open">Ava</string>
+    <string name="selinux_status_unknown">Teadmata</string>
 </resources>

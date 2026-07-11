@@ -93,4 +93,10 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="home_fingerprint">Barmaq izi</string>
+    <string name="install_force_backup">Orijinal imic kimi yedəklə</string>
+    <string name="install_force_backup_summary">Zəhmət olmasa seçdiyiniz boot imicinin orijinal imic olduğuna əmin olun</string>
+    <string name="module_install">Yüklə</string>
+    <string name="module_install_prompt_with_name">Aşağıdakı modullar quraşdırılacaq: %1$s</string>
+    <string name="selinux_status_unknown">Naməlum</string>
 </resources>

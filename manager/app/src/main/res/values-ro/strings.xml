@@ -133,4 +133,12 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="enable_web_debugging">Activează depanarea WebView</string>
+    <string name="enable_web_debugging_summary">Poate fi folosit pentru a depana WebUI, activează numai când este necesar.</string>
+    <string name="home_fingerprint">Amprentă</string>
+    <string name="install_force_backup">Salvează ca imagine originală</string>
+    <string name="install_force_backup_summary">Asigură-te că imaginea boot selectată este imaginea originală</string>
+    <string name="module_install">Instalează</string>
+    <string name="open">Deschide</string>
+    <string name="selinux_status_unknown">Necunoscut</string>
 </resources>

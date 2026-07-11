@@ -93,4 +93,9 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="home_fingerprint">טביעת אצבע</string>
+    <string name="install_force_backup">גבה כתמונת מקור</string>
+    <string name="install_force_backup_summary">אנא ודא שתמונת האתחול שבחרת היא תמונת המקור</string>
+    <string name="module_install">התקנה</string>
+    <string name="selinux_status_unknown">לא ידוע</string>
 </resources>

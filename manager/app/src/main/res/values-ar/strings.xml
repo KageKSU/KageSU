@@ -307,4 +307,13 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="enable_web_debugging">تمكين تصحيح أخطاء WebView</string>
+    <string name="enable_web_debugging_summary">يمكن استخدامه لتصحيح أخطاء WebUI، يرجى تمكينه فقط عند الحاجة.</string>
+    <string name="home_fingerprint">البصمة</string>
+    <string name="install_force_backup">نسخ احتياطي كصورة أصلية</string>
+    <string name="install_force_backup_summary">يرجى التأكد من أن صورة boot التي اخترتها هي الصورة الأصلية</string>
+    <string name="module_install">تثبيت الوحدة</string>
+    <string name="module_install_prompt_with_name">الحزم الاتيه سيتم تثبيتها %1$s</string>
+    <string name="open">فتح</string>
+    <string name="selinux_status_unknown">مجهول</string>
 </resources>

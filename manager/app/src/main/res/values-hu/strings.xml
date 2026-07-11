@@ -133,4 +133,12 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="enable_web_debugging">WebView hibakeresés engedélyezése</string>
+    <string name="enable_web_debugging_summary">A WebUI hibakeresésére használható, csak szükség esetén engedélyezze.</string>
+    <string name="home_fingerprint">Ujjlenyomat</string>
+    <string name="install_force_backup">Biztonsági mentés gyári képként</string>
+    <string name="install_force_backup_summary">Kérjük, győződj meg róla, hogy a kiválasztott boot lemezkép a gyári lemezkép</string>
+    <string name="module_install">Telepítés</string>
+    <string name="open">Megnyitás</string>
+    <string name="selinux_status_unknown">Ismeretlen</string>
 </resources>

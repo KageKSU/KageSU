@@ -81,4 +81,7 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="install_force_backup">ಮೂಲ ಇಮೇಜ್ ಆಗಿ ಬ್ಯಾಕಪ್ ಮಾಡಿ</string>
+    <string name="install_force_backup_summary">ದಯವಿಟ್ಟು ನೀವು ಆಯ್ಕೆ ಮಾಡಿದ boot ಇಮೇಜ್ ಮೂಲ ಇಮೇಜ್ ಆಗಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ</string>
+    <string name="selinux_status_unknown">ತಿಳಿಯದ</string>
 </resources>

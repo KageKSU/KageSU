@@ -76,4 +76,9 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="home_fingerprint">اثرانگشت</string>
+    <string name="install_force_backup">به عنوان ایمیج اصلی پشتیبان بگیر</string>
+    <string name="install_force_backup_summary">لطفاً مطمئن شوید ایمیج بوتی که انتخاب کرده‌اید همان ایمیج اصلی است</string>
+    <string name="module_install">نصب</string>
+    <string name="selinux_status_unknown">ناشناخته</string>
 </resources>

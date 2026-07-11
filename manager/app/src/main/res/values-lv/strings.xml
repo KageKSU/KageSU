@@ -136,4 +136,13 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="enable_web_debugging">Iespējot WebView atkļūdošanu</string>
+    <string name="enable_web_debugging_summary">Var izmantot WebUI atkļūdošanai, lūdzu, izmantot tikai tad, kad tas ir nepieciešams.</string>
+    <string name="home_fingerprint">Pirkstu nospiedums</string>
+    <string name="install_force_backup">Dublēt kā sākotnējo attēlu</string>
+    <string name="install_force_backup_summary">Lūdzu, pārliecinieties, ka izvēlētais boot attēls ir sākotnējais attēls</string>
+    <string name="module_install">Uzstādīt</string>
+    <string name="module_install_prompt_with_name">Tiks uzstādīti šādi moduļi : %1$s</string>
+    <string name="open">Atvērt</string>
+    <string name="selinux_status_unknown">Nezināms</string>
 </resources>

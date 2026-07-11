@@ -94,4 +94,9 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="home_fingerprint">फिंगरप्रिंट</string>
+    <string name="install_force_backup">स्टॉक इमेज के रूप में बैकअप करें</string>
+    <string name="install_force_backup_summary">कृपया सुनिश्चित करें कि आपने जो boot इमेज चुनी है वह स्टॉक इमेज है</string>
+    <string name="module_install">इंस्टाल करें</string>
+    <string name="selinux_status_unknown">अज्ञात</string>
 </resources>

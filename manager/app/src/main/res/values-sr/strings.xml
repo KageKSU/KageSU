@@ -31,4 +31,6 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Releases</string>
     <string name="tab_info">Info</string>
+    <string name="install_force_backup">Napravi rezervnu kopiju kao originalnu sliku</string>
+    <string name="install_force_backup_summary">Uverite se da je izabrana boot slika originalna slika</string>
 </resources>

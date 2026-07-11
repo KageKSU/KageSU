@@ -140,4 +140,23 @@
     <string name="tab_readme">README</string>
     <string name="tab_releases">Wydania</string>
     <string name="tab_info">Informacje</string>
+    <string name="enable_web_debugging">Debugowanie WebView</string>
+    <string name="enable_web_debugging_summary">Może być użyte do debugowania WebUI. Włącz tylko w razie potrzeby.</string>
+    <string name="home_fingerprint">Odcisk</string>
+    <string name="home_gki_warning">Począwszy od wersji 3.0.0, tryb pracy GKI będzie używany wyłącznie w środowiskach testowych. Nie zalecamy jego stosowania w codziennym użytkowaniu, a pliki obrazów nie będą już udostępniane.</string>
+    <string name="install_force_backup">Utwórz kopię zapasową jako obraz fabryczny</string>
+    <string name="install_force_backup_summary">Upewnij się, że wybrany obraz boot to obraz fabryczny</string>
+    <string name="module_install">Instaluj</string>
+    <string name="module_install_prompt_with_name">Zainstalowane zostaną następujące moduły: %1$s</string>
+    <string name="open">Otwórz</string>
+    <string name="processing">Przetwarzanie…</string>
+    <string name="refresh_complete">Odświeżono pomyślnie</string>
+    <string name="refresh_pulling">Przeciągnij w dół, aby odświeżyć</string>
+    <string name="refresh_refresh">Odświeżanie…</string>
+    <string name="refresh_release">Uwolnij, aby odświeżyć</string>
+    <string name="selinux_status_unknown">Nieznany</string>
+    <string name="settings_module_check_update">Sprawdź aktualizację modułów</string>
+    <string name="settings_theme">Motyw</string>
+    <string name="settings_theme_summary">Wybierz tryb motywu aplikacji.</string>
+    <string name="undo">Cofnij</string>
 </resources>
