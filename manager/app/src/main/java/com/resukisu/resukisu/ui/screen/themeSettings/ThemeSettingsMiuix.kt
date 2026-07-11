@@ -5,7 +5,6 @@ import android.graphics.Color as AndroidColor
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -93,6 +92,7 @@ import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.Slider
+import top.yukonga.miuix.kmp.basic.SliderDefaults
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
@@ -525,15 +525,17 @@ private fun DpiSliderControlsMiuix(
     val dpiConfirmMessage = stringResource(R.string.dpi_confirm_message, state.currentDpi, state.tempDpi)
     val confirmText = stringResource(R.string.confirm)
     val cancelText = stringResource(R.string.cancel)
-    val sliderValue by animateFloatAsState(targetValue = state.tempDpi.toFloat(), label = "DPI Slider")
 
+    // Drive the slider directly from tempDpi (no animateFloatAsState feedback loop,
+    // which made the drag feel laggy/jumpy).
     Slider(
-        value = sliderValue,
+        value = state.tempDpi.toFloat(),
         onValueChange = { newValue -> viewModel.updateTempDpi(newValue.toInt()) },
         modifier = Modifier.fillMaxWidth(),
         valueRange = 160f..600f,
         showKeyPoints = true,
         keyPoints = state.dpiPresets.map { (_, dpi) -> dpi.toFloat() },
+        hapticEffect = SliderDefaults.SliderHapticEffect.Step,
     )
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
