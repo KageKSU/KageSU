@@ -192,8 +192,9 @@ internal fun ThemeSettingsScreenMiuix(
                                 }
                             }
                         )
-                        if (settingsState.predictiveBackAnimation == PredictiveBackAnimation.Scale ||
-                            settingsState.predictiveBackAnimation == PredictiveBackAnimation.AOSP
+                        AnimatedVisibility(
+                            visible = settingsState.predictiveBackAnimation == PredictiveBackAnimation.Scale ||
+                                    settingsState.predictiveBackAnimation == PredictiveBackAnimation.AOSP
                         ) {
                             OverlayDropdownPreference(
                                 title = stringResource(R.string.predictive_back_exit_direction),
